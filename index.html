@@ -13,6 +13,7 @@
     <link rel="stylesheet" id="alt" disabled="true" type="text/css" href="https://jenil.github.io/bulmaswatch/materia/bulmaswatch.min.css">
     <link rel="stylesheet" id="material" disabled="true" type="text/css" href="https://jenil.github.io/bulmaswatch/cosmo/bulmaswatch.min.css">
     <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/bulma_switch.css">
     <!-- JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/js/all.min.js" integrity="sha256-MAgcygDRahs+F/Nk5Vz387whB4kSK9NXlDN3w58LLq0=" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
@@ -124,7 +125,32 @@
                             <section class="tab-content">
                                 <div class="columns">
                                     <div class="column is-half">
-                                        <div id="ports"></div>
+                                        <p class="subtitle has-text-weight-light">
+                                            <i class="fa fa-microchip fa-fw" style="color:blue;"></i>
+                                            MINERS
+                                        </p>
+                                        <div id="ports">
+
+                                        </div>
+                                        <br>
+                                        <span class="tag is-info" id="total_ports"></span>
+                                        <div id="error"></div>
+                                        <hr>
+                                        <div class="buttons">
+                                            <button class="button is-primary">Start mining</button>
+                                            <button class="button is-link">Stop mining</button>
+                                        </div>
+                                        <hr>
+                                        <div class="traces">
+                                            <code>
+                                                Example of a trace<br>
+                                                Example of a trace<br>
+                                                Example of a trace<br>
+                                                Example of a trace<br>
+                                                Example of a trace<br>
+                                                Example of a trace<br>
+                                            </code>
+                                        </div>
                                     </div>
                                     <div class="column is-half">
                                         <div class="block">

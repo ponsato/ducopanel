@@ -8,7 +8,11 @@ function createWindow () {
         autoHideMenuBar: true,
         icon:'resources/duco.ico',
         webPreferences: {
-            /*preload: path.join(__dirname, 'preload.js')*/
+            nodeIntegration: false,
+            contextIsolation: true,
+            enableRemoteModule: false,
+            preload: path.join(__dirname, 'js/serialports.js'),
+            webSecurity: false
         },
 
     })
@@ -17,6 +21,8 @@ function createWindow () {
     mainWindow.show();
     mainWindow.webContents.session.clearStorageData();
 }
+
+app.allowRendererProcessReuse=false
 
 app.whenReady().then(() => {
     createWindow();

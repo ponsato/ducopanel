@@ -28,14 +28,49 @@
     "@electron-forge/maker-rpm": "^6.0.0-beta.57",
     "@electron-forge/maker-squirrel": "^6.0.0-beta.57",
     "@electron-forge/maker-zip": "^6.0.0-beta.57",
-    "electron": "^13.1.2"
+    "electron": "^13.1.2",
+    "electron-rebuild": "^2.3.4"
   },
   "dependencies": {
-    "electron-squirrel-startup": "^1.0.0"
+    "bulma-switch": "^2.0.0",
+    "electron-squirrel-startup": "^1.0.0",
+    "serialport": "^9.0.6"
+  },
+  "build": {
+    "productName": "Ducopanel",
+    "appId": "com.experiment.ducopanel",
+    "dmg":{
+      "contents":[
+        {
+          "x":130,
+          "y":220
+        },
+        {
+          "x":410,
+          "y":220,
+          "type":"link",
+          "path":"/Applications"
+        }
+      ]
+    },
+    "win":{
+      "target":[
+        "nsis",
+        "msi"
+      ],
+      "asar": false
+    },
+    "directories": {
+      "buildResources": "build",
+      "output":"release"
+    },
+    "files": ["**/*", "build/icon.*"]
   },
   "config": {
     "forge": {
-      "packagerConfig": {},
+      "packagerConfig": {
+        "icon": "build/icon.ico"
+      },
       "makers": [
         {
           "name": "@electron-forge/maker-squirrel",

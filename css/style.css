@@ -116,3 +116,10 @@ select {
 .block2, .block4, .transaction1, .transacion3, .transaction5 {
     color: #0984e3;
 }
+
+div#ports {
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: flex-start;
+    max-height: 200px;
+}
