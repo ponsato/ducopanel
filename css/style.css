@@ -123,3 +123,8 @@ div#ports {
     justify-content: flex-start;
     max-height: 200px;
 }
+
+.traces {
+    height: 15em;
+    overflow: auto;
+}

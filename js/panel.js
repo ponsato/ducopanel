@@ -100,7 +100,7 @@ window.addEventListener('load', function() {
         $.getJSON('https://server.duinocoin.com/users/' + username, function(data) {
             balance = parseFloat(data.result.balance.balance);
             let balanceusd = balance * ducoUsdPrice;
-            console.log("Balance received: " + balance + "($" + balanceusd + ")");
+            //console.log("Balance received: " + balance + "($" + balanceusd + ")");
 
             let balance_list = balance.toFixed(8).split(".")
             let balance_before_dot = balance_list[0]
@@ -123,7 +123,7 @@ window.addEventListener('load', function() {
             let jsonD = data.result.transactions.reverse();
 
             const transtable = document.getElementById("transactions");
-            console.log("Transaction list received");
+            //console.log("Transaction list received");
             if (jsonD.length > 0) {
                 let transactions = "";
                 for (let i in jsonD) {
@@ -148,7 +148,7 @@ window.addEventListener('load', function() {
             } else transtable.innerHTML = `<tr><td data-label="Date">No transactions yet</td></tr>`;
 
             let myMiners = data.result.miners;
-            console.log("Miner data received");
+            //console.log("Miner data received");
             let miners = document.getElementById("miners");
             miners.innerHTML = "";
             let minerHashrate = document.getElementById("minerHR");
@@ -376,7 +376,7 @@ window.addEventListener('load', function() {
                 if (loggedIn == false &&
                     versionReceived == false &&
                     serverMessage.includes("2.")) {
-                    console.log("Version received: " + serverMessage);
+                    //console.log("Version received: " + serverMessage);
                     versionReceived = true;
                 }
                 if (loggedIn == false &&
@@ -388,13 +388,13 @@ window.addEventListener('load', function() {
                 if (loggedIn == false &&
                     versionReceived &&
                     serverMessage.includes("OK")) {
-                    console.log("User logged-in");
+                    //console.log("User logged-in");
 
                     document.getElementById("loginstatus")
                         .innerHTML = "Logged in!";
                     document.getElementById("loginbutton").classList.remove("is-loading");
                     document.getElementById("wallettext")
-                        .innerHTML = "<span class='has-text-weight-light'><b>" + username + "</b>";
+                        .innerHTML = "<span id='username' class='has-text-weight-light'><b>" + username + "</b>";
                     const transtable = document.getElementById("transactions");
                     transtable.innerHTML = `<tr><td data-label="Date">Please wait...</td></tr>`;
 

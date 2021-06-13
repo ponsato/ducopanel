@@ -34,27 +34,28 @@
   "dependencies": {
     "bulma-switch": "^2.0.0",
     "electron-squirrel-startup": "^1.0.0",
+    "python-shell": "^3.0.0",
     "serialport": "^9.0.6"
   },
   "build": {
     "productName": "Ducopanel",
     "appId": "com.experiment.ducopanel",
-    "dmg":{
-      "contents":[
+    "dmg": {
+      "contents": [
         {
-          "x":130,
-          "y":220
+          "x": 130,
+          "y": 220
         },
         {
-          "x":410,
-          "y":220,
-          "type":"link",
-          "path":"/Applications"
+          "x": 410,
+          "y": 220,
+          "type": "link",
+          "path": "/Applications"
         }
       ]
     },
-    "win":{
-      "target":[
+    "win": {
+      "target": [
         "nsis",
         "msi"
       ],
@@ -62,9 +63,12 @@
     },
     "directories": {
       "buildResources": "build",
-      "output":"release"
+      "output": "release"
     },
-    "files": ["**/*", "build/icon.*"]
+    "files": [
+      "**/*",
+      "build/icon.*"
+    ]
   },
   "config": {
     "forge": {
