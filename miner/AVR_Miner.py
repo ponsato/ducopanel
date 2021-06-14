@@ -990,49 +990,30 @@ def mine_avr(com):
                         + str(shares[0] + shares[1])
                         + get_string('accepted_shares'))
                     with thread_lock:
-                        print(
-                            Style.RESET_ALL
-                            + Fore.WHITE
-                            + now().strftime(Style.DIM + '%H:%M:%S ')
-                            + Style.BRIGHT
-                            + Back.MAGENTA
-                            + Fore.RESET
+                        print((now().strftime('%H:%M:%S ')
                             + ' usb'
                             + str(''.join(filter(str.isdigit, com)))
                             + ' '
-                            + Back.RESET
-                            + Fore.GREEN
-                            + ' ✓'
                             + get_string('accepted')
-                            + Fore.RESET
                             + str(int(shares[0]))
                             + '/'
                             + str(int(shares[0] + shares[1]))
-                            + Fore.YELLOW
                             + ' ('
                             + str(int((shares[0]
                                        / (shares[0] + shares[1]) * 100)))
                             + '%)'
-                            + Style.NORMAL
-                            + Fore.RESET
-                            + ' ∙ '
+                            + ' - '
                             + str('%01.3f' % float(computetime))
                             + 's'
-                            + Style.NORMAL
-                            + ' ∙ '
-                            + Fore.BLUE
-                            + Style.BRIGHT
+                            + ' - '
                             + str(round(hashrate))
                             + ' H/s'
-                            + Style.NORMAL
-                            + Fore.RESET
                             + ' @ diff '
                             + str(diff)
-                            + ' ∙ '
-                            + Fore.CYAN
+                            + ' - '
                             + 'ping '
                             + str('%03.0f' % int(ping))
-                            + 'ms')
+                            + 'ms'))
 
                 elif feedback == 'BLOCK':
                     # If block was found
@@ -1046,46 +1027,27 @@ def mine_avr(com):
                         + str(shares[0] + shares[1])
                         + get_string('accepted_shares'))
                     with thread_lock:
-                        print(
-                            Style.RESET_ALL
-                            + Fore.WHITE
-                            + now().strftime(Style.DIM + '%H:%M:%S ')
-                            + Style.BRIGHT
-                            + Back.MAGENTA
-                            + Fore.RESET
+                        print(now().strftime('%H:%M:%S ')
                             + ' usb'
                             + str(''.join(filter(str.isdigit, com)))
                             + ' '
-                            + Back.RESET
-                            + Fore.CYAN
-                            + ' ✓'
                             + get_string('block_found')
-                            + Fore.RESET
                             + str(int(shares[0]))
                             + '/'
                             + str(int(shares[0] + shares[1]))
-                            + Fore.YELLOW
                             + ' ('
                             + str(int((shares[0]
                                        / (shares[0] + shares[1]) * 100)))
                             + '%)'
-                            + Style.NORMAL
-                            + Fore.RESET
-                            + ' ∙ '
+                            + ' - '
                             + str('%01.3f' % float(computetime))
                             + 's'
-                            + Style.NORMAL
-                            + ' ∙ '
-                            + Fore.BLUE
-                            + Style.BRIGHT
+                            + ' - '
                             + str(int(hashrate))
                             + ' H/s'
-                            + Style.NORMAL
-                            + Fore.RESET
                             + ' @ diff '
                             + str(diff)
-                            + ' ∙ '
-                            + Fore.CYAN
+                            + ' - '
                             + 'ping '
                             + str('%02.0f' % int(ping))
                             + 'ms')

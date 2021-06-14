@@ -125,6 +125,15 @@ div#ports {
 }
 
 .traces {
-    height: 15em;
+    height: 25em;
     overflow: auto;
+}
+div.code {
+    white-space: unset;
+}
+pre {
+    padding: 0;
+}
+pre code {
+    font-size: .7em;
 }

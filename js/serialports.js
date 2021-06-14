@@ -51,7 +51,7 @@ function manageMinerConfig () {
         "username = " + username + "\n" +
         "avrport = " + avrport.toString() + "\n" +
         "donate = 0\n" +
-        "language = spanish\n" +
+        "language = english\n" +
         "identifier = " + identifier + "\n" +
         "debug = n\n" +
         "\n";
@@ -91,15 +91,18 @@ function runMiner() {
     };
     python.stdout.on('data', function (data) {
         console.log("Python response: ", data.toString('utf8'));
-        traces.innerHTML += '<code>' + data.toString('utf8') + '</code><br>';
+        //traces.innerHTML += '<code>' + data.toString('utf8') + '</code><br>';
+        traces.innerHTML += String.fromCharCode.apply(null, data);
     });
     python.stderr.on('data', (data) => {
         //traces.innerHTML += '<code>child process exited with code ' + data + '</code><br>';
-        traces.innerHTML += '<code>' + data.toString('utf8') + '</code><br>';
+        //traces.innerHTML += '<code>' + data.toString('utf8') + '</code><br>';
+        traces.innerHTML += String.fromCharCode.apply(null, data);
     });
 
     python.on('close', (code) => {
         //traces.innerHTML += '<code>child process exited with code ' + code + '</code><br>';
-        traces.innerHTML += '<code>' + code.toString('utf8') + '</code><br>';
+        //traces.innerHTML += '<code>' + code.toString('utf8') + '</code><br>';
+        traces.innerHTML += String.fromCharCode.apply(null, data);
     });
 }

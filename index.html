@@ -14,11 +14,14 @@
     <link rel="stylesheet" id="material" disabled="true" type="text/css" href="https://jenil.github.io/bulmaswatch/cosmo/bulmaswatch.min.css">
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <link rel="stylesheet" type="text/css" href="css/bulma_switch.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.0.1/styles/default.min.css">
     <!-- JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/js/all.min.js" integrity="sha256-MAgcygDRahs+F/Nk5Vz387whB4kSK9NXlDN3w58LLq0=" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
     <!-- WebWallet -->
     <script type="text/javascript" src="js/panel.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.0.1/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
     <!--<script type="text/javascript" src="js/serialports.js"></script>-->
 </head>
 <body>
@@ -144,8 +147,8 @@
                                             <button class="button is-link" id="stop_mining">Stop mining</button>
                                         </div>
                                         <hr>
-                                        <div class="box traces" id="traces">
-
+                                        <div class="box traces code">
+                                            <pre><code id="traces"></code></pre>
                                         </div>
                                     </div>
                                     <div class="column is-half">
