@@ -77,8 +77,12 @@ window.addEventListener('load', function() {
     let start_mining = document.getElementById('start_mining');
     start_mining.onclick = function () {
         manageMinerConfig();
+        start_mining.setAttribute("disabled", true);
     };
-
+    let clear_console = document.getElementById('clear_console');
+    clear_console.onclick = function () {
+        document.getElementById('traces').innerHTML = '';
+    };
 
 });
 
@@ -86,8 +90,11 @@ function runMiner() {
     let traces = document.getElementById('traces');
     let python = require('child_process').spawn('python', ['miner/AVR_Miner.py', '']);
     let stop_mining = document.getElementById('stop_mining');
+    stop_mining.removeAttribute("disabled");
     stop_mining.onclick = function () {
         python.kill('SIGINT');
+        document.getElementById('start_mining').removeAttribute("disabled");
+        stop_mining.setAttribute("disabled", true);
     };
     python.stdout.on('data', function (data) {
         console.log("Python response: ", data.toString('utf8'));

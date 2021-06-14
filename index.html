@@ -140,15 +140,17 @@
                                         <div id="error"></div>
                                         <hr>
                                         <div class="buttons">
-                                            <input class="input" id="identifier" type="text" placeholder="Identifier ">
-                                            <br>
-                                            <br>
+                                            <input class="input" id="identifier" type="text" placeholder="Identifier">
+                                            <br><br><br><br>
                                             <button class="button is-primary" id="start_mining">Start mining</button>
-                                            <button class="button is-link" id="stop_mining">Stop mining</button>
+                                            <button class="button is-link" id="stop_mining" disabled>Stop mining</button>
                                         </div>
                                         <hr>
                                         <div class="box traces code">
                                             <pre><code id="traces"></code></pre>
+                                        </div>
+                                        <div class="buttons">
+                                            <button class="button is-primary" id="clear_console">Clear console</button>
                                         </div>
                                     </div>
                                     <div class="column is-half">

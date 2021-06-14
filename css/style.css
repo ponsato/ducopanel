@@ -125,7 +125,7 @@ div#ports {
 }
 
 .traces {
-    height: 25em;
+    max-height: 25em;
     overflow: auto;
 }
 div.code {
