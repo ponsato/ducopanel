@@ -126,13 +126,13 @@ div#ports {
 
 .traces {
     max-height: 25em;
-    overflow: auto;
 }
 div.code {
     white-space: unset;
 }
 pre {
     padding: 0;
+    max-height: 23em;
 }
 pre code {
     font-size: .7em;

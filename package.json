@@ -34,8 +34,10 @@
   "dependencies": {
     "bulma-switch": "^2.0.0",
     "electron-squirrel-startup": "^1.0.0",
+    "fs-extra": "^10.0.0",
     "python-shell": "^3.0.0",
-    "serialport": "^9.0.6"
+    "serialport": "^9.0.6",
+    "upath": "^2.0.1"
   },
   "build": {
     "productName": "Ducopanel",
@@ -73,7 +75,11 @@
   "config": {
     "forge": {
       "packagerConfig": {
-        "icon": "build/icon.ico"
+        "icon": "build/icon.ico",
+        "ignore": [
+          ".idea",
+          ".gitignore"
+        ]
       },
       "makers": [
         {

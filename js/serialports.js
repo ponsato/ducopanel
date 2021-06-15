@@ -1,4 +1,5 @@
 const serialports = require('serialport');
+const upath = require('upath');
 /*const {dialog} = require('electron').remote;*/
 const fs = require('fs');
 let previous_ports;
@@ -42,6 +43,10 @@ setTimeout(function listPorts() {
 function manageMinerConfig () {
     let username = document.getElementById('username').textContent;
     let avrport = [];
+    let dir = './AVRMiner_2.49_resources';
+    if (!fs.existsSync(dir)){
+        fs.mkdirSync(dir);
+    }
     document.querySelectorAll("input[type=checkbox][name=port]:checked").forEach(function(port){
         avrport.push(port.id);
     });
@@ -55,7 +60,7 @@ function manageMinerConfig () {
         "identifier = " + identifier + "\n" +
         "debug = n\n" +
         "\n";
-    fs.writeFile('AVRMiner_2.49_resources/Miner_config.cfg', content, (err) => {
+    fs.writeFile(dir + '/Miner_config.cfg', content, (err) => {
         if(err){
             alert("An error ocurred creating config file "+ err.message);
             let modal_error = document.querySelector('#modal_error');
@@ -88,7 +93,8 @@ window.addEventListener('load', function() {
 
 function runMiner() {
     let traces = document.getElementById('traces');
-    let python = require('child_process').spawn('python', ['miner/AVR_Miner.py', '']);
+    let dirminer = upath.toUnix(upath.join(__dirname, "../miner","AVR_Miner.py"));
+    let python = require('child_process').spawn('python', [dirminer, '']);
     let stop_mining = document.getElementById('stop_mining');
     stop_mining.removeAttribute("disabled");
     stop_mining.onclick = function () {
