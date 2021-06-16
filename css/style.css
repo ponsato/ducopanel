@@ -117,7 +117,8 @@ select {
     color: #0984e3;
 }
 
-div#ports {
+div#ports,
+div#ports_toboot {
     display: flex;
     flex-flow: column wrap;
     justify-content: flex-start;
