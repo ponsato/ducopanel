@@ -99,8 +99,14 @@
                             <ul>
                                 <li class="is-active">
                                     <a>
-                                        <span class="icon is-small"><i class="fas fa-terminal" aria-hidden="false"></i></span>
+                                        <span class="icon is-small"><i class="fas fa-microchip" aria-hidden="false"></i></span>
                                         <span>Mining</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a>
+                                        <span class="icon is-small"><i class="fas fa-terminal" aria-hidden="false"></i></span>
+                                        <span>Bootloader</span>
                                     </a>
                                 </li>
                                 <li>
@@ -223,6 +229,42 @@
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
+                                </div>
+                            </section>
+                            <!--Bootloading-->
+                            <section class="tab-content">
+                                <div class="box">
+                                    <p class="subtitle has-text-weight-light">
+                                        <i class="fa fa-terminal fa-fw" style="color:green;"></i>
+                                        BOOTLOADER
+                                    </p>
+                                    <h6 class="subtitle is-6">Select the model of Arduino board</h6>
+                                    <div class="select is-info">
+                                        <select id="avr_board">
+                                            <option value="uno">UNO</option>
+                                            <option value="nano">NANO</option>
+                                            <option value="mega">MEGA</option>
+                                            <option value="due">DUE</option>
+                                        </select>
+                                    </div>
+                                    <hr>
+                                    <div id="ports_toboot">
+
+                                    </div>
+                                    <br>
+                                    <span class="tag is-info" id="total_ports_toboot"></span>
+                                    <div id="error_boot"></div>
+                                    <hr>
+                                    <div class="buttons">
+                                        <button class="button is-primary" id="start_boot">Start bootloader</button>
+                                    </div>
+                                    <hr>
+                                    <div class="box traces code">
+                                        <pre><code id="traces_boot"></code></pre>
+                                    </div>
+                                    <div class="buttons">
+                                        <button class="button is-primary" id="clear_console_boot">Clear console</button>
                                     </div>
                                 </div>
                             </section>
