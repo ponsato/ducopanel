@@ -33,11 +33,11 @@ async function listSerialPorts() {
             list_boot.innerHTML = '<div>';
             Object.entries(ports).forEach(([key, value]) => {
                 list.innerHTML += '<div class="field">' +
-                    '<input id="'+ value.path + '" type="checkbox" name="port" class="switch" checked="checked">' +
+                    '<input id="'+ value.path + '" value="'+ value.path + '" type="checkbox" name="port" class="switch" checked="checked">' +
                     '<label for="'+ value.path + '">'+ value.path + '</label></div>';
                 list_boot.innerHTML += '<div class="field">' +
-                    '<input id="'+ value.path + '" type="checkbox" name="port_boot" class="switch" checked="checked">' +
-                    '<label for="'+ value.path + '">'+ value.path + '</label></div>';
+                    '<input id="boot_'+ value.path + '" value="'+ value.path + '" type="checkbox" name="port_boot" class="switch" checked="checked">' +
+                    '<label for="boot_'+ value.path + '">'+ value.path + '</label></div>';
             });
             list.innerHTML += '</div>';
             list_boot.innerHTML += '</div>';
@@ -61,12 +61,12 @@ function manageMinerConfig (method) {
     }
     if (method === 'mining') {
         document.querySelectorAll("input[type=checkbox][name=port]:checked").forEach(function(port){
-            avrport.push(port.id);
+            avrport.push(port.value);
         });
     }
     if (method === 'boot') {
         document.querySelectorAll("input[type=checkbox][name=port_boot]:checked").forEach(function(port){
-            avrport.push(port.id);
+            avrport.push(port.value);
         });
     }
     let identifier_string = document.getElementById("identifier").value;
@@ -109,7 +109,9 @@ function manageMinerConfig (method) {
 
 window.addEventListener('load', function() {
     let start_mining = document.getElementById('start_mining');
+    let stop_boot = document.getElementById('stop_boot');
     start_mining.onclick = function () {
+        eventFire(stop_boot, 'click');
         manageMinerConfig('mining');
         start_mining.setAttribute("disabled", true);
     };
@@ -117,43 +119,49 @@ window.addEventListener('load', function() {
     clear_console.onclick = function () {
         document.getElementById('traces').innerHTML = '';
     };
+
+    let start_boot = document.getElementById('start_boot');
+    let stop_mining = document.getElementById('stop_mining');
+    start_boot.onclick = function () {
+        eventFire(stop_mining, 'click');
+        manageMinerConfig('boot');
+        start_boot.setAttribute("disabled", true);
+    }
     let clear_console_boot = document.getElementById('clear_console_boot');
     clear_console_boot.onclick = function () {
         document.getElementById('traces_boot').innerHTML = '';
     };
-
-    let start_boot = document.getElementById('start_boot');
-    start_boot.onclick = function () {
-        manageMinerConfig('boot');
-    }
 });
 
 function runMiner() {
     let traces = document.getElementById('traces');
     let dirminer = upath.toUnix(upath.join(__dirname, "../miner","AVR_Miner.py"));
     let python = require('child_process').spawn('python', [dirminer, '']);
+    let start_mining = document.getElementById('start_mining');
     let stop_mining = document.getElementById('stop_mining');
     stop_mining.removeAttribute("disabled");
     stop_mining.onclick = function () {
         python.kill('SIGINT');
-        document.getElementById('start_mining').removeAttribute("disabled");
+        start_mining.removeAttribute("disabled");
         stop_mining.setAttribute("disabled", true);
     };
+    // TODO detect trace types to display colours
     python.stdout.on('data', function (data) {
         console.log("Python response: ", data.toString('utf8'));
-        //traces.innerHTML += '<code>' + data.toString('utf8') + '</code><br>';
         traces.innerHTML += String.fromCharCode.apply(null, data);
+        traces.scrollTop = traces.scrollHeight;
     });
     python.stderr.on('data', (data) => {
-        //traces.innerHTML += '<code>child process exited with code ' + data + '</code><br>';
-        //traces.innerHTML += '<code>' + data.toString('utf8') + '</code><br>';
+        console.log("Python response: ", data.toString('utf8'));
         traces.innerHTML += String.fromCharCode.apply(null, data);
+        traces.scrollTop = traces.scrollHeight;
     });
 
     python.on('close', (data) => {
-        //traces.innerHTML += '<code>child process exited with code ' + code + '</code><br>';
-        //traces.innerHTML += '<code>' + code.toString('utf8') + '</code><br>';
-        traces.innerHTML += String.fromCharCode.apply(null, data);
+        traces.innerHTML += 'child process exited with code ' + data;
+        traces.scrollTop = traces.scrollHeight;
+        start_mining.removeAttribute("disabled");
+        stop_mining.setAttribute("disabled", true);
     });
 }
 
@@ -161,21 +169,38 @@ function runBootloader() {
     let traces = document.getElementById('traces_boot');
     let dircode = upath.toUnix(upath.join(__dirname, "../miner","upload-sketch.py"));
     let python = require('child_process').spawn('python', [dircode, '']);
+    let stop_boot = document.getElementById('stop_boot');
     let start_boot = document.getElementById('start_boot');
-    //start_boot.setAttribute("disabled", true);
+    stop_boot.removeAttribute("disabled");
+    stop_boot.onclick = function () {
+        python.kill('SIGINT');
+        start_boot.removeAttribute("disabled");
+        stop_boot.setAttribute("disabled", true);
+    };
+    // TODO detect trace types to display colours
     python.stdout.on('data', function (data) {
         console.log("Python response: ", data.toString('utf8'));
-        //traces.innerHTML += '<code>' + data.toString('utf8') + '</code><br>';
         traces.innerHTML += String.fromCharCode.apply(null, data);
+        traces.scrollTop = traces.scrollHeight;
     });
     python.stderr.on('data', (data) => {
-        //traces.innerHTML += '<code>child process exited with code ' + data + '</code><br>';
-        //traces.innerHTML += '<code>' + data.toString('utf8') + '</code><br>';
         traces.innerHTML += String.fromCharCode.apply(null, data);
+        traces.scrollTop = traces.scrollHeight;
     });
     python.on('close', (data) => {
         traces.innerHTML += 'child process exited with code ' + data;
-        //traces.innerHTML += '<code>' + code.toString('utf8') + '</code><br>';
-        // traces.innerHTML += String.fromCharCode.apply(null, data);
+        start_boot.removeAttribute("disabled");
+        stop_boot.setAttribute("disabled", true);
+        traces.scrollTop = traces.scrollHeight;
     });
+}
+
+function eventFire(el, etype){
+    if (el.fireEvent) {
+        el.fireEvent('on' + etype);
+    } else {
+        var evObj = document.createEvent('Events');
+        evObj.initEvent(etype, true, false);
+        el.dispatchEvent(evObj);
+    }
 }

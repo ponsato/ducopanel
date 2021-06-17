@@ -7,7 +7,6 @@ RESOURCES_DIR = 'AVRMiner_' + str(MINER_VER) + '_resources'
 
 config = ConfigParser()
 
-print('Checking for arduino-cli…')
 try:
     subprocess.call(['arduino-cli'], shell=True)
 except Exception as e:
@@ -27,13 +26,13 @@ except Exception as e:
 
 try:
     if board == 'uno':
-        script = 'arduino-cli compile --fqbn arduino:avr:uno ' + BASE_DIR + '/Arduino_Code/Arduino_Code.ino'
+        script = 'arduino-cli compile --fqbn arduino:avr:uno ' + BASE_DIR + '/miner/Arduino_Code/Arduino_Code.ino'
     elif board == 'nano':
-        script = 'arduino-cli compile --fqbn arduino:avr:nano ' + BASE_DIR + '/Arduino_Code/Arduino_Code.ino'
+        script = 'arduino-cli compile --fqbn arduino:avr:nano ' + BASE_DIR + '/miner/Arduino_Code/Arduino_Code.ino'
     elif board == 'mega':
-    	script = 'arduino-cli compile --fqbn arduino:avr:mega ' + BASE_DIR + '/Arduino_Code/Arduino_Code.ino'
+    	script = 'arduino-cli compile --fqbn arduino:avr:mega ' + BASE_DIR + '/miner/Arduino_Code/Arduino_Code.ino'
     elif board == 'due':
-        script = 'arduino-cli compile --fqbn arduino:avr:due ' + BASE_DIR + '/Arduino_Code/Arduino_Code.ino'
+        script = 'arduino-cli compile --fqbn arduino:avr:due ' + BASE_DIR + '/miner/Arduino_Code/Arduino_Code.ino'
     else:
     	print('no board selected')
     subprocess.call(script, shell=True)
@@ -45,16 +44,17 @@ ports = avrport.split(',')
 for port in ports:
     try:
         if board == 'uno':
-            upload = f'arduino-cli upload -p ' + port + ' --fqbn arduino:avr:uno ' + BASE_DIR + '/Arduino_Code/Arduino_Code.ino'
+            upload = f'arduino-cli upload -p ' + port + ' --fqbn arduino:avr:uno ' + BASE_DIR + '/miner/Arduino_Code/Arduino_Code.ino'
         elif board == 'nano':
-            upload = f'arduino-cli upload -p ' + port + ' --fqbn arduino:avr:nano ' + BASE_DIR + '/Arduino_Code/Arduino_Code.ino'
+            upload = f'arduino-cli upload -p ' + port + ' --fqbn arduino:avr:nano ' + BASE_DIR + '/miner/Arduino_Code/Arduino_Code.ino'
         elif board == 'mega':
-            upload = f'arduino-cli upload -p ' + port + ' --fqbn arduino:avr:mega ' + BASE_DIR + '/Arduino_Code/Arduino_Code.ino'
+            upload = f'arduino-cli upload -p ' + port + ' --fqbn arduino:avr:mega ' + BASE_DIR + '/miner/Arduino_Code/Arduino_Code.ino'
         elif board == 'due':
-            upload = f'arduino-cli upload -p ' + port + ' --fqbn arduino:avr:due ' + BASE_DIR + '/Arduino_Due_Code/Arduino_Due_Code.ino'
+            upload = f'arduino-cli upload -p ' + port + ' --fqbn arduino:avr:due ' + BASE_DIR + '/miner/Arduino_Due_Code/Arduino_Due_Code.ino'
         else:
             print('no board selected')
         subprocess.call(upload, shell=True)
+        print(f'If no errors have been displayed, the code has been uploaded correctly to {port}')
     except Exception as e:
         print(f'Error uploading to {port}: {e}')
         sys.exit()

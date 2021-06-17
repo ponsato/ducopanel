@@ -97,13 +97,13 @@
                     <div class="container">
                         <div class="tabs">
                             <ul>
-                                <li class="is-active">
+                                <li class="is-active" id="tab_mining">
                                     <a>
                                         <span class="icon is-small"><i class="fas fa-microchip" aria-hidden="false"></i></span>
                                         <span>Mining</span>
                                     </a>
                                 </li>
-                                <li>
+                                <li id="tab_bootloader">
                                     <a>
                                         <span class="icon is-small"><i class="fas fa-terminal" aria-hidden="false"></i></span>
                                         <span>Bootloader</span>
@@ -239,7 +239,9 @@
                                         <i class="fa fa-terminal fa-fw" style="color:green;"></i>
                                         BOOTLOADER
                                     </p>
-                                    <h6 class="subtitle is-6">Select the model of Arduino board</h6>
+                                    <h6 class="subtitle is-6">Select the Arduino board and its port.
+                                        <br>Note that if any device other than the selected type is connected to the port, the script will fail.
+                                        <br>Watch your boards blink.</h6>
                                     <div class="select is-info">
                                         <select id="avr_board">
                                             <option value="uno">UNO</option>
@@ -258,6 +260,7 @@
                                     <hr>
                                     <div class="buttons">
                                         <button class="button is-primary" id="start_boot">Start bootloader</button>
+                                        <button class="button is-link" id="stop_boot" disabled>Stop bootloader</button>
                                     </div>
                                     <hr>
                                     <div class="box traces code">
