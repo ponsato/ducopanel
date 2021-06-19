@@ -145,20 +145,35 @@ function runMiner() {
         start_mining.removeAttribute("disabled");
         stop_mining.setAttribute("disabled", true);
     };
-    // TODO detect trace types to display colours
     python.stdout.on('data', function (data) {
         console.log("Python response: ", data.toString('utf8'));
-        traces.innerHTML += String.fromCharCode.apply(null, data);
+        if (String.fromCharCode.apply(null, data).indexOf('Error') > -1) {
+            traces.innerHTML += '<span style="color: red">' + String.fromCharCode.apply(null, data) + '</span>';
+        } else if (String.fromCharCode.apply(null, data).indexOf('Accepted') > -1) {
+            traces.innerHTML += '<span style="color: lime">' + String.fromCharCode.apply(null, data) + '</span>'
+        } else if (String.fromCharCode.apply(null, data).indexOf('sys0') > -1) {
+            traces.innerHTML += '<span style="color: yellow">' + String.fromCharCode.apply(null, data) + '</span>'
+        } else {
+            traces.innerHTML += '<span style="color: blue">' + String.fromCharCode.apply(null, data) + '</span>'
+        }
         traces.scrollTop = traces.scrollHeight;
     });
     python.stderr.on('data', (data) => {
         console.log("Python response: ", data.toString('utf8'));
-        traces.innerHTML += String.fromCharCode.apply(null, data);
+        if (String.fromCharCode.apply(null, data).indexOf('Error') > -1) {
+            traces.innerHTML += '<span style="color: red">' + String.fromCharCode.apply(null, data) + '</span>';
+        } else if (String.fromCharCode.apply(null, data).indexOf('Accepted') > -1) {
+            traces.innerHTML += '<span style="color: lime">' + String.fromCharCode.apply(null, data) + '</span>'
+        } else if (String.fromCharCode.apply(null, data).indexOf('sys0') > -1) {
+            traces.innerHTML += '<span style="color: yellow">' + String.fromCharCode.apply(null, data) + '</span>'
+        } else {
+            traces.innerHTML += '<span style="color: blue">' + String.fromCharCode.apply(null, data) + '</span>'
+        }
         traces.scrollTop = traces.scrollHeight;
     });
 
     python.on('close', (data) => {
-        traces.innerHTML += 'child process exited with code ' + data;
+        traces.innerHTML += '<span style="color: white">child process exited with code ' + data + '</span>';
         traces.scrollTop = traces.scrollHeight;
         start_mining.removeAttribute("disabled");
         stop_mining.setAttribute("disabled", true);
@@ -177,18 +192,33 @@ function runBootloader() {
         start_boot.removeAttribute("disabled");
         stop_boot.setAttribute("disabled", true);
     };
-    // TODO detect trace types to display colours
     python.stdout.on('data', function (data) {
         console.log("Python response: ", data.toString('utf8'));
-        traces.innerHTML += String.fromCharCode.apply(null, data);
+        if (String.fromCharCode.apply(null, data).indexOf('Error') > -1) {
+            traces.innerHTML += '<span style="color: red">' + String.fromCharCode.apply(null, data) + '</span>';
+        } else if (String.fromCharCode.apply(null, data).indexOf('correctly') > -1) {
+            traces.innerHTML += '<span style="color: lime">' + String.fromCharCode.apply(null, data) + '</span>'
+        } else if (String.fromCharCode.apply(null, data).indexOf('Global variables use') > -1) {
+            traces.innerHTML += '<span style="color: yellow">' + String.fromCharCode.apply(null, data) + '</span>'
+        } else {
+            traces.innerHTML += '<span style="color: white">' + String.fromCharCode.apply(null, data) + '</span>'
+        }
         traces.scrollTop = traces.scrollHeight;
     });
     python.stderr.on('data', (data) => {
-        traces.innerHTML += String.fromCharCode.apply(null, data);
+        if (String.fromCharCode.apply(null, data).indexOf('Error') > -1) {
+            traces.innerHTML += '<span style="color: red">' + String.fromCharCode.apply(null, data) + '</span>';
+        } else if (String.fromCharCode.apply(null, data).indexOf('Accepted') > -1) {
+            traces.innerHTML += '<span style="color: lime">' + String.fromCharCode.apply(null, data) + '</span>'
+        } else if (String.fromCharCode.apply(null, data).indexOf('sys0') > -1) {
+            traces.innerHTML += '<span style="color: yellow">' + String.fromCharCode.apply(null, data) + '</span>'
+        } else {
+            traces.innerHTML += '<span style="color: blue">' + String.fromCharCode.apply(null, data) + '</span>'
+        }
         traces.scrollTop = traces.scrollHeight;
     });
     python.on('close', (data) => {
-        traces.innerHTML += 'child process exited with code ' + data;
+        traces.innerHTML += '<span style="color: white">child process exited with code ' + data + '</span>';
         start_boot.removeAttribute("disabled");
         stop_boot.setAttribute("disabled", true);
         traces.scrollTop = traces.scrollHeight;

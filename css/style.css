@@ -136,5 +136,8 @@ pre {
     max-height: 23em;
 }
 pre code {
-    font-size: .7em;
+    font-size: .9em;
+}
+.hljs {
+    background: #363636 !important;
 }
