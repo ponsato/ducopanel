@@ -139,7 +139,7 @@ window.addEventListener('load', function() {
                         `<td data-label="Sender" class="subtitle is-size-6">${jsonD[i].sender}</td>` +
                         `<td data-label="Recipient" class="subtitle is-size-6">${jsonD[i].recipient}</td>` +
                         `<td data-label="Hash">` +
-                        `<a class="subtitle is-size-6" style="color:#8e44ad" href="https://explorer.duinocoin.com/?search=${jsonD[i].hash}">` +
+                        `<a class="subtitle is-size-6" target='_blank' style="color:#8e44ad" href="https://explorer.duinocoin.com/?search=${jsonD[i].hash}">` +
                         `${jsonD[i].hash.substr(jsonD[i].hash.length - 5)}</a>` +
                         `<td data-label="Message" class="subtitle is-size-6 has-text-grey">${jsonD[i].memo}</td></tr>`;
                     if (i >= 10) break
@@ -435,7 +435,7 @@ window.addEventListener('load', function() {
                             .innerHTML = "<span class='subtitle is-size-7 mb-2 has-text-success'><b>" +
                             serverMessage[1] +
                             "</b></span> TXID: <a href='https://explorer.duinocoin.com?search=" +
-                            serverMessage[2] + "'>" +
+                            serverMessage[2] + "' target='_blank'>" +
                             serverMessage[2] +
                             "</a>";
                     } else if (serverMessage[0].includes("NO")) {
@@ -595,20 +595,20 @@ window.addEventListener('load', function() {
             let worker_counter = 0;
             $.each(data["Active workers"], function(k, v) {
                 if (v >= 32) {
-                    if (counter % 2 == 0) workers = workers.concat(`<li><a class="block1" href="?search=` + k + `"> ` + k + `</a><span class="tag" style="color:#eb2f06;">` + v + `</span></li>`);
-                    else workers = workers.concat(`<li><a class="block2" href="?search=` + k + `"> ` + k + `</a><span class="tag" style="color:#eb2f06;">` + v + `</span></li>`);
+                    if (counter % 2 == 0) workers = workers.concat(`<li>` + k + `<span class="tag" style="color:#eb2f06;">` + v + `</span></li>`);
+                    else workers = workers.concat(`<li>` + k + `<span class="tag" style="color:#eb2f06;">` + v + `</span></li>`);
                 } else if (v >= 24) {
-                    if (counter % 2 == 0) workers = workers.concat(`<li><a class="block1" href="?search=` + k + `"> ` + k + `</a><span class="tag" style="color:#f0932b;">` + v + `</span></li>`);
-                    else workers = workers.concat(`<li><a class="block2" href="?search=` + k + `"> ` + k + `</a><span class="tag" style="color:#f0932b;">` + v + `</span></li>`);
+                    if (counter % 2 == 0) workers = workers.concat(`<li>` + k + `<span class="tag" style="color:#f0932b;">` + v + `</span></li>`);
+                    else workers = workers.concat(`<li>` + k + `<span class="tag" style="color:#f0932b;">` + v + `</span></li>`);
                 } else if (v >= 16) {
-                    if (counter % 2 == 0) workers = workers.concat(`<li><a class="block1" href="?search=` + k + `"> ` + k + `</a><span class="tag" style="color:#feca57;">` + v + `</span></li>`);
-                    else workers = workers.concat(`<li><a class="block2" href="?search=` + k + `"> ` + k + `</a><span class="tag" style="color:#feca57;">` + v + `</span></li>`);
+                    if (counter % 2 == 0) workers = workers.concat(`<li>` + k + `<span class="tag" style="color:#feca57;">` + v + `</span></li>`);
+                    else workers = workers.concat(`<li>` + k + `<span class="tag" style="color:#feca57;">` + v + `</span></li>`);
                 } else if (v >= 8) {
-                    if (counter % 2 == 0) workers = workers.concat(`<li><a class="block1" href="?search=` + k + `"> ` + k + `</a><span class="tag" style="color:#2d3436;">` + v + `</span></li>`);
-                    else workers = workers.concat(`<li><a class="block2" href="?search=` + k + `"> ` + k + `</a><span class="tag" style="color:#2d3436;">` + v + `</span></li>`);
+                    if (counter % 2 == 0) workers = workers.concat(`<li>` + k + `<span class="tag" style="color:#2d3436;">` + v + `</span></li>`);
+                    else workers = workers.concat(`<li>` + k + `<span class="tag" style="color:#2d3436;">` + v + `</span></li>`);
                 } else {
-                    if (counter % 2 == 0) workers = workers.concat(`<li><a class="block1" href="?search=` + k + `"> ` + k + `</a><span class="tag" style="color:#10ac84;">` + v + `</span></li>`);
-                    else workers = workers.concat(`<li><a class="block2" href="?search=` + k + `"> ` + k + `</a><span class="tag" style="color:#10ac84;">` + v + `</span></li>`);
+                    if (counter % 2 == 0) workers = workers.concat(`<li>` + k + `<span class="tag" style="color:#10ac84;">` + v + `</span></li>`);
+                    else workers = workers.concat(`<li>` + k + `<span class="tag" style="color:#10ac84;">` + v + `</span></li>`);
                 }
                 worker_counter += v;
                 counter++;
@@ -622,22 +622,22 @@ window.addEventListener('load', function() {
     function EXPLORERupdate() {
         $.getJSON('https://server.duinocoin.com/transactions', function(data) {
             document.getElementById("transactionstext3").innerHTML = "<strong>Last transactions:</strong><br>" +
-                "<a class='transaction1 monospace' href='?search=" + data.result[data.result.length - 1].hash + "'>" + data.result[data.result.length - 1].hash.substring(0, 20) + "</a><br>" +
-                "<a class='transaction2 monospace' href='?search=" + data.result[data.result.length - 2].hash + "'>" + data.result[data.result.length - 2].hash.substring(0, 20) + "</a><br>" +
-                "<a class='transaction3 monospace' href='?search=" + data.result[data.result.length - 3].hash + "'>" + data.result[data.result.length - 3].hash.substring(0, 20) + "</a><br>" +
-                "<a class='transaction4 monospace' href='?search=" + data.result[data.result.length - 4].hash + "'>" + data.result[data.result.length - 4].hash.substring(0, 20) + "</a><br>" +
-                "<a class='transaction5 monospace' href='?search=" + data.result[data.result.length - 5].hash + "'>" + data.result[data.result.length - 5].hash.substring(0, 20) + "</a>";
+                data.result[data.result.length - 1].hash.substring(0, 20) + "<br>" +
+                data.result[data.result.length - 2].hash.substring(0, 20) + "<br>" +
+                data.result[data.result.length - 3].hash.substring(0, 20) + "<br>" +
+                data.result[data.result.length - 4].hash.substring(0, 20) + "<br>" +
+                data.result[data.result.length - 5].hash.substring(0, 20);
         })
         $.getJSON('https://server.duinocoin.com/foundBlocks.json', function(data) {
             let last = [];
             for (hash in data) last.push(hash);
 
             document.getElementById("transactionstext4").innerHTML = "<strong>Last blocks:</strong><br>" +
-                "<a class='block1 monospace' href='?search=" + last[last.length - 1] + "'>" + last[last.length - 1].substring(0, 20) + "</a><br>" +
-                "<a class='block2 monospace' href='?search=" + last[last.length - 2] + "'>" + last[last.length - 2].substring(0, 20) + "</a><br>" +
-                "<a class='block3 monospace' href='?search=" + last[last.length - 3] + "'>" + last[last.length - 3].substring(0, 20) + "</a><br>" +
-                "<a class='block4 monospace' href='?search=" + last[last.length - 4] + "'>" + last[last.length - 4].substring(0, 20) + "</a><br>" +
-                "<a class='block5 monospace' href='?search=" + last[last.length - 5] + "'>" + last[last.length - 5].substring(0, 20) + "</a>";
+                last[last.length - 1].substring(0, 20) + "<br>" +
+                last[last.length - 2].substring(0, 20) + "<br>" +
+                last[last.length - 3].substring(0, 20) + "<br>" +
+                last[last.length - 4].substring(0, 20) + "<br>" +
+                last[last.length - 5].substring(0, 20);
         })
     }
 

@@ -17,17 +17,20 @@ function createWindow () {
         },
 
     })
+    mainWindow.webContents.session.clearStorageData();
+    mainWindow.webContents.session.clearCache();
     mainWindow.maximize();
     mainWindow.loadFile('index.html');
     mainWindow.show();
-    mainWindow.webContents.session.clearStorageData();
+    mainWindow.webContents.setWindowOpenHandler(({ url }) => {
+        return { action: 'allow' }
+    });
+    mainWindow.webContents.on("devtools-opened", () => { mainWindow.webContents.closeDevTools(); });
 }
 
-app.allowRendererProcessReuse=false
-
 app.whenReady().then(() => {
+    app.allowRendererProcessReuse = false
     createWindow();
-
 })
 
 
