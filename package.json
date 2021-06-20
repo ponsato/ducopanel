@@ -65,6 +65,7 @@
     },
     "directories": {
       "buildResources": "build",
+      "app": "build",
       "output": "release"
     },
     "files": [
@@ -73,36 +74,6 @@
     ]
   },
   "config": {
-    "forge": {
-      "packagerConfig": {
-        "icon": "build/icon.ico",
-        "ignore": [
-          ".idea",
-          ".gitignore"
-        ]
-      },
-      "makers": [
-        {
-          "name": "@electron-forge/maker-squirrel",
-          "config": {
-            "name": "ducopanel"
-          }
-        },
-        {
-          "name": "@electron-forge/maker-zip",
-          "platforms": [
-            "darwin"
-          ]
-        },
-        {
-          "name": "@electron-forge/maker-deb",
-          "config": {}
-        },
-        {
-          "name": "@electron-forge/maker-rpm",
-          "config": {}
-        }
-      ]
-    }
+    "forge": "./forge.config.js"
   }
 }

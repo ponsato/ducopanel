@@ -1,5 +1,6 @@
 const serialports = require('serialport');
 const upath = require('upath');
+const path = require('path');
 /*const {dialog} = require('electron').remote;*/
 const fs = require('fs');
 let previous_ports;
@@ -187,7 +188,6 @@ function detectThreads() {
         input_threads.setAttribute('placeholder', '1 - ' + data.toString('utf8'));
         python.kill('SIGINT');
     });
-
 }
 
 function runMiner() {
