@@ -54,10 +54,19 @@ setTimeout(function listPorts() {
 
 function manageMinerConfig (method) {
     let username = document.getElementById('username').textContent;
+    let content = '';
+    let dir = '';
     let avrport = [];
-    let dir = './AVRMiner_2.49_resources';
-    if (!fs.existsSync(dir)){
-        fs.mkdirSync(dir);
+    if (method !== 'pc') {
+        dir = './AVRMiner_2.49_resources';
+        if (!fs.existsSync(dir)){
+            fs.mkdirSync(dir);
+        }
+    } else {
+        dir = './PCMiner_2.49_resources';
+        if (!fs.existsSync(dir)){
+            fs.mkdirSync(dir);
+        }
     }
     if (method === 'mining') {
         document.querySelectorAll("input[type=checkbox][name=port]:checked").forEach(function(port){
@@ -69,21 +78,42 @@ function manageMinerConfig (method) {
             avrport.push(port.value);
         });
     }
-    let identifier_string = document.getElementById("identifier").value;
-    let identifier = identifier_string !== '' ? identifier_string : 'none';
-    let avrboard = '';
-    if (method === 'boot') {
-        avrboard = "avrboard = " + document.getElementById('avr_board').value;
+    if (method !== 'pc') {
+        let identifier_string = document.getElementById("identifier").value;
+        let identifier = identifier_string !== '' ? identifier_string : 'none';
+        let avrboard = '';
+        if (method === 'boot') {
+            avrboard = "avrboard = " + document.getElementById('avr_board').value;
+        }
+        content = "[arduminer]\n" +
+            "username = " + username + "\n" +
+            "avrport = " + avrport.toString() + "\n" +
+            "donate = 0\n" +
+            "language = english\n" +
+            "identifier = " + identifier + "\n" +
+            "debug = n\n" +
+            avrboard +
+            "\n";
+    } else {
+        let identifier_string = document.getElementById("identifier_pcminering").value;
+        let identifier = identifier_string !== '' ? identifier_string : 'none';
+        let efficiency = document.getElementById('mining_intensity').value;
+        let threads = document.getElementById('mining_threads').value;
+        let algorithm = document.getElementById('algorithm').value;
+        content = "[Duino-Coin-PC-Miner]\n" +
+            "username = " + username + "\n" +
+            "efficiency = " + efficiency + "\n" +
+            "threads = " + threads + "\n" + // TODO
+            "requested_diff = NET\n" +
+            "donate = 0\n" +
+            "identifier = " + identifier + "\n" +
+            "algorithm = " + algorithm + "\n" +
+            "language = english\n" +
+            "debug = n\n" +
+            "soc_timeout = 30\n" + // TODO
+            "discord_presence = y\n" + // TODO
+            "\n";
     }
-    let content = "[arduminer]\n" +
-        "username = " + username + "\n" +
-        "avrport = " + avrport.toString() + "\n" +
-        "donate = 0\n" +
-        "language = english\n" +
-        "identifier = " + identifier + "\n" +
-        "debug = n\n" +
-        avrboard +
-        "\n";
     fs.writeFile(dir + '/Miner_config.cfg', content, (err) => {
         if(err){
             alert("An error ocurred creating config file "+ err.message);
@@ -102,6 +132,9 @@ function manageMinerConfig (method) {
             }
             if (method === 'boot') {
                 runBootloader();
+            }
+            if (method === 'pc') {
+                runPcMiner();
             }
         }
     });
@@ -131,7 +164,31 @@ window.addEventListener('load', function() {
     clear_console_boot.onclick = function () {
         document.getElementById('traces_boot').innerHTML = '';
     };
+
+    let start_pcminering = document.getElementById('start_pcminering');
+    start_pcminering.onclick = function () {
+        manageMinerConfig('pc');
+        start_pcminering.setAttribute("disabled", true);
+    }
+    let clear_console_pcminering = document.getElementById('clear_console_pcminering');
+    clear_console_pcminering.onclick = function () {
+        document.getElementById('traces_pcminering').innerHTML = '';
+    };
+    detectThreads();
 });
+
+function detectThreads() {
+    let input_threads = document.getElementById('mining_threads');
+    let dirthreads = upath.toUnix(upath.join(__dirname, "../miner","detectThreads.py"));
+    let python = require('child_process').spawn('python', [dirthreads, '']);
+    python.stdout.on('data', function (data) {
+        console.log("Num threats: ", data.toString('utf8'));
+        input_threads.setAttribute('max', data.toString('utf8'));
+        input_threads.setAttribute('placeholder', '1 - ' + data.toString('utf8'));
+        python.kill('SIGINT');
+    });
+
+}
 
 function runMiner() {
     let traces = document.getElementById('traces');
@@ -222,6 +279,52 @@ function runBootloader() {
         start_boot.removeAttribute("disabled");
         stop_boot.setAttribute("disabled", true);
         traces.scrollTop = traces.scrollHeight;
+    });
+}
+
+function runPcMiner() {
+    let traces = document.getElementById('traces_pcminering');
+    let dirminer = upath.toUnix(upath.join(__dirname, "../miner","PC_Miner.py"));
+    let python = require('child_process').spawn('python', [dirminer, '']);
+    let start_pcminering = document.getElementById('start_pcminering');
+    let stop_pcminering = document.getElementById('stop_pcminering');
+    stop_pcminering.removeAttribute("disabled");
+    stop_pcminering.onclick = function () {
+        python.kill('SIGINT');
+        start_pcminering.removeAttribute("disabled");
+        stop_pcminering.setAttribute("disabled", true);
+    };
+    python.stdout.on('data', function (data) {
+        console.log("Python response: ", data.toString('utf8'));
+        if (String.fromCharCode.apply(null, data).indexOf('Error') > -1) {
+            traces.innerHTML += '<span style="color: red">' + String.fromCharCode.apply(null, data) + '</span>';
+        } else if (String.fromCharCode.apply(null, data).indexOf('Accepted') > -1) {
+            traces.innerHTML += '<span style="color: lime">' + String.fromCharCode.apply(null, data) + '</span>'
+        } else if (String.fromCharCode.apply(null, data).indexOf('sys0') > -1) {
+            traces.innerHTML += '<span style="color: yellow">' + String.fromCharCode.apply(null, data) + '</span>'
+        } else {
+            traces.innerHTML += '<span style="color: blue">' + String.fromCharCode.apply(null, data) + '</span>'
+        }
+        traces.scrollTop = traces.scrollHeight;
+    });
+    python.stderr.on('data', (data) => {
+        console.log("Python response: ", data.toString('utf8'));
+        if (String.fromCharCode.apply(null, data).indexOf('Error') > -1) {
+            traces.innerHTML += '<span style="color: red">' + String.fromCharCode.apply(null, data) + '</span>';
+        } else if (String.fromCharCode.apply(null, data).indexOf('Accepted') > -1) {
+            traces.innerHTML += '<span style="color: lime">' + String.fromCharCode.apply(null, data) + '</span>'
+        } else if (String.fromCharCode.apply(null, data).indexOf('sys0') > -1) {
+            traces.innerHTML += '<span style="color: yellow">' + String.fromCharCode.apply(null, data) + '</span>'
+        } else {
+            traces.innerHTML += '<span style="color: blue">' + String.fromCharCode.apply(null, data) + '</span>'
+        }
+        traces.scrollTop = traces.scrollHeight;
+    });
+    python.on('close', (data) => {
+        traces.innerHTML += '<span style="color: white">child process exited with code ' + data + '</span>';
+        traces.scrollTop = traces.scrollHeight;
+        start_pcminering.removeAttribute("disabled");
+        stop_pcminering.setAttribute("disabled", true);
     });
 }
 
