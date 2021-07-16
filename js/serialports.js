@@ -1,6 +1,7 @@
 const serialports = require('serialport');
 const upath = require('upath');
 const path = require('path');
+const version = "2.56";
 /*const {dialog} = require('electron').remote;*/
 const fs = require('fs');
 let previous_ports;
@@ -59,12 +60,12 @@ function manageMinerConfig (method) {
     let dir = '';
     let avrport = [];
     if (method !== 'pc') {
-        dir = './AVRMiner_2.49_resources';
+        dir = './AVRMiner_' + version + '_resources';
         if (!fs.existsSync(dir)){
             fs.mkdirSync(dir);
         }
     } else {
-        dir = './PCMiner_2.49_resources';
+        dir = './PCMiner_' + version + '_resources';
         if (!fs.existsSync(dir)){
             fs.mkdirSync(dir);
         }
@@ -86,13 +87,17 @@ function manageMinerConfig (method) {
         if (method === 'boot') {
             avrboard = "avrboard = " + document.getElementById('avr_board').value;
         }
-        content = "[arduminer]\n" +
+        content = "[Duino-Coin-AVR-Miner]\n" +
             "username = " + username + "\n" +
             "avrport = " + avrport.toString() + "\n" +
             "donate = 0\n" +
             "language = english\n" +
             "identifier = " + identifier + "\n" +
             "debug = n\n" +
+            "soc_timeout = 45\n" +
+            "avr_timeout = 3.1\n" +
+            "shuffle_ports = y\n" +
+            "discord_presence = y\n" +
             avrboard +
             "\n";
     } else {
@@ -105,13 +110,14 @@ function manageMinerConfig (method) {
             "username = " + username + "\n" +
             "efficiency = " + efficiency + "\n" +
             "threads = " + threads + "\n" + // TODO
-            "requested_diff = NET\n" +
+            "requested_diff = MEDIUM\n" +
             "donate = 0\n" +
             "identifier = " + identifier + "\n" +
             "algorithm = " + algorithm + "\n" +
             "language = english\n" +
             "debug = n\n" +
             "soc_timeout = 30\n" + // TODO
+            "periodic_report = 60\n" + // TODO
             "discord_presence = y\n" + // TODO
             "\n";
     }
@@ -184,9 +190,12 @@ function detectThreads() {
     let python = require('child_process').spawn('python', [dirthreads, '']);
     python.stdout.on('data', function (data) {
         console.log("Num threats: ", data.toString('utf8'));
-        input_threads.setAttribute('max', data.toString('utf8'));
-        input_threads.setAttribute('placeholder', '1 - ' + data.toString('utf8'));
+        input_threads.setAttribute('max', data.toString('utf8').replace(/(\r\n|\n|\r)/gm, ""));
+        input_threads.setAttribute('placeholder', '1 - ' + data.toString('utf8').replace(/(\r\n|\n|\r)/gm, ""));
         python.kill('SIGINT');
+    });
+    document.getElementById('mining_threads').addEventListener('keypress', function (evt) {
+        evt.preventDefault();
     });
 }
 

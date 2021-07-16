@@ -1,10 +1,124 @@
+.card-orange {
+    top: 0.15em;
+    position: relative;
+    padding: 0.3em;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+    border-radius: 0.5em;
+    background: linear-gradient(135deg, #f2d50f 0%, #da0641 100%);
+    height: 1.75em !important;
+    width: 1.75em !important;
+    color: white;
+}
+
+.card-purple {
+    top: 0.15em;
+    position: relative;
+    padding: 0.3em;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+    border-radius: 0.5em;
+    background: linear-gradient(135deg, #C56CD6 0%, #3425AF 100%);
+    height: 1.75em !important;
+    width: 1.75em !important;
+    color: white;
+}
+
+.card-turquoise {
+    top: 0.15em;
+    position: relative;
+    padding: 0.3em;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+    border-radius: 0.5em;
+    background: linear-gradient(135deg, #42e695 0%, #3bb2b8 100%);
+    height: 1.75em !important;
+    width: 1.75em !important;
+    color: white;
+}
+
+.card-red {
+    top: 0.15em;
+    position: relative;
+    padding: 0.3em;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+    border-radius: 0.5em;
+    background: linear-gradient(135deg, #F5515F 0%, #A1051D 100%);
+    height: 1.75em !important;
+    width: 1.75em !important;
+    color: white;
+}
+
+.card-green {
+    top: 0.15em;
+    position: relative;
+    padding: 0.3em;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+    border-radius: 0.5em;
+    background: linear-gradient(135deg, #b1ea4d 0%, #459522 100%);
+    height: 1.75em !important;
+    width: 1.75em !important;
+    color: white;
+}
+
+.card-pink {
+    top: 0.15em;
+    position: relative;
+    padding: 0.3em;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+    border-radius: 0.5em;
+    background: linear-gradient(135deg, #f54848 0%, #ef95ff 100%);
+    height: 1.75em !important;
+    width: 1.75em !important;
+    color: white;
+}
+
+.card-blue {
+    top: 0.15em;
+    position: relative;
+    padding: 0.3em;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+    border-radius: 0.5em;
+    background: linear-gradient(135deg, #13f1fc 0%, #0470dc 100%);
+    height: 1.75em !important;
+    width: 1.75em !important;
+    color: white;
+}
+
+.card-pomegrante {
+    top: 0.15em;
+    position: relative;
+    padding: 0.3em;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+    border-radius: 0.5em;
+    background: linear-gradient(135deg, #F36265 0%, #961276 100%);
+    height: 1.75em !important;
+    width: 1.75em !important;
+    color: white;
+}
+
 .is-primary {
     /* Override Bulmas primary color to Duco-Colored gradient*/
     background: linear-gradient(145deg, #fd746c, #ff9068) !important;
 }
+
 .is-duco {
-    background: #fdcb6e !important;
+    background: linear-gradient(160deg, #fccf30 0%, #f55555 100%);
+    border: none;
+    color: white !important;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
 }
+
+.fa-check,
+.fa-circle-notch,
+.fa-sign-in-alt {
+    filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.25));
+}
+
+.is-duco-alt {
+    background: linear-gradient(160deg, #fe9c88 0%, #f5d961 100%);
+    border: none;
+    color: white !important;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+}
+
 .iframe-container {
     position: relative;
     width: 100%;
@@ -20,7 +134,11 @@
     left: 0;
     right: 0;
     bottom: 0;
-    border: 1px solid red;
+}
+
+.monospace {
+    /* Monospace font for TXIDs */
+    font-family: 'JetBrains Mono', monospace !important;
 }
 
 body {
@@ -33,51 +151,129 @@ body {
     padding: 0 !important;
     background-repeat: no-repeat !important;
 }
+
 .balanceT {
     max-width: 80vw !important;
     max-height: 15em !important;
     overflow-x: scroll !important;
     overflow-y: scroll !important;
 }
+
 .balanceT table {
     margin: 0;
     padding: 0;
-    border: 1px solid var(--light-bg);
     border-collapse: collapse;
 }
-.balanceTC .caption {
-    font-size: 1.5em !important;
-    margin: .5em 0 .5em;
-}
-.balanceT table tr {
-    background-color: var(--hover) !important;
-    border: 1px solid var(--light-bg) !important;
-    padding: .35em !important;
-}
+
 .balanceT table th,
 .balanceT table td {
     padding: .5em !important;
     text-align: left !important;
 }
+
 .balanceT table th {
-    letter-spacing: .1em !important;
     text-transform: uppercase !important;
+    width: 5em;
 }
-::-webkit-scrollbar {
-    width: 5px;
-    height: 5px;
+
+@media (prefers-color-scheme: light) {
+    ::-webkit-scrollbar {
+        width: 5px;
+        height: 5px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: #888;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: #555;
+    }
 }
-::-webkit-scrollbar-track {
-    background: #f1f1f1;
+
+@media (prefers-color-scheme: dark) {
+    ::-webkit-scrollbar {
+        width: 5px;
+        height: 5px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: #636e72;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: #2d3436;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: #555;
+    }
 }
-::-webkit-scrollbar-thumb {
-    background: #888;
-}
-::-webkit-scrollbar-thumb:hover {
-    background: #555;
-}
+
 select {
     background: inherit !important;
+}
+
+#modal_error {
+    animation: fadeIn 1s;
+    -webkit-animation: fadeIn 1s;
+    -moz-animation: fadeIn 1s;
+    -o-animation: fadeIn 1s;
+    -ms-animation: fadeIn 1s;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@-moz-keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@-webkit-keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@-o-keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@-ms-keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
 }
 
 .tab-content {
@@ -105,15 +301,22 @@ select {
     font-family: 'JetBrains Mono', monospace !important;
 }
 #workers {
-    /* Splitted worker columns */
-    columns: 3;
-    -webkit-columns: 3;
-    -moz-columns: 3;
+    max-height: 50em;
+    overflow: auto;
 }
-.block1, .block3, .block5, .transaction2, .transaction4 {
+.block1,
+.block3,
+.block5,
+.transaction2,
+.transaction4 {
     color: #5f27cd;
 }
-.block2, .block4, .transaction1, .transacion3, .transaction5 {
+
+.block2,
+.block4,
+.transaction1,
+.transacion3,
+.transaction5 {
     color: #0984e3;
 }
 

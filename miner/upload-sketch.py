@@ -2,7 +2,7 @@ import sys
 import subprocess
 from configparser import ConfigParser
 
-MINER_VER = '2.49'  # Version number
+MINER_VER = '2.56'  # Version number
 RESOURCES_DIR = 'AVRMiner_' + str(MINER_VER) + '_resources'
 
 config = ConfigParser()
@@ -16,8 +16,8 @@ except Exception as e:
 
 try:
     config.read(RESOURCES_DIR + '/Miner_config.cfg')
-    avrport = config['arduminer']['avrport']
-    board = config['arduminer']['avrboard']
+    avrport = config['Duino-Coin-AVR-Miner']['avrport']
+    board = config['Duino-Coin-AVR-Miner']['avrboard']
     import os
     BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 except Exception as e:

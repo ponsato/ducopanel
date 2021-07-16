@@ -4,12 +4,12 @@
 -->
 
 <a href="https://duinocoin.com">
-  <img src="https://github.com/revoxhere/duino-coin/blob/master/Resources/duco_200x200.png?raw=true" align="right" />
+  <img src="https://github.com/revoxhere/duino-coin/blob/master/Resources/duco.png?raw=true" width="215px" align="right" />
 </a>
 
 <h1>
   <a href="https://duinocoin.com">
-    <img src="https://github.com/revoxhere/duino-coin/blob/master/Resources/ducobanner.png?raw=true" height="74px" />
+    <img src="https://github.com/revoxhere/duino-coin/blob/master/Resources/ducobanner.png?raw=true" width="430px" />
   </a>
   <br>
   <a href="https://github.com/revoxhere/duino-coin/blob/master/README.md">
@@ -22,6 +22,10 @@
     <img src="https://img.shields.io/badge/Polski-ED4C67.svg?style=for-the-badge" /></a>
   <a href="https://github.com/revoxhere/duino-coin/blob/master/Resources/README_TRANSLATIONS/README_ru_RU.md">
     <img src="https://img.shields.io/badge/русский-be2edd.svg?style=for-the-badge" /></a>
+  <a href="https://github.com/revoxhere/duino-coin/blob/master/Resources/README_TRANSLATIONS/README_tr_TR.md">
+    <img src="https://img.shields.io/badge/Türk-5f27cd.svg?style=for-the-badge" /></a>
+  <a href="https://github.com/revoxhere/duino-coin/blob/master/Resources/README_TRANSLATIONS/README_th_TH.md">
+    <img src="https://img.shields.io/badge/-%E0%B9%84%E0%B8%97%E0%B8%A2-blue.svg?style=for-the-badge" /></a>
 </h1>
 <a href="https://wallet.duinocoin.com">
   <img src="https://img.shields.io/badge/Online Wallet-8e44ad.svg?style=for-the-badge&logo=Web" /></a>
@@ -33,8 +37,8 @@
   <img src="https://img.shields.io/badge/Video-Watch-e74c3c.svg?style=for-the-badge&logo=Youtube" /></a>
 <a href="https://discord.gg/kvBkccy">
   <img src="https://img.shields.io/discord/677615191793467402.svg?color=5539cc&label=Discord&logo=Discord&style=for-the-badge" /></a>
-<a href="https://github.com/revoxhere/duino-coin/releases/tag/2.4.5">
-  <img src="https://img.shields.io/badge/release-2.4.5-ff4112.svg?style=for-the-badge" /></a>
+<a href="https://github.com/revoxhere/duino-coin/releases/tag/2.5.5">
+  <img src="https://img.shields.io/badge/release-2.5.5-ff4112.svg?style=for-the-badge" /></a>
 <br>
 
 <h3>
@@ -71,6 +75,7 @@ python3 -m pip install -r requirements.txt # Install pip dependencies
 
 After doing this, you are good to go with launching the software (e.g. `python3 PC_Miner.py`).
 
+
 #### Windows
 
 1. Download and install [Python 3](https://www.python.org/downloads/) (make sure you add Python and Pip to your PATH)
@@ -80,8 +85,6 @@ After doing this, you are good to go with launching the software (e.g. `python3 
 
 After doing this, you are good to go with launching the software (just double click on desired `.py` files or type `py PC_Miner.py` in the command prompt).
 
-
-
 ## Community-made softwares
 
 <details>
@@ -90,6 +93,8 @@ After doing this, you are good to go with launching the software (just double cl
   </summary>
 
   ### Other miners known to work with Duino-Coin:
+  *   [Duino-JS](https://github.com/Hoiboy19/Duino-JS) - a JavaScript miner which you can easily implement in your site by Hoiboy19
+  *   [Mineuino](https://github.com/VatsaDev/Mineuino) - website monetizer by VatsaDev
   *   [hauchel's duco-related stuff repository](https://github.com/hauchel/duco/) - Collection of various codes for mining DUCO on other microcontrollers
   *   [duino-coin-php-miner](https://github.com/ricardofiorani/duino-coin-php-miner) Dockerized Miner in PHP by ricardofiorani
   *   [duino-coin-kodi](https://github.com/SandUhrGucker/duino-coin-kodi) - Mining addon for Kodi Media Center by SandUhrGucker
@@ -111,6 +116,9 @@ After doing this, you are good to go with launching the software (just double cl
       *   [Teensy 4.1 code for Arduino IDE](https://github.com/revoxhere/duino-coin/blob/master/Unofficial%20miners/Teensy_code/Teensy_code.ino) by joaquinbvw
 
   ### Other tools:
+  *   [Duino Coin Status Monitor](https://github.com/TSltd/duino_coin) for 128x64 SSD1306 OLED and ESP8266 by TSltd
+  *   [ducopanel](https://github.com/ponsato/ducopanel) - a GUI app for controling your Duino-Coin miners by ponsato
+  *   [Duino AVR Monitor](https://www.microsoft.com/store/apps/9NJ7HPFSR9V5) - GUI Windows App for monitoring AVR devices mining DUCO by niknak
   *   [Duino-Coin Arduino library](https://github.com/ricaun/arduino-DuinoCoin) by ricaun
   *   [DuinoCoinI2C](https://github.com/ricaun/DuinoCoinI2C) - Use ESP8266 as a master for Arduinos by ricaun
   *   [Duino-Coin Mining Dashboard](https://lulaschkas.github.io/duco-mining-dashboard/) and troubleshooting helper by Lulaschkas
@@ -186,11 +194,11 @@ Some third-party included files may have different licenses - please check their
 
 ## Terms of service
 1. Duino-Coins ("DUCOs") are earned by miners with a process called mining.<br/>
-2. Mining is described as using DUCO-S1 algorithm (explained in the <a href="https://github.com/revoxhere/duino-coin/blob/gh-pages/assets/whitepaper.pdf">Duino-Coin Whitepaper</a>), in which finding a correct result to a mathematical problem gives the miner a reward.<br/>
+2. Mining is described as using DUCO-S1 (and XXHASH) algorithm (as explained in the <a href="https://github.com/revoxhere/duino-coin/blob/gh-pages/assets/whitepaper.pdf">Duino-Coin Whitepaper</a>), in which finding a correct result to a mathematical problem gives the miner a reward.<br/>
 3. Mining can be officially done using CPUs, AVR boards (e.g. Arduino boards), Single-board computers (e.g. Raspberry Pi boards), ESP32/8266 boards with the usage of official miners (other officially allowed miners are described in the upper part of README).<br/>
 4. Mining on GPUs, FPGAs and other high-efficiency hardware is allowed, but using only the `EXTREME` mining difficulty.<br/>
-5. Any users using miners on difficulty not suited for their hardware (see the <a href="https://github.com/revoxhere/duino-coin/tree/useful-tools#socket-api">difficulty list</a>) will be automatically throttled and/or blocked.<br/>
-6. Any users spotted using inappropriate and/or overpowered hardware will be banned manually or automatically from the network without prior notice.<br/>
+5. Any users using miners on difficulty not suited for their hardware (see the <a href="https://github.com/revoxhere/duino-coin/tree/useful-tools#socket-api">difficulty list</a>) will be automatically throttled by being moved to correct difficulty tier.<br/>
+6. Any user that keeps trying to use lower difficulty than it's suited for may get temporarily blocked.<br/>
 7. Banning involves blocking the user from accessing his coins along with the removal of an account.<br/>
 8. Only coins earned legally are eligible for the exchange.<br/>
 9. Users spotted using a VPN (or similar) with malicious intents (e.g. bypassing limits) may be banned without prior notice.<br/>
@@ -208,32 +216,25 @@ Some third-party included files may have different licenses - please check their
 3. Balances, transactions and mining-related data is publicly available in the public <a href="https://github.com/revoxhere/duino-coin/tree/useful-tools#http-json-api">JSON APIs</a>.<br/>
 4. The privacy policy may be changed in the future with a prior notification.
 
-## Developers
+## Active project maintainers
 
-*   **Developers:**
-    *   [@revoxhere](https://github.com/revoxhere/) (Founder/lead dev) - robik123.345@gmail.com
-    *   [@Bilaboz](https://github.com/bilaboz/) (Lead dev)
-    *   [@connorhess](https://github.com/connorhess) (Lead dev)
-    *   [@JoyBed](https://github.com/JoyBed) (Lead dev)
-    *   [@HGEcode](https://github.com/HGEcode) (Dev)
-    *   [@LDarki](https://github.com/LDarki) (Web dev)
-    *   [@travelmode](https://github.com/colonelwatch) (Dev)
-    *   [@ygboucherk](https://github.com/ygboucherk) ([wDUCO](https://github.com/ygboucherk/wrapped-duino-coin-v2) dev)
-    *   [@Tech1k](https://github.com/Tech1k/) - kristian@beyondcoin.io (Webmaster)
-    *   [@EinWildesPanda](https://github.com/EinWildesPanda) (Dev)
+*   [@revoxhere](https://github.com/revoxhere/) - robik123.345@gmail.com (Lead Python dev, project founder)
+*   [@Bilaboz](https://github.com/bilaboz/) (Lead NodeJS dev)
+*   [@connorhess](https://github.com/connorhess) (Lead Python dev, Node-S owner)
+*   [@JoyBed](https://github.com/JoyBed) (Lead AVR dev)
+##
+*   [@EinWildesPanda](https://github.com/EinWildesPanda) (Dev)
+*   [@ygboucherk](https://github.com/ygboucherk) ([wDUCO](https://github.com/ygboucherk/wrapped-duino-coin-v2) dev)
+*   [@Tech1k](https://github.com/Tech1k/) - kristian@beyondcoin.io (Webmaster)
+*   [@DoctorEenot](https://github.com/DoctorEenot) (Dev)
+##
+*   [@HGEcode](https://github.com/HGEcode) (Python dev)
+*   [@LDarki](https://github.com/LDarki) (Web dev)
+*   [@Lulaschkas](https://github.com/Lulaschkas) (Dev)
+*   [@Pripun](https://github.com/Pripun) (Mobile apps dev)
+*   [@joaquinbvw](https://github.com/joaquinbvw) (AVR dev)
 
-*   **Contributors:**
-    *   [@5Q](https://github.com/its5Q)
-    *   [@kyngs](https://github.com/kyngs)
-    *   [@httsmvkcom](https://github.com/httsmvkcom)
-    *   [@Nosh-Ware](https://github.com/Nosh-Ware)
-    *   [@BastelPichi](https://github.com/BastelPichi)
-    *   [@suifengtec](https://github.com/suifengtec)
-    *   Thanks to [@Furim](https://github.com/Furim) for help in the early development stage
-    *   Thanks to [@ATAR4XY](https://www.youtube.com/channel/UC-gf5ejhDuAc_LMxvugPXbg) for designing early logos
-    *   Thanks to [@Tech1k](https://github.com/Tech1k) for [Beyondcoin](https://beyondcoin.io) partnership and providing [duinocoin.com](https://duinocoin.com) domain
-    *   Thanks to [@MrKris7100](https://github.com/MrKris7100) for help with implementing SHA1 algorithm
-    *   Thanks to [@daknuett](https://github.com/daknuett) for help with Arduino SHA1 library
+Also big thanks to all [Contributors](https://github.com/revoxhere/duino-coin/graphs/contributors) that helped to develop the Duino-Coin project.
 
 <hr>
 

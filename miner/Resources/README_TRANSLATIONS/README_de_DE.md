@@ -47,45 +47,45 @@
   <tr>
     <td>
       💻 Von vielen Plattformen unterstützt<br>
-      👥 A friendly & growing community<br>
-      💱 Easy to use & exchange<br>
-      🌎 Available everywhere<br>
-      :new: Fully original project<br>
-      :blush: Beginner-friendly<br>
-      💰 Cost-effective<br>
-      ⛏️ Easy to mine<br>
+      👥 Eine freundliche & wachsende community<br>
+      💱 Einfach zu nutzten & in andere Währungen umzutauschen<br>
+      🌎 Überall verfügbar<br>
+      :new: Komplett originales Projekt<br>
+      :blush: Anfänger freundlich <br>
+      💰 Kosten-effektiv<br>
+      ⛏️ Einfach zu minen<br>
       📚 Open-source<br>
     </td>
     <td>
-      ♾️ Coin supply: Infinite (before December 2020: 350k coins)<br>
-      😎 Premine: <5k blocks (<500 coins)<br>
-      ⚡ Transaction time: Instant<br>
-      🔢 Decimals: up to 20<br>
+      ♾️ Coin supply: Unendlich (vor Dezember 2020: 350k coins) <br>
+      😎 Prämie: <5k blöcke(<500 coins)<br>
+      ⚡ Transaktionszeit: sofort<br>
+      🔢 Dezimalstellen: bis zu 20<br>
       🔤 Ticker: DUCO (ᕲ)<br>
-      ⚒️ Algorithms: DUCO-S1, DUCO-S1A, XXHASH +more planned<br>
-      ♐ Rewards: supported by "Kolka system" helping to reward miners fairly<br>
+      ⚒️ Algorithmen: DUCO-S1, DUCO-S1A, XXHASH +mehr geplannt<br>
+      ♐ Rewards: unterstützt durch das "Kolka System", welches hilft, miner fair zu belohnen<br>
     </td>
   </tr>
 </table>
 
 <h2 align="center">Get started</h2><br>
 
-Official getting started guides for creating an account and setting up miners on variety of devices are available <a href="https://revoxhere.github.io/duino-coin/getting-started">on the official website</a>.<br>
-Frequently asked questions and answers, troubleshooting help can be found in the [Wikis](https://github.com/revoxhere/duino-coin/wiki).<br>
+Offiziele Start-guides um einen Account zu erstellen und einen Miner zu auf vielen geräten zu starten, sind verfügbar <a href="https://revoxhere.github.io/duino-coin/getting-started">auf der offizielen Website</a>.<br>
+Ein FAQ und Hilfe kann in den Wikis gefunden werden [Wikis](https://github.com/revoxhere/duino-coin/wiki).
+<br>
 
-| Official Wallets | Official Miners |
+| Offiziele Wallets | Offiziele Miner |
 :-----------------:|:----------------:
 [<img src="https://i.imgur.com/msVtLHs.png">](https://duinocoin.com/getting-started#register)  |  [<img src="https://i.imgur.com/SMkKHOK.png">](https://duinocoin.com/getting-started#computer)
 
-<h3 align="center">Installing Duino-Coin</h2><br>
+<h3 align="center">Duino-Coin installieren</h2><br>
 
-The easiest way to get started with Duino-Coin is to download [the latest release](https://github.com/revoxhere/duino-coin/releases/latest) for your OS.<br>
-After downloading, unzip it and launch the desired program.<br>
-There are no dependencies required.
+Der einfachste Weg zu starten, ist  [den neusten release](https://github.com/revoxhere/duino-coin/releases/latest) für dein OS herunterzuladen.<br>
+<br> Wenn der Download fertig ist, unzipe ihn und öffnen dein gewünschtes Programm. Es sind keine anderen programme nötig. <br>
 
 <hr>
 
-If you want to run the programs from source, you may need to install some dependencies. Here's how to do it on debian-based distros (e.g. Ubuntu, Debian, Raspian):
+ Wenn du die Programme von source lunchen willst, must du vielleicht einige Dependencies installieren. So kann man es auf Debian-based Linux distros (z.B. Ubuntu, Debian oder Raspian) machen:
 ```BASH
 sudo apt install python3 python3-pip git
 git clone https://github.com/revoxhere/duino-coin
