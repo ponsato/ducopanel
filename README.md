@@ -6,9 +6,11 @@ On the other hand, we will try to include Arduino Cli to upload the official cod
 
 For this we will use https://www.electronjs.org
 
+![N|Solid](https://media.discordapp.net/attachments/677615906322382862/865730813470310421/unknown.png?width=1248&height=671)
+
 ## Requirements
 
-It is necessary to have Python 3 and Arduino CLI installed in the environment, both with global variables declared.
+It is necessary to have Python 3 and Arduino CLI installed in the environment, both with global enviroment variables declared.
 
 You can download them from the following links:
 - https://www.python.org/downloads/
