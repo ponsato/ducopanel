@@ -61,8 +61,8 @@ C:\Users\user\AppData\Roaming\ducopanel
 
 You can download the installer for the latest version for Windows 64-bit here:
 
-- http://tomaszafra.es/ducopanel/installers/ducopanel-1.0.0-setup.exe
-- http://tomaszafra.es/ducopanel/installers/ducopanel-1.0.0-setup.msi
+- [ducopanel.exe](http://tomaszafra.es/ducopanel/installers/ducopanel-1.0.0-setup.exe)
+- [ducopanel.msi](http://tomaszafra.es/ducopanel/installers/ducopanel-1.0.0-setup.msi)
 
 
 
