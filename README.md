@@ -13,9 +13,9 @@ For this we will use https://www.electronjs.org
 It is necessary to have Python 3 and Arduino CLI installed in the environment, both with global enviroment variables declared.
 
 You can download them from the following links:
-- https://www.python.org/downloads/
-- https://arduino.github.io/arduino-cli/latest/installation/
-- https://support.shotgunsoftware.com/hc/en-us/articles/114094235653-Setting-global-environment-variables-on-Windows
+- [Python 3](https://www.python.org/downloads/)
+- [Arduino Cli](https://arduino.github.io/arduino-cli/latest/installation/)
+- [Setting global enviroment variables](https://support.shotgunsoftware.com/hc/en-us/articles/114094235653-Setting-global-environment-variables-on-Windows)
 
 ## To use
 
@@ -67,6 +67,3 @@ You can download the installer for the latest version for Windows 64-bit here:
 
 - [ducopanel-1.0.0-setup.exe](https://tomaszafra.es/ducopanel/installers/ducopanel-1.0.0-setup.exe)
 - [ducopanel-1.0.0-setup.msi](https://tomaszafra.es/ducopanel/installers/ducopanel-1.0.0-setup.msi)
-
-
-
