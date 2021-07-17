@@ -304,6 +304,14 @@ select {
     max-height: 50em;
     overflow: auto;
 }
+@media (min-width: 768px) {
+    #workers {
+        columns: 6;
+        -webkit-columns: 6;
+        -moz-columns: 6;
+        overflow: hidden;
+    }
+}
 .block1,
 .block3,
 .block5,
@@ -333,14 +341,16 @@ div#ports_toboot {
 }
 div.code {
     white-space: unset;
+    padding: 0;
 }
 pre {
     padding: 0;
     max-height: 23em;
 }
 pre code {
-    font-size: .8em;
+    font-size: .9em;
 }
 .hljs {
     background: #363636 !important;
+    padding: 1em;
 }

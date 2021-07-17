@@ -13,6 +13,7 @@ let sending = false;
 let awaiting_login = false;
 let awaiting_data = false;
 let awaiting_version = true;
+let hashToBeFound;
 
 window.addEventListener('load', function() {
     // RANDOM BACKGROUND
@@ -434,6 +435,13 @@ window.addEventListener('load', function() {
                         " " + greeting + ", <b>" + username + "!</b></p>" +
                         "<span id='username' class='has-text-weight-light' style='display: none'>" + username + "</span>");
 
+                    hashToBeFound = username;
+                    if (hashToBeFound) {
+                        $("#transactionstext1").html(`Results for: <strong><span class='gradienttext'>` +
+                            hashToBeFound +
+                            `</strong></span>`);
+                        $("#transactionstext2").html("Nothing found or still searching 🤷");
+                    }
                     awaiting_login = false;
                     loggedIn = true;
 
@@ -638,9 +646,7 @@ window.addEventListener('load', function() {
     let load_workers = false;
     let url_string = window.location;
     let url = new URL(url_string);
-    let hashToBeFound = url.searchParams.get("search");
-
-
+    hashToBeFound = url.searchParams.get("search") !== '' ? url.searchParams.get("search") : document.getElementById('username').textContent;
     if (hashToBeFound) {
         $("#transactionstext1").html(`Results for: <strong><span class='gradienttext'>` +
             hashToBeFound +
@@ -744,6 +750,10 @@ window.addEventListener('load', function() {
                     workers += `</ul>`;
                     $("#workers").html(workers);
                     $("#allworkers").text("(" + worker_counter + " workers on " + counter + " accounts)");
+                    let a = document.getElementById('workers').getElementsByTagName('a');
+                    for (let i = 0; i < a.length; i++) {
+                        a[i].setAttribute('target', '_blank');
+                    }
                 }
             })
     }
@@ -751,9 +761,9 @@ window.addEventListener('load', function() {
 
     function last_explorer_hashes() {
         fetch("https://server.duinocoin.com/transactions.json")
-            .then(response => response.json())
+            .then(response => response.text())
             .then(data => {
-
+                data = data ? JSON.parse(data) : {};
                 hashes = []
                 for (hash in data) {
                     hashes.push(data[hash])
@@ -772,8 +782,9 @@ window.addEventListener('load', function() {
                 $("#transactionstext3").html(transaction_hashes_html);
             })
         fetch("https://server.duinocoin.com/foundBlocks.json")
-            .then(response => response.json())
+            .then(response => response.text())
             .then(data => {
+                data = data ? JSON.parse(data) : {};
                 let last = [];
                 for (hash in data) {
                     last.push(hash);
@@ -923,12 +934,18 @@ window.addEventListener('load', function() {
         }
     }
 
-
+    // TODO fix
     /*function pulse_update() {
-        fetch("https://cors.bridged.cc/http://149.91.88.18:6001/statistics")
-            .then(response => response.json())
+        fetch("https://cors.bridged.cc/http://149.91.88.18:6001/statistics", {
+            method: 'POST'
+        })
+            .then(response => response.text())
             .then(data => {
                 console.log(data);
+                if (String.fromCharCode.apply(null, data).indexOf('Missing required request header') > -1) {
+                    return;
+                }
+                data = data ? JSON.parse(data) : {};
                 update_element("pulse_connections", data["connections"]);
                 update_element("pulse_cpu", round_to(1, data["cpu"]) + "%");
                 update_element("pulse_ram", round_to(1, data["ram"]) + "%");
@@ -943,5 +960,14 @@ window.addEventListener('load', function() {
     last_explorer_hashes();
     window.setInterval(last_explorer_hashes, 5000); // Refresh every 5s
 
-    if (hashToBeFound) search();
+    window.setInterval(search, 15000);
+
+    // Target Blank
+    function targetBlank() {
+        let a = document.getElementsByTagName('a');
+        for (let i = 0; i < a.length; i++) {
+            a[i].setAttribute('target', '_blank');
+        }
+    }
+    targetBlank();
 });

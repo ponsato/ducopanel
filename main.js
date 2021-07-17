@@ -8,6 +8,9 @@ function createWindow () {
         fullscreenable: false,
         autoHideMenuBar: true,
         icon:'resources/duco.ico',
+        backgroundColor: '#363636',
+        darkTheme: true,
+        frame: false,
         webPreferences: {
             nodeIntegration: false,
             contextIsolation: true,
@@ -16,7 +19,11 @@ function createWindow () {
             webSecurity: false
         },
 
-    })
+    });
+    mainWindow.removeMenu();
+    mainWindow.on('menu', function (e){
+        e.preventDefault();
+    });
     mainWindow.webContents.session.clearStorageData();
     mainWindow.webContents.session.clearCache();
     mainWindow.maximize();
