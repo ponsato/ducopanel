@@ -47,16 +47,17 @@ This folder with all the contents of the application can be packed and run on an
 
 ## Windows installer
 
-In order to get a windows installer, you have previously had to get a precompiled version with the above command.
-
 You can then run the following command (be careful with the architecture you are using):
 
 ```bash
-electron-installer-windows --src out\ducopanel-win32-x64\ --dest dist/installers/ --config config.json
+npm run-script build
 ```
 
+The installation files shall be created in:
+```bash
+/dist/installers/
+```
 The installation will be carried out on the following route:
-
 ```bash
 C:\Users\user\AppData\Local\ducopanel
 ```

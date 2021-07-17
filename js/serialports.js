@@ -316,6 +316,7 @@ function runPcMiner() {
     let shares_pcminer = document.getElementById("shares_pcminer");
     let hljs_pcminer = document.getElementById('hljs_pcminer');
     let sharesperc_pcminer = document.getElementById('sharesperc_pcminer');
+    let username = document.getElementById('username').textContent;
     if (threads < 1) {
         threads = 1;
     }
