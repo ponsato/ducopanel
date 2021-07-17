@@ -6,6 +6,15 @@ On the other hand, we will try to include Arduino Cli to upload the official cod
 
 For this we will use https://www.electronjs.org
 
+## Requirements
+
+It is necessary to have Python 3 and Arduino CLI installed in the environment, both with global variables declared.
+
+You can download them from the following links:
+- https://www.python.org/downloads/
+- https://arduino.github.io/arduino-cli/latest/installation/
+- https://support.shotgunsoftware.com/hc/en-us/articles/114094235653-Setting-global-environment-variables-on-Windows
+
 ## To use
 
 To clone and run this repository you'll need [Git](https://git-scm.com) and [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer. From your command line:
@@ -33,3 +42,27 @@ npm run make
 In the /out folder, a folder will be created with the name of the project and the corresponding architecture (x64, linux, etc.), where the executable file will be located among other files. This is a precompiled version, when everything is ready I will update the documentation with the steps to obtain a production version for each of the operating systems.
 
 This folder with all the contents of the application can be packed and run on any other device with the corresponding operating system. In this way, the result of the development can be tested without the need for a production version.
+
+## Windows installer
+
+In order to get a windows installer, you have previously had to get a precompiled version with the above command.
+
+You can then run the following command (be careful with the architecture you are using):
+
+```bash
+electron-installer-windows --src out\ducopanel-win32-x64\ --dest dist/installers/ --config config.json
+```
+
+The installation will be carried out on the following route:
+
+C:\Users\user\AppData\Roaming\ducopanel
+
+## Downloads
+
+You can download the installer for the latest version for Windows 64-bit here:
+
+- http://tomaszafra.es/ducopanel/installers/ducopanel-1.0.0-setup.exe
+- http://tomaszafra.es/ducopanel/installers/ducopanel-1.0.0-setup.msi
+
+
+

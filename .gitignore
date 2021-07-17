@@ -1,6 +1,7 @@
 /.idea
 /node_modules
 out/
+dist/
 /package-lock.json
 PCMiner_*/
 AVRMiner_*/

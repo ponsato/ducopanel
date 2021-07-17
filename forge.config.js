@@ -23,9 +23,7 @@ const config = {
         icon: path.resolve(__dirname, 'build', 'icons', 'icon'),
         ignore: [
             ".idea",
-            ".gitignore",
-            "AVRMiner_2.49_resources",
-            "PCMiner_2.49_resources"
+            ".gitignore"
         ],
         win32metadata: {
             CompanyName: 'Duinocoin',
