@@ -30,9 +30,12 @@ from multiprocessing import Lock
 from random import choice
 import pip
 import select
-
 thread_lock = Lock()
 
+def s_print(*a, **b):
+    """Thread safe print function"""
+    with thread_lock:
+        print(*a, **b)
 
 def install(package):
     try:
@@ -52,7 +55,7 @@ try:
     # Check if cpuinfo is installed
     import cpuinfo
 except ModuleNotFoundError:
-    print(
+    s_print(
         now().strftime("%H:%M:%S ")
         + "Cpuinfo is not installed. "
         + "Miner will try to install it. "
@@ -65,7 +68,7 @@ try:
     # Check if requests is installed
     import requests
 except ModuleNotFoundError:
-    print(
+    s_print(
         now().strftime('%H:%M:%S ')
         + 'Requests is not installed. '
         + 'Miner will try to install it. '
@@ -78,7 +81,7 @@ try:
     # Check if colorama is installed
     from colorama import Back, Fore, Style, init
 except ModuleNotFoundError:
-    print(
+    s_print(
         now().strftime("%H:%M:%S ")
         + "Colorama is not installed. "
         + "Miner will try to install it. "
@@ -90,7 +93,7 @@ try:
     # Check if pypresence is installed
     from pypresence import Presence
 except ModuleNotFoundError:
-    print(
+    s_print(
         now().strftime("%H:%M:%S ")
         + "Pypresence is not installed. "
         + "Miner will try to install it. "
@@ -103,7 +106,7 @@ try:
     import xxhash
     xxhash_enabled = True
 except ModuleNotFoundError:
-    print(
+    s_print(
         now().strftime("%H:%M:%S ")
         + "Xxhash is not installed - "
         + "Xxhash support will be disabled")
@@ -211,7 +214,7 @@ def getString(string_name):
 def debug_output(text):
     # Debug output
     if debug == "y":
-        print(now().strftime(Style.DIM + "%H:%M:%S.%f ") + "DEBUG: " + text)
+        s_print(now().strftime(Style.DIM + "%H:%M:%S.%f ") + "DEBUG: " + text)
 
 
 def title(title):
@@ -221,14 +224,14 @@ def title(title):
         system("title " + title)
     else:
         # Most standard terminals
-        print("\33]0;" + title + "\a", end="")
+        s_print("\33]0;" + title + "\a", end="")
         sys.stdout.flush()
 
 
 def handler(signal_received, frame):
     # SIGINT handler
     if current_process().name == "MainProcess":
-        print(
+        s_print(
             "sys0",
             getString("sigint_detected")
             + getString("goodbye"),
@@ -272,7 +275,7 @@ signal(SIGINT, handler)
 def Greeting():
     # Greeting message
     global greeting
-    print(Style.RESET_ALL)
+    s_print(Style.RESET_ALL)
 
     if requested_diff == "LOW":
         diffName = getString("low_diff_short")
@@ -293,24 +296,24 @@ def Greeting():
     else:
         greeting = getString("greeting_back")
 
-    print(" - "
+    s_print(" - "
         + getString("banner")
         + " (v"
         + str(MINER_VER)
         + ") "
         + "2019-2021")
 
-    print(" - "
+    s_print(" - "
         + "https://github.com/revoxhere/duino-coin")
 
     if lang != "english":
-        print(" - "
+        s_print(" - "
             + lang.capitalize()
             + " translation: "
             + getString("translation_autor"))
 
     try:
-        print(" - "
+        s_print(" - "
             + "CPU: "
             + str(threadcount)
             + "x "
@@ -319,22 +322,22 @@ def Greeting():
         debug_output("Error displaying CPU message: " + str(e))
 
     if osname == "nt" or osname == "posix":
-        print(" - "
+        s_print(" - "
             + getString("donation_level")
             + str(donation_level))
 
-    print(" - "
+    s_print(" - "
         + getString("algorithm")
         + algorithm
         + " - "
         + diffName)
 
     if rig_identiier != "None":
-        print(" - "
+        s_print(" - "
             + getString("rig_identifier")
             + rig_identiier)
 
-    print(" - "
+    s_print(" - "
         + str(greeting)
         + ", "
         + str(username)
@@ -385,12 +388,12 @@ def loadConfig():
 
     # Initial configuration
     if not Path(RESOURCES_DIR + "/Miner_config.cfg").is_file():
-        print(
+        s_print(
             Style.BRIGHT
             + getString("basic_config_tool")
             + RESOURCES_DIR
             + getString("edit_config_file_warning"))
-        print(
+        s_print(
             Style.RESET_ALL
             + getString("dont_have_account")
             + Fore.YELLOW
@@ -406,7 +409,7 @@ def loadConfig():
             + Style.BRIGHT)
 
         if xxhash_enabled:
-            print(
+            s_print(
                 Style.RESET_ALL
                 + Style.BRIGHT
                 + Fore.RESET
@@ -415,7 +418,7 @@ def loadConfig():
                 + " - DUCO-S1 ("
                 + getString("recommended")
                 + ")")
-            print(
+            s_print(
                 Style.RESET_ALL
                 + Style.BRIGHT
                 + Fore.RESET
@@ -447,7 +450,7 @@ def loadConfig():
             + Fore.RESET
             + Style.BRIGHT)
 
-        print(
+        s_print(
             Style.RESET_ALL
             + Style.BRIGHT
             + Fore.RESET
@@ -455,7 +458,7 @@ def loadConfig():
             + Style.NORMAL
             + " - "
             + getString("low_diff"))
-        print(
+        s_print(
             Style.RESET_ALL
             + Style.BRIGHT
             + Fore.RESET
@@ -463,7 +466,7 @@ def loadConfig():
             + Style.NORMAL
             + " - "
             + getString("medium_diff"))
-        print(
+        s_print(
             Style.RESET_ALL
             + Style.BRIGHT
             + Fore.RESET
@@ -520,7 +523,7 @@ def loadConfig():
             threadcount = cpu_count()
         elif int(threadcount) > int(8):
             threadcount = 8
-            print(
+            s_print(
                 Style.RESET_ALL
                 + Style.BRIGHT
                 + getString("max_threads_notice"))
@@ -568,7 +571,7 @@ def loadConfig():
 
         with open(RESOURCES_DIR + "/Miner_config.cfg", "w") as configfile:
             config.write(configfile)
-            print(Style.RESET_ALL + getString("config_saved"))
+            s_print(Style.RESET_ALL + getString("config_saved"))
     else:
         # If config already exists, load data from it
         config.read(RESOURCES_DIR + "/Miner_config.cfg")
@@ -613,7 +616,7 @@ def Donate():
             + "-p x -s 4 -e ")
 
     if int(donation_level) <= 0:
-        print(
+        s_print(
             "sys0",
             + getString("free_network_warning")
             + getString("donate_warning")
@@ -639,7 +642,7 @@ def Donate():
             # Launch CMD as subprocess
             donateExecutable = Popen(
                 cmd, shell=True, stderr=DEVNULL)
-            print(
+            s_print(
                 "sys0",
                 getString("thanks_donation"),
                 "warning")
@@ -741,7 +744,7 @@ def Thread(
                             break
                     except Exception as e:
                         retry_counter += 1
-                        print("net0",
+                        s_print("net0",
                                      " Error connecting to mining node: "
                                      + str(e)
                                      + ", retrying in 5s",
@@ -755,7 +758,7 @@ def Thread(
                     if "\n" in motd:
                         motd = motd.replace("\n", "\n\t\t")
 
-                    print("net" + str(threadid),
+                    s_print("net" + str(threadid),
                                  " MOTD: "
                                  + str(motd),
                                  "success")
@@ -763,7 +766,7 @@ def Thread(
                 if threadid == 0:
                     if float(server_version) <= float(MINER_VER):
                         # Miner is up-to-date
-                        print(
+                        s_print(
                             "net"
                             + str(threadid),
                             getString("connected")
@@ -777,7 +780,7 @@ def Thread(
                             "success")
                     else:
                         # Miner is outdated
-                        print(
+                        s_print(
                             "sys"
                             + str(threadid),
                             getString("outdated_miner")
@@ -792,7 +795,7 @@ def Thread(
 
             except Exception as e:
                 # Socket connection error
-                print(
+                s_print(
                     "net"
                     + str(threadid),
                     getString("connecting_error")
@@ -808,7 +811,7 @@ def Thread(
         else:
             using_algo = getString("using_algo")
 
-        print(
+        s_print(
             "sys"
             + str(threadid),
             getString("mining_thread")
@@ -851,7 +854,7 @@ def Thread(
                                      "Correct job received")
                         break
                     except:
-                        print("cpu" + str(threadid),
+                        s_print("cpu" + str(threadid),
                                      " Node message: "
                                      + job[1],
                                      "warning")
@@ -933,7 +936,7 @@ def Thread(
 
                         if (totalhashrate > 1500
                                 and accepted.value % 50 == 0):
-                            print("sys0",
+                            s_print("sys0",
                                          " " +
                                          getString("max_hashrate_notice"),
                                          "warning")
@@ -952,7 +955,7 @@ def Thread(
                                 + str(accepted.value + rejected.value)
                                 + getString("accepted_shares"))
                             with thread_lock:
-                                print(now().strftime("%H:%M:%S ")
+                                s_print(now().strftime("%H:%M:%S ")
                                     + " cpu"
                                     + str(threadid)
                                     + " "
@@ -990,7 +993,7 @@ def Thread(
                                 + str(accepted.value + rejected.value)
                                 + getString("accepted_shares"))
                             with thread_lock:
-                                print(now().strftime("%H:%M:%S ")
+                                s_print(now().strftime("%H:%M:%S ")
                                     + " cpu"
                                     + str(threadid)
                                     + " "
@@ -1028,7 +1031,7 @@ def Thread(
                                 + str(accepted.value + rejected.value)
                                 + getString("accepted_shares"))
                             with thread_lock:
-                                print(now().strftime(Style.DIM + "%H:%M:%S ")
+                                s_print(now().strftime(Style.DIM + "%H:%M:%S ")
                                     + " cpu"
                                     + str(threadid)
                                     + " "
@@ -1070,7 +1073,7 @@ def Thread(
                         break
                     break
             except Exception as e:
-                print(
+                s_print(
                     "net"
                     + str(threadid),
                     getString("error_while_mining")
@@ -1079,7 +1082,7 @@ def Thread(
                     + ")",
                     "error")
                 debug_output("Error while mining: " + str(e))
-                sleep(5)
+                sys.exit([arg])
                 break
 
 
@@ -1089,7 +1092,7 @@ def periodic_report(start_time,
                     hashrate,
                     uptime):
     seconds = round(end_time - start_time)
-    print("sys0",
+    s_print("sys0",
                  " Periodic mining report (BETA): "
                  + "\n\t\t- During the last "
                  + str(seconds)
@@ -1127,7 +1130,7 @@ def pretty_print(message_type, message, state):
         color = Fore.RED
 
     with thread_lock:
-        print(Style.RESET_ALL
+        s_print(Style.RESET_ALL
               + Fore.WHITE
               + now().strftime(Style.DIM + "%H:%M:%S ")
               + Style.BRIGHT
@@ -1226,7 +1229,7 @@ def get_fastest_connection(server_ip: str):
 
 def fetch_pools():
     while True:
-        print("net0",
+        s_print("net0",
             " "
             + getString("connection_search")
             + "...",
@@ -1237,7 +1240,7 @@ def fetch_pools():
                 "https://server.duinocoin.com/getPool"
             ).json()
 
-            print("net0",
+            s_print("net0",
                          " Retrieved mining node: "
                          + str(response["name"]),
                          "success")
@@ -1247,7 +1250,7 @@ def fetch_pools():
 
             return NODE_ADDRESS, NODE_PORT
         except Exception as e:
-            print("net0",
+            s_print("net0",
                          " Error retrieving mining node: "
                          + str(e)
                          + ", retrying in 15s",
@@ -1284,8 +1287,7 @@ if __name__ == "__main__":
         hashrates_list = manager.dict()
         totalhashrate_mean = manager.list()
     except Exception as e:
-        print(e)
-        print(
+        s_print(
             "sys0",
             " Multiprocessing is not available. "
             + "Please check permissions and/or your python installation. "
@@ -1299,7 +1301,7 @@ if __name__ == "__main__":
         loadConfig()
         debug_output("Config file loaded")
     except Exception as e:
-        print(
+        s_print(
             "sys0",
             getString("load_config_error")
             + RESOURCES_DIR
@@ -1317,7 +1319,7 @@ if __name__ == "__main__":
         Greeting()
         debug_output("Greeting displayed")
     except Exception as e:
-        print(
+        s_print(
             "sys0",
             "Error displaying greeting message"
             + Style.NORMAL
@@ -1370,7 +1372,7 @@ if __name__ == "__main__":
                 sleep(0.1)
 
     except Exception as e:
-        print(
+        s_print(
             "sys0",
             "Error launching CPU thread(s)"
             + Style.NORMAL

@@ -15,7 +15,7 @@ function createWindow () {
         icon:'resources/duco.ico',
         backgroundColor: '#363636',
         darkTheme: true,
-        frame: false,
+        //frame: false,
         webPreferences: {
             nodeIntegration: false,
             contextIsolation: true,
@@ -25,10 +25,10 @@ function createWindow () {
         },
 
     });
-    mainWindow.removeMenu();
+    /*mainWindow.removeMenu();
     mainWindow.on('menu', function (e){
         e.preventDefault();
-    });
+    });*/
     mainWindow.webContents.session.clearStorageData();
     mainWindow.webContents.session.clearCache();
     mainWindow.maximize();
@@ -37,7 +37,7 @@ function createWindow () {
     mainWindow.webContents.setWindowOpenHandler(({ url }) => {
         return { action: 'allow' }
     });
-    mainWindow.webContents.on("devtools-opened", () => { mainWindow.webContents.closeDevTools(); });
+    //mainWindow.webContents.on("devtools-opened", () => { mainWindow.webContents.closeDevTools(); });
 }
 
 app.whenReady().then(() => {

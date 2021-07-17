@@ -430,6 +430,7 @@
                                                     </div>
                                                     <br>
                                                     <span class="tag is-info" id="total_ports"></span>
+                                                    <!--info-->
                                                     <div id="error"></div>
                                                     <div class="buttons">
                                                         <input class="input" id="identifier" type="text"
@@ -443,7 +444,7 @@
                                                         </button>
                                                     </div>
                                                     <div class="box traces code">
-                                                        <pre class="hljs"><code id="traces"></code></pre>
+                                                        <pre class="hljs" id="hljs_miner"><code id="traces"></code></pre>
                                                     </div>
                                                     <div class="buttons">
                                                         <button class="button is-primary" id="clear_console">Clear
@@ -452,6 +453,79 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="columns">
+                                                <div class="column">
+                                                    <div class="box">
+                                                        <p class="subtitle">
+                                                            <i class="fa fa-check fa-fw" style="color:#6ab04c;"></i>
+                                                            ACCEPTED SHARES
+                                                        </p>
+                                                        <p class="title">
+                                                                    <span id="shares_miner">
+                                                                        0/0
+                                                                    </span>
+                                                            <span class="subtitle" id="sharesperc">
+                                                                        (0%)
+                                                                    </span>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="column">
+                                                    <div class="box">
+                                                        <p class="subtitle">
+                                                            <i class="fa fa-tachometer-alt fa-fw" style="color:#eb4d4b;"></i>
+                                                            HASHRATE
+                                                        </p>
+                                                        <p class="title">
+                                                                    <span id="hashrate_miner">
+                                                                        0 kH/s
+                                                                    </span>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="column">
+                                                    <div class="box">
+                                                        <p class="subtitle">
+                                                            <i class="fa fa-coins is-size-7 card-purple fa-fw"></i>
+                                                            EST. DAILY PROFIT
+                                                        </p>
+                                                        <p class="title">
+                                                                    <span id="estimatedprofit_miner">
+                                                                        Calculating
+                                                                    </span>
+                                                            <span class="subtitle" id="estimatedprofitusd_miner">
+                                                                    </span>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="columns">
+                                                <div class="column is-two-thirds">
+                                                    <div class="box">
+                                                        <p class="subtitle">
+                                                            <i class="fa fa-chart-bar is-size-7 card-pomegrante fa-fw"></i>
+                                                            YOUR MINERS
+                                                        </p>
+                                                        <div style="height:5em;overflow:auto;">
+                                                            <span id="miners_miner">Please wait</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="column is-one-third">
+                                                    <div class="box">
+                                                        <p class="subtitle">
+                                                            <i class="fa fa-clock fa-fw" style="color:#f0932b;"></i>
+                                                            ELAPSED TIME
+                                                        </p>
+                                                        <p class="title">
+                                                            <span data-chronometer>
+                                                                00:00:00
+                                                            </span>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+
                                         </div>
                                     </section>
                                     <!--Bootloading-->

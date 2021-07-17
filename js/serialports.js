@@ -205,6 +205,11 @@ function runMiner() {
     let python = require('child_process').spawn('python', [dirminer, '']);
     let start_mining = document.getElementById('start_mining');
     let stop_mining = document.getElementById('stop_mining');
+    let totalShares = 0;
+    let sharesCorrect = 0;
+    let shares_miner = document.getElementById("shares_miner");
+    let hljs_miner = document.getElementById('hljs_miner');
+    let sharesperc = document.getElementById('sharesperc');
     stop_mining.removeAttribute("disabled");
     stop_mining.onclick = function () {
         python.kill('SIGINT');
@@ -215,34 +220,68 @@ function runMiner() {
         console.log("Python response: ", data.toString('utf8'));
         if (String.fromCharCode.apply(null, data).indexOf('Error') > -1) {
             traces.innerHTML += '<span style="color: red">' + String.fromCharCode.apply(null, data) + '</span>';
+        } else if (String.fromCharCode.apply(null, data).indexOf('Rejected') > -1) {
+            totalShares++;
+            traces.innerHTML += '<span style="color: red">' + String.fromCharCode.apply(null, data) + '</span>';
         } else if (String.fromCharCode.apply(null, data).indexOf('Accepted') > -1) {
-            traces.innerHTML += '<span style="color: lime">' + String.fromCharCode.apply(null, data) + '</span>'
+            totalShares++;
+            sharesCorrect++;
+            traces.innerHTML += '<span style="color: lime">' + String.fromCharCode.apply(null, data) + '</span>';
         } else if (String.fromCharCode.apply(null, data).indexOf('sys0') > -1) {
-            traces.innerHTML += '<span style="color: yellow">' + String.fromCharCode.apply(null, data) + '</span>'
+            traces.innerHTML += '<span style="color: yellow">' + String.fromCharCode.apply(null, data) + '</span>';
         } else {
-            traces.innerHTML += '<span style="color: blue">' + String.fromCharCode.apply(null, data) + '</span>'
+            traces.innerHTML += '<span style="color: cyan">' + String.fromCharCode.apply(null, data) + '</span>';
         }
-        traces.scrollTop = traces.scrollHeight;
+        hljs_miner.scrollTop = document.getElementById('hljs_miner').scrollHeight;
+        shares_miner.innerHTML = sharesCorrect + "/" + totalShares;
+        sharesperc.innerHTML = " (" + (sharesCorrect / totalShares * 100).toFixed(2) + "%)";
     });
     python.stderr.on('data', (data) => {
         console.log("Python response: ", data.toString('utf8'));
         if (String.fromCharCode.apply(null, data).indexOf('Error') > -1) {
             traces.innerHTML += '<span style="color: red">' + String.fromCharCode.apply(null, data) + '</span>';
+        } else if (String.fromCharCode.apply(null, data).indexOf('Rejected') > -1) {
+            totalShares++;
+            traces.innerHTML += '<span style="color: red">' + String.fromCharCode.apply(null, data) + '</span>';
         } else if (String.fromCharCode.apply(null, data).indexOf('Accepted') > -1) {
-            traces.innerHTML += '<span style="color: lime">' + String.fromCharCode.apply(null, data) + '</span>'
+            totalShares++;
+            sharesCorrect++;
+            traces.innerHTML += '<span style="color: lime">' + String.fromCharCode.apply(null, data) + '</span>';
         } else if (String.fromCharCode.apply(null, data).indexOf('sys0') > -1) {
-            traces.innerHTML += '<span style="color: yellow">' + String.fromCharCode.apply(null, data) + '</span>'
+            traces.innerHTML += '<span style="color: yellow">' + String.fromCharCode.apply(null, data) + '</span>';
         } else {
-            traces.innerHTML += '<span style="color: blue">' + String.fromCharCode.apply(null, data) + '</span>'
+            traces.innerHTML += '<span style="color: cyan">' + String.fromCharCode.apply(null, data) + '</span>';
         }
-        traces.scrollTop = traces.scrollHeight;
+        hljs_miner.scrollTop = document.getElementById('hljs_miner').scrollHeight;
+        shares_miner.innerHTML = sharesCorrect + "/" + totalShares;
+        sharesperc.innerHTML = " (" + (sharesCorrect / totalShares * 100).toFixed(2) + "%)";
     });
+    let hours = `00`,
+        minutes = `00`,
+        seconds = `00`;
+    document.querySelector("[data-chronometer]").innerHTML = `${hours}:${minutes}:${seconds}`;
+    let chronometer = setInterval(function() {
+        seconds++
+        if (seconds < 10){seconds = `0` + seconds}
+        if (seconds > 59) {
+            seconds = `00`;
+            minutes++;
+            if (minutes < 10){minutes = `0` + minutes}
+        }
+        if (minutes > 59) {
+            minutes = `00`;
+            hours++;
+            if (hours < 10){hours = `0` + hours}
+        }
+        document.querySelector("[data-chronometer]").innerHTML = `${hours}:${minutes}:${seconds}`;
+    }, 1000);
 
     python.on('close', (data) => {
         traces.innerHTML += '<span style="color: white">child process exited with code ' + data + '</span>';
-        traces.scrollTop = traces.scrollHeight;
+        hljs_miner.scrollTop = document.getElementById('hljs_miner').scrollHeight;
         start_mining.removeAttribute("disabled");
         stop_mining.setAttribute("disabled", true);
+        clearInterval(chronometer);
     });
 }
 
@@ -312,7 +351,7 @@ function runPcMiner() {
         } else if (String.fromCharCode.apply(null, data).indexOf('sys0') > -1) {
             traces.innerHTML += '<span style="color: yellow">' + String.fromCharCode.apply(null, data) + '</span>'
         } else {
-            traces.innerHTML += '<span style="color: blue">' + String.fromCharCode.apply(null, data) + '</span>'
+            traces.innerHTML += '<span style="color: cyan">' + String.fromCharCode.apply(null, data) + '</span>'
         }
         traces.scrollTop = traces.scrollHeight;
     });
@@ -325,7 +364,20 @@ function runPcMiner() {
         } else if (String.fromCharCode.apply(null, data).indexOf('sys0') > -1) {
             traces.innerHTML += '<span style="color: yellow">' + String.fromCharCode.apply(null, data) + '</span>'
         } else {
-            traces.innerHTML += '<span style="color: blue">' + String.fromCharCode.apply(null, data) + '</span>'
+            traces.innerHTML += '<span style="color: cyan">' + String.fromCharCode.apply(null, data) + '</span>'
+        }
+        traces.scrollTop = traces.scrollHeight;
+    });
+    python.on('error', (error) => {
+        console.error(`error: ${error.message}`);
+        if (String.fromCharCode.apply(null, data).indexOf('Error') > -1) {
+            traces.innerHTML += '<span style="color: red">' + String.fromCharCode.apply(null, error) + '</span>';
+        } else if (String.fromCharCode.apply(null, error).indexOf('Accepted') > -1) {
+            traces.innerHTML += '<span style="color: lime">' + String.fromCharCode.apply(null, error) + '</span>'
+        } else if (String.fromCharCode.apply(null, error).indexOf('sys0') > -1) {
+            traces.innerHTML += '<span style="color: yellow">' + String.fromCharCode.apply(null, error) + '</span>'
+        } else {
+            traces.innerHTML += '<span style="color: cyan">' + String.fromCharCode.apply(null, error) + '</span>'
         }
         traces.scrollTop = traces.scrollHeight;
     });
@@ -345,4 +397,17 @@ function eventFire(el, etype){
         evObj.initEvent(etype, true, false);
         el.dispatchEvent(evObj);
     }
+}
+
+function getTime() {
+    let date = new Date();
+    let h = date.getHours();
+    let m = date.getMinutes();
+    let s = date.getSeconds();
+
+    h = (h < 10) ? "0" + h : h;
+    m = (m < 10) ? "0" + m : m;
+    s = (s < 10) ? "0" + s : s;
+
+    return h + ":" + m + ":" + s;
 }

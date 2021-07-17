@@ -127,7 +127,7 @@ window.addEventListener('load', function() {
             data = data.result;
             balance = parseFloat(data.balance.balance);
             let balanceusd = balance * duco_price;
-            console.log("Balance received: " + balance + " ($" + balanceusd + ")");
+            //console.log("Balance received: " + balance + " ($" + balanceusd + ")");
 
             if (oldb != balance) {
                 calculdaily(balance, oldb)
@@ -152,7 +152,7 @@ window.addEventListener('load', function() {
                 balanceusd_after_dot);
 
             myMiners = data.miners;
-            console.log("Miner data received");
+            //console.log("Miner data received");
 
             if (myMiners.length > 0 || success_once) {
                 let success_once = true;
@@ -205,7 +205,9 @@ window.addEventListener('load', function() {
                     totalHashes = totalHashes + miner_hashrate;
                 }
                 update_element("miners", user_miners_html);
+                update_element("miners_miner", user_miners_html);
                 update_element("minerHR", "Total hashrate: " + scientific_prefix(totalHashes) + "H/s");
+                update_element("hashrate_miner", scientific_prefix(totalHashes) + "H/s");
                 totalHashes = 0;
             } else {
                 update_html("miners", "<b class='subtitle is-size-6'>No miners detected</b>" +
@@ -214,7 +216,7 @@ window.addEventListener('load', function() {
 
             const transtable = document.getElementById("transactions");
             user_transactions = data.transactions.reverse();
-            console.log("Transaction list received");
+            //console.log("Transaction list received");
             if (user_transactions) {
                 transactions_html = "";
                 for (let i in user_transactions) {
@@ -286,6 +288,9 @@ window.addEventListener('load', function() {
             update_html("estimatedprofit", avg_before_dot +
                 "<span class='has-text-weight-light'>." +
                 avg_after_dot + "</span> ᕲ");
+            update_html("estimatedprofit_miner", avg_before_dot +
+                "<span class='has-text-weight-light'>." +
+                avg_after_dot + "</span> ᕲ");
 
             avgusd = daily * duco_price;
             avgusd_list = round_to(2, avgusd).toString().split(".")
@@ -293,6 +298,11 @@ window.addEventListener('load', function() {
             avgusd_after_dot = avgusd_list[1]
 
             update_html("estimatedprofitusd", "<span>≈ $</span>" +
+                avgusd_before_dot +
+                "<span class='has-text-weight-light'>." +
+                avgusd_after_dot +
+                "</span>");
+            update_html("estimatedprofitusd_miner", "<span>≈ $</span>" +
                 avgusd_before_dot +
                 "<span class='has-text-weight-light'>." +
                 avgusd_after_dot +
@@ -326,7 +336,7 @@ window.addEventListener('load', function() {
 
             socket.onclose = function(event) {
                 if (loggedIn) {
-                    console.error("Error Code: " + event.code);
+                    //console.error("Error Code: " + event.code);
                     let dataErr = "Unknown";
 
                     if (event.code == 1000) {
@@ -404,7 +414,7 @@ window.addEventListener('load', function() {
                 serverMessage = msg.data;
 
                 if (awaiting_version && sending == false) {
-                    console.log("Version received: " + serverMessage);
+                    //console.log("Version received: " + serverMessage);
                     awaiting_version = false;
                 }
                 if (awaiting_login == false && awaiting_version == false && sending == false) {
@@ -414,7 +424,7 @@ window.addEventListener('load', function() {
                 }
                 if (awaiting_login && serverMessage.includes("OK") && sending == false) {
 
-                    console.log("User logged-in");
+                    //console.log("User logged-in");
                     let time = new Date().getHours();
                     let greeting = "Welcome back";
                     if (time < 12) {
@@ -861,7 +871,7 @@ window.addEventListener('load', function() {
             fetch('https://server.duinocoin.com/balances/' + hashToBeFound)
                 .then(response => response.json())
                 .then(data => {
-                    console.log(data)
+                    //console.log(data)
                     if (data.success == true) {
                         cont = false;
                         let amount_usd = data.result.balance * duco_price;
