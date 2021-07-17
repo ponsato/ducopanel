@@ -59,17 +59,6 @@ function manageMinerConfig (method) {
     let content = '';
     let dir = '';
     let avrport = [];
-    if (method !== 'pc') {
-        dir = './AVRMiner_' + version + '_resources';
-        if (!fs.existsSync(dir)){
-            fs.mkdirSync(dir);
-        }
-    } else {
-        dir = './PCMiner_' + version + '_resources';
-        if (!fs.existsSync(dir)){
-            fs.mkdirSync(dir);
-        }
-    }
     if (method === 'mining') {
         document.querySelectorAll("input[type=checkbox][name=port]:checked").forEach(function(port){
             avrport.push(port.value);
@@ -80,7 +69,11 @@ function manageMinerConfig (method) {
             avrport.push(port.value);
         });
     }
-    if (method !== 'pc') {
+    if (method === 'mining' || method === 'boot') {
+        dir = './AVRMiner_' + version + '_resources';
+        if (!fs.existsSync(dir)){
+            fs.mkdirSync(dir);
+        }
         let identifier_string = document.getElementById("identifier").value;
         let identifier = identifier_string !== '' ? identifier_string : 'none';
         let avrboard = '';
@@ -99,26 +92,6 @@ function manageMinerConfig (method) {
             "shuffle_ports = y\n" +
             "discord_presence = y\n" +
             avrboard +
-            "\n";
-    } else {
-        let identifier_string = document.getElementById("identifier_pcminering").value;
-        let identifier = identifier_string !== '' ? identifier_string : 'none';
-        let efficiency = document.getElementById('mining_intensity').value;
-        let threads = document.getElementById('mining_threads').value;
-        let algorithm = document.getElementById('algorithm').value;
-        content = "[Duino-Coin-PC-Miner]\n" +
-            "username = " + username + "\n" +
-            "efficiency = " + efficiency + "\n" +
-            "threads = " + threads + "\n" + // TODO
-            "requested_diff = MEDIUM\n" +
-            "donate = 0\n" +
-            "identifier = " + identifier + "\n" +
-            "algorithm = " + algorithm + "\n" +
-            "language = english\n" +
-            "debug = n\n" +
-            "soc_timeout = 30\n" + // TODO
-            "periodic_report = 60\n" + // TODO
-            "discord_presence = y\n" + // TODO
             "\n";
     }
     fs.writeFile(dir + '/Miner_config.cfg', content, (err) => {
@@ -174,7 +147,7 @@ window.addEventListener('load', function() {
 
     let start_pcminering = document.getElementById('start_pcminering');
     start_pcminering.onclick = function () {
-        manageMinerConfig('pc');
+        runPcMiner();
         start_pcminering.setAttribute("disabled", true);
     }
     let clear_console_pcminering = document.getElementById('clear_console_pcminering');
@@ -331,62 +304,92 @@ function runBootloader() {
 }
 
 function runPcMiner() {
+    let identifier_string = document.getElementById("identifier_pcminering").value;
+    let identifier = identifier_string !== '' ? identifier_string : 'None';
+    let threads = document.getElementById('mining_threads').value !== '' ? document.getElementById('mining_threads').value : 1;
     let traces = document.getElementById('traces_pcminering');
-    let dirminer = upath.toUnix(upath.join(__dirname, "../miner","PC_Miner.py"));
-    let python = require('child_process').spawn('python', [dirminer, '']);
     let start_pcminering = document.getElementById('start_pcminering');
     let stop_pcminering = document.getElementById('stop_pcminering');
+    let workerVer = 0;
+    let totalShares_pcminer = 0;
+    let sharesCorrect_pcminer = 0;
+    let shares_pcminer = document.getElementById("shares_pcminer");
+    let hljs_pcminer = document.getElementById('hljs_pcminer');
+    let sharesperc_pcminer = document.getElementById('sharesperc_pcminer');
+    if (threads < 1) {
+        threads = 1;
+    }
+    if (threads > 50) {
+        threads = 50;
+    }
+    let workers = [];
+    for (let workersAmount = 0; workersAmount < threads; workersAmount++) {
+        let socketWorker = new Worker("js/webminer/worker.js");
+        workers.push(socketWorker);
+        socketWorker.postMessage('Start,' + username + "," + identifier + ","+ workerVer); //passes the start command, username, rigid and worker version to the worker
+        workerVer++;
+        socketWorker.onmessage = function(event) {
+            const data = event.data.split(",");
+            switch (data[0]) {
+                case 'UpdateLog':
+                    if (data[1].indexOf('error') > -1) {
+                        traces.innerHTML += '<span style="color: red">' + data[1] + '</span>';
+                    } else if (data[1].indexOf('found') > -1) {
+                        traces.innerHTML += '<span style="color: lime">' + data[1].replace("Share found", "Accepted") + '</span>'
+                    } else if (data[1].indexOf('sys0') > -1) {
+                        traces.innerHTML += '<span style="color: yellow">' + data[1] + '</span>'
+                    } else {
+                        traces.innerHTML += '<span style="color: cyan">' + String.fromCharCode.apply(null, data[1]) + '</span>'
+                    }
+                    hljs_pcminer.scrollTop = document.getElementById('hljs_pcminer').scrollHeight;
+                    break;
+                case 'UpdateHashrate':
+                    document.getElementById("hashrate_pcminer").innerHTML = parseFloat(data[2] / 1000).toFixed(2) + " kH/s";
+                    break;
+                case 'GoodShare':
+                    totalShares_pcminer++;
+                    sharesCorrect_pcminer++;
+                    shares_pcminer.innerHTML = sharesCorrect_pcminer + "/" + totalShares_pcminer;
+                    sharesperc_pcminer.innerHTML = " (" + (sharesCorrect_pcminer / totalShares_pcminer * 100).toFixed(2) + "%)";
+                    break;
+                case 'BadShare':
+                    totalShares_pcminer++;
+                    shares_pcminer.innerHTML = sharesCorrect_pcminer + "/" + totalShares_pcminer;
+                    sharesperc_pcminer.innerHTML = " (" + (sharesCorrect_pcminer / totalShares_pcminer * 100).toFixed(2) + "%)";
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+    let hours = `00`,
+        minutes = `00`,
+        seconds = `00`;
+    document.querySelector("[data-chronometer_pcminer]").innerHTML = `${hours}:${minutes}:${seconds}`;
+    let chronometer_pcminer = setInterval(function() {
+        seconds++
+        if (seconds < 10){seconds = `0` + seconds}
+        if (seconds > 59) {
+            seconds = `00`;
+            minutes++;
+            if (minutes < 10){minutes = `0` + minutes}
+        }
+        if (minutes > 59) {
+            minutes = `00`;
+            hours++;
+            if (hours < 10){hours = `0` + hours}
+        }
+        document.querySelector("[data-chronometer_pcminer]").innerHTML = `${hours}:${minutes}:${seconds}`;
+    }, 1000);
     stop_pcminering.removeAttribute("disabled");
     stop_pcminering.onclick = function () {
-        python.kill('SIGINT');
+        workers.map(function (worker) {
+            worker.terminate();
+        });
         start_pcminering.removeAttribute("disabled");
         stop_pcminering.setAttribute("disabled", true);
+        clearInterval(chronometer_pcminer);
     };
-    python.stdout.on('data', function (data) {
-        console.log("Python response: ", data.toString('utf8'));
-        if (String.fromCharCode.apply(null, data).indexOf('Error') > -1) {
-            traces.innerHTML += '<span style="color: red">' + String.fromCharCode.apply(null, data) + '</span>';
-        } else if (String.fromCharCode.apply(null, data).indexOf('Accepted') > -1) {
-            traces.innerHTML += '<span style="color: lime">' + String.fromCharCode.apply(null, data) + '</span>'
-        } else if (String.fromCharCode.apply(null, data).indexOf('sys0') > -1) {
-            traces.innerHTML += '<span style="color: yellow">' + String.fromCharCode.apply(null, data) + '</span>'
-        } else {
-            traces.innerHTML += '<span style="color: cyan">' + String.fromCharCode.apply(null, data) + '</span>'
-        }
-        traces.scrollTop = traces.scrollHeight;
-    });
-    python.stderr.on('data', (data) => {
-        console.log("Python response: ", data.toString('utf8'));
-        if (String.fromCharCode.apply(null, data).indexOf('Error') > -1) {
-            traces.innerHTML += '<span style="color: red">' + String.fromCharCode.apply(null, data) + '</span>';
-        } else if (String.fromCharCode.apply(null, data).indexOf('Accepted') > -1) {
-            traces.innerHTML += '<span style="color: lime">' + String.fromCharCode.apply(null, data) + '</span>'
-        } else if (String.fromCharCode.apply(null, data).indexOf('sys0') > -1) {
-            traces.innerHTML += '<span style="color: yellow">' + String.fromCharCode.apply(null, data) + '</span>'
-        } else {
-            traces.innerHTML += '<span style="color: cyan">' + String.fromCharCode.apply(null, data) + '</span>'
-        }
-        traces.scrollTop = traces.scrollHeight;
-    });
-    python.on('error', (error) => {
-        console.error(`error: ${error.message}`);
-        if (String.fromCharCode.apply(null, data).indexOf('Error') > -1) {
-            traces.innerHTML += '<span style="color: red">' + String.fromCharCode.apply(null, error) + '</span>';
-        } else if (String.fromCharCode.apply(null, error).indexOf('Accepted') > -1) {
-            traces.innerHTML += '<span style="color: lime">' + String.fromCharCode.apply(null, error) + '</span>'
-        } else if (String.fromCharCode.apply(null, error).indexOf('sys0') > -1) {
-            traces.innerHTML += '<span style="color: yellow">' + String.fromCharCode.apply(null, error) + '</span>'
-        } else {
-            traces.innerHTML += '<span style="color: cyan">' + String.fromCharCode.apply(null, error) + '</span>'
-        }
-        traces.scrollTop = traces.scrollHeight;
-    });
-    python.on('close', (data) => {
-        traces.innerHTML += '<span style="color: white">child process exited with code ' + data + '</span>';
-        traces.scrollTop = traces.scrollHeight;
-        start_pcminering.removeAttribute("disabled");
-        stop_pcminering.setAttribute("disabled", true);
-    });
 }
 
 function eventFire(el, etype){

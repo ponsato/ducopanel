@@ -206,6 +206,7 @@ window.addEventListener('load', function() {
                 }
                 update_element("miners", user_miners_html);
                 update_element("miners_miner", user_miners_html);
+                update_element("miners_pcminer", user_miners_html);
                 update_element("minerHR", "Total hashrate: " + scientific_prefix(totalHashes) + "H/s");
                 update_element("hashrate_miner", scientific_prefix(totalHashes) + "H/s");
                 totalHashes = 0;
@@ -289,6 +290,9 @@ window.addEventListener('load', function() {
                 "<span class='has-text-weight-light'>." +
                 avg_after_dot + "</span> ᕲ");
             update_html("estimatedprofit_miner", avg_before_dot +
+                "<span class='has-text-weight-light'>." +
+                avg_after_dot + "</span> ᕲ");
+            update_html("estimatedprofit_pcminer", avg_before_dot +
                 "<span class='has-text-weight-light'>." +
                 avg_after_dot + "</span> ᕲ");
 

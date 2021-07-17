@@ -506,7 +506,7 @@
                                                             <i class="fa fa-chart-bar is-size-7 card-pomegrante fa-fw"></i>
                                                             YOUR MINERS
                                                         </p>
-                                                        <div style="height:5em;overflow:auto;">
+                                                        <div style="height:7em;overflow:auto;">
                                                             <span id="miners_miner">Please wait</span>
                                                         </div>
                                                     </div>
@@ -525,7 +525,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-
                                         </div>
                                     </section>
                                     <!--Bootloading-->
@@ -588,27 +587,6 @@
                                                                placeholder="PC Identifier">
                                                     </div>
                                                     <div class="control">
-                                                        <label for="algorithm" class="label">Algorithm</label>
-                                                        <div class="select is-info">
-                                                            <select id="algorithm">
-                                                                <option value="DUCO-S1">DUCO-S1</option>
-                                                                <option value="XXHASH">XXHASH</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="control">
-                                                        <label for="mining_intensity" class="label">Mining Intensity
-                                                            %</label>
-                                                        <input class="input is-info" type=number min=1 max=100
-                                                               id="mining_intensity" placeholder="1 - 100">
-                                                    </div>
-                                                    <div class="control">
-                                                        <label for="mining_difficulty" class="label">Mining
-                                                            Difficulty</label>
-                                                        <input class="input is-info" type=number min=1 max=3
-                                                               id="mining_difficulty" placeholder="1 - 3">
-                                                    </div>
-                                                    <div class="control">
                                                         <label for="mining_threads" class="label">Threads for
                                                             mining</label>
                                                         <input class="input is-info" type=number min=1
@@ -626,12 +604,84 @@
                                             </div>
                                             <br>
                                             <div class="box traces code">
-                                                <pre class="hljs"><code id="traces_pcminering"></code></pre>
+                                                <pre class="hljs" id="hljs_pcminer"><code id="traces_pcminering"></code></pre>
                                             </div>
                                             <div class="buttons">
                                                 <button class="button is-primary" id="clear_console_pcminering">Clear
                                                     console
                                                 </button>
+                                            </div>
+                                            <div class="columns">
+                                                <div class="column">
+                                                    <div class="box">
+                                                        <p class="subtitle">
+                                                            <i class="fa fa-check fa-fw" style="color:#6ab04c;"></i>
+                                                            ACCEPTED SHARES
+                                                        </p>
+                                                        <p class="title">
+                                                                    <span id="shares_pcminer">
+                                                                        0/0
+                                                                    </span>
+                                                            <span class="subtitle" id="sharesperc_pcminer">
+                                                                        (0%)
+                                                                    </span>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="column">
+                                                    <div class="box">
+                                                        <p class="subtitle">
+                                                            <i class="fa fa-tachometer-alt fa-fw" style="color:#eb4d4b;"></i>
+                                                            HASHRATE
+                                                        </p>
+                                                        <p class="title">
+                                                            <span id="hashrate_pcminer">
+                                                                0 kH/s
+                                                            </span>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="column">
+                                                    <div class="box">
+                                                        <p class="subtitle">
+                                                            <i class="fa fa-coins is-size-7 card-purple fa-fw"></i>
+                                                            EST. DAILY PROFIT
+                                                        </p>
+                                                        <p class="title">
+                                                            <span id="estimatedprofit_pcminer">
+                                                                Calculating
+                                                            </span>
+                                                            <span class="subtitle" id="estimatedprofitusd_pcminer">
+                                                            </span>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="columns">
+                                                <div class="column is-two-thirds">
+                                                    <div class="box">
+                                                        <p class="subtitle">
+                                                            <i class="fa fa-chart-bar is-size-7 card-pomegrante fa-fw"></i>
+                                                            YOUR MINERS
+                                                        </p>
+                                                        <div style="height:7em;overflow:auto;">
+                                                            <span id="miners_pcminer">Please wait</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="column is-one-third">
+                                                    <div class="box">
+                                                        <p class="subtitle">
+                                                            <i class="fa fa-clock fa-fw" style="color:#f0932b;"></i>
+                                                            ELAPSED TIME
+                                                        </p>
+                                                        <p class="title">
+                                                            <span data-chronometer_pcminer>
+                                                                00:00:00
+                                                            </span>
+                                                        </p>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </section>
@@ -891,8 +941,8 @@
                                                             <i class="is-size-7 card-red fa fa-chart-pie"></i>
                                                             CHARTS
                                                             <span class="title is-size-6 has-text-grey">
-                            (click to enlarge)
-                        </span>
+                                                                (click to enlarge)
+                                                            </span>
                                                         </p>
                                                         <div class="columns">
                                                             <div class="column is-half">
@@ -1073,15 +1123,15 @@
                                                         <i class="is-size-7 card-purple fa fa-users"></i>
                                                         ACTIVE WORKERS
                                                         <span class="title is-size-6 has-text-grey" id="allworkers">
-                        (not loaded by default)
-                    </span>
+                                                            (not loaded by default)
+                                                        </span>
                                                     </p>
                                                     <div class="panel-block">
-                    <span id="workers" class="subtitle is-size-6">
-                        <button id="loadworkers" class="button is-info">
-                            Load all workers
-                        </button>
-                    </span>
+                                                        <span id="workers" class="subtitle is-size-6">
+                                                            <button id="loadworkers" class="button is-info">
+                                                                Load all workers
+                                                            </button>
+                                                        </span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1149,11 +1199,6 @@
                                                         <i class="fas fa-sun"></i>
                                                     </span>
                                             </div>
-                                            <a href="https://server.duinocoin.com/webminer.html"
-                                               class="button is-secondary">
-                                                <img class="icon is-small" src="resources/webminer.png">
-                                                <span>Web Miner</span>
-                                            </a>
                                             <a href="https://github.com/revoxhere/duino-coin" target="_blank"
                                                class="button is-secondary">
                                                 <i class="fab fa-fw fa-github icon is-small"></i>
@@ -1177,11 +1222,6 @@
                                                target="_blank" class="button is-secondary">
                                                 <img src="resources/justswap.png" class="icon is-small">
                                                 <span>JustSwap Exchange</span>
-                                            </a>
-                                            <a href="https://explorer.duinocoin.com" target="_blank"
-                                               class="button is-secondary">
-                                                <img src="resources/explorer.png" class="icon is-small">
-                                                <span>Network stats</span>
                                             </a>
                                             <a href="https://lulaschkas.github.io/duco-mining-dashboard/"
                                                target="_blank" class="button is-secondary">
