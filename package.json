@@ -1,5 +1,5 @@
 {
-  "name": "ducopanel",
+  "name": "Ducopanel",
   "version": "1.0.0",
   "description": "Duinocoin minerpanel and dashboard",
   "main": "main.js",
@@ -7,7 +7,13 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron-forge start",
     "package": "electron-forge package",
-    "make": "electron-forge make"
+    "make": "electron-forge make",
+    "clean": "rimraf dist",
+    "exe32": "electron-packager . Ducopanel --platform win32 --arch ia32 --ignore \"(dist|node_modules/electron.*)\" --icon resources/Icon.ico",
+    "exe64": "electron-packager . Ducopanel --platform win32 --arch x64 --ignore \"(dist|node_modules/electron.*)\" --icon resources/Icon.ico",
+    "set32": "electron-installer-windows --src out/ducopanel-win32-ia32/ --dest dist/installers/ia32/ --config config.json",
+    "set64": "electron-installer-windows --src out/ducopanel-win32-x64/ --dest dist/installers/ --config config.json",
+    "build": "npm run clean && npm run make && npm run set64"
   },
   "repository": {
     "type": "git",

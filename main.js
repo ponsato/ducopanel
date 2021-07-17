@@ -1,6 +1,11 @@
 const { app, BrowserWindow } = require('electron')
 const path = require('path')
 
+if (require('electron-squirrel-startup')) app.quit();
+const setupEvents = require('./forge.config')
+if (setupEvents.handleSquirrelEvent()) {
+    process.exit()
+}
 
 function createWindow () {
     const mainWindow = new BrowserWindow({

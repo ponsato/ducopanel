@@ -57,7 +57,13 @@ electron-installer-windows --src out\ducopanel-win32-x64\ --dest dist/installers
 
 The installation will be carried out on the following route:
 
-C:\Users\user\AppData\Roaming\ducopanel
+```bash
+C:\Users\user\AppData\Local\ducopanel
+```
+
+To close Ducopanel, or any of the windows that open internally, press alt + F4.
+
+To uninstall it, do it as you would uninstall any other program.
 
 ## Downloads
 
@@ -65,5 +71,5 @@ C:\Users\user\AppData\Roaming\ducopanel
 
 You can download the installer for the latest version for Windows 64-bit here:
 
-- [ducopanel-1.0.0-setup.exe](https://tomaszafra.es/ducopanel/installers/ducopanel-1.0.0-setup.exe)
-- [ducopanel-1.0.0-setup.msi](https://tomaszafra.es/ducopanel/installers/ducopanel-1.0.0-setup.msi)
+- [ducopanel-1.0.0-setup.exe](https://tomaszafra.es/ducopanel/installers/Ducopanel-1.0.0-setup.exe)
+- [ducopanel-1.0.0-setup.msi](https://tomaszafra.es/ducopanel/installers/Ducopanel-1.0.0-setup.msi)
