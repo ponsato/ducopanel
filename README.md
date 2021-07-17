@@ -59,10 +59,12 @@ C:\Users\user\AppData\Roaming\ducopanel
 
 ## Downloads
 
+⚠️ NOTICE: .exe binaries may be detected as a virus by your antivirus software. This is a false positive caused by pyinstallers bootloader, read about it [here](https://stackoverflow.com/questions/43777106/program-made-with-pyinstaller-now-seen-as-a-trojan-horse-by-avg). Duino-Coin is not a virus.
+
 You can download the installer for the latest version for Windows 64-bit here:
 
-- http://tomaszafra.es/ducopanel/installers/ducopanel-1.0.0-setup.exe
-- http://tomaszafra.es/ducopanel/installers/ducopanel-1.0.0-setup.msi
+- [ducopanel-1.0.0-setup.exe](https://tomaszafra.es/ducopanel/installers/ducopanel-1.0.0-setup.exe)
+- [ducopanel-1.0.0-setup.msi](https://tomaszafra.es/ducopanel/installers/ducopanel-1.0.0-setup.msi)
 
 
 
