@@ -13,7 +13,9 @@
     "exe64": "electron-packager . Ducopanel --platform win32 --arch x64 --ignore \"(dist|node_modules/electron.*)\" --icon resources/Icon.ico",
     "set32": "electron-installer-windows --src out/ducopanel-win32-ia32/ --dest dist/installers/ia32/ --config config.json",
     "set64": "electron-installer-windows --src out/ducopanel-win32-x64/ --dest dist/installers/ --config config.json",
-    "build": "npm run clean && npm run make && npm run set64"
+    "package-linux": "electron-packager . Ducopanel --overwrite --platform=linux --icon=resources/Icon.png --prune=true --out=dist/installers",
+    "build": "npm run clean && npm run make && npm run set64",
+    "buildLinux": "npm run clean && npm run make && npm run package-linux"
   },
   "repository": {
     "type": "git",
