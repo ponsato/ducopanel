@@ -214,8 +214,43 @@ body {
     }
 }
 
+.scale-in {
+    -webkit-animation-name: scaleIn;
+    animation-name: scaleIn;
+    -webkit-animation-duration: .5s;
+    animation-duration: .5s;
+}
+
+@-webkit-keyframes scaleIn {
+    from {-webkit-transform: scale(0);transform: scale(0);}
+    to {-webkit-transform: scale(1);transform: scale(1);}
+}
+
+@keyframes scaleIn {
+    from {-webkit-transform: scale(0);transform: scale(0);}
+    to {-webkit-transform: scale(1);transform: scale(1);}
+}
+
+.modal-background {
+    background-color: rgba(0, 0, 0, .4) !important;
+    -webkit-backdrop-filter: blur(2px);
+    backdrop-filter: blur(2px);
+}
+
+/**/
+
 select {
     background: inherit !important;
+}
+/* Change Autocomplete styles in Chrome*/
+.input:-webkit-autofill,
+.input:-webkit-autofill:hover,
+.input:-webkit-autofill:focus,
+.input:valid {
+    border: 1px solid hsl(141, 53%, 53%) !important;
+    -webkit-text-fill-color: hsl(141, 53%, 53%);
+    -webkit-box-shadow: 0 0 0px 10px inherit inset;
+    transition: background-color 5000s ease-in-out 0s;
 }
 
 #modal_error {

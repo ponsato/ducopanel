@@ -27,6 +27,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!-- WebWallet -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script type="text/javascript" src="js/panel.js"></script>
     <!--<script type="text/javascript" src="js/serialports.js"></script>-->
 </head>
@@ -49,7 +50,7 @@
                                 <p class="has-text-weight-normal" style="text-align:center">
                                     Duco Panel
                                     <span class="subtitle is-size-7">
-                                        v1.0.0
+                                        v1.256.0
                                     </span>
                                 </p>
                             </span>
@@ -59,8 +60,7 @@
                                 <div class="field">
                                     <label for="" class="label has-text-grey">Your username</label>
                                     <div class="control has-icons-left">
-                                        <input type="text" id="usernameinput" placeholder="e.g. revox" class="input"
-                                               required>
+                                        <input type="text" id="usernameinput" placeholder="e.g. revox" class="input" required>
                                         <span class="icon is-small is-left">
                                             <i class="fa fa-user"></i>
                                         </span>
@@ -69,8 +69,7 @@
                                 <div class="field">
                                     <label for="" class="label has-text-grey">Your password</label>
                                     <div class="control has-icons-left">
-                                        <input type="password" id="passwordinput" placeholder="*******" class="input"
-                                               required>
+                                        <input type="password" id="passwordinput" placeholder="*******" class="input" required>
                                         <span class="icon is-small is-left">
                                             <i class="fa fa-lock"></i>
                                         </span>
@@ -90,8 +89,7 @@
                                                     Login
                                                 </span>
                                         </button>
-                                        <a href="https://wallet.duinocoin.com/register"
-                                           class="button is-duco-alt is-warning is-fullwidth" id="loginbutton">
+                                        <a href="https://wallet.duinocoin.com/register" class="button is-duco-alt is-warning is-fullwidth" id="loginbutton">
                                             <i class="fa fa-sign-in-alt fa-fw"></i>&nbsp;
                                             Register
                                         </a>
@@ -156,77 +154,56 @@
                                     <!--Wallet-->
                                     <section class="tab-content">
                                         <div class="container">
-                                            <div class="columns">
-                                                <div class="column">
-                                                    <div class="box">
-                                                        <p class="subtitle">
-                                                            <i class="fa fa-wallet is-size-7 card-orange fa-fw"></i>
-                                                            DUCO BALANCE
-                                                        </p>
-                                                        <p class="title">
-                                                    <span id="balance">
-                                                        Please wait
-                                                    </span>
-                                                            <span class="subtitle is-size-6" id="balanceusd"
-                                                                  style="white-space: nowrap">
-                                                    </span>
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                                <div class="column">
-                                                    <div class="box">
-                                                        <p class="subtitle">
-                                                            <i class="fa fa-coins is-size-7 card-purple fa-fw"></i>
-                                                            EST. DAILY PROFIT
-                                                        </p>
-                                                        <p class="title">
-                                                    <span id="estimatedprofit">
-                                                        Calculating
-                                                    </span>
-                                                            <span class="subtitle" id="estimatedprofitusd">
-                                                    </span>
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                                <div class="column">
+                                            <div class="columns is-multiline">
+                                                <div class="column is-full">
                                                     <div class="box">
                                                         <div class="columns">
                                                             <div class="column">
                                                                 <p class="subtitle">
-                                                                    <i class="fa fa-money-bill-wave is-size-7 card-turquoise fa-fw"></i>
-                                                                    DUCO PRICE
+                                                                    <i class="fa fa-wallet is-size-7 card-orange fa-fw"></i>
+                                                                    DUCO BALANCE
                                                                 </p>
                                                                 <p class="title">
-                                                            <span id="ducousd">
-                                                                Please wait
-                                                            </span>
+                                                                    <span id="balance">
+                                                                        Fetching data
+                                                                    </span>
+                                                                    <span class="subtitle is-size-6" id="balanceusd" style="white-space: nowrap">
+                                                                    </span>
+                                                                </p>
+                                                                <p class="subtitle">
+                                                                    <span id="estimatedprofit">
+                                                                        Calculating est. daily profit
+                                                                    </span>
+                                                                    <span class="subtitle" id="estimatedprofitusd">
+                                                                    </span>
                                                                 </p>
                                                             </div>
-                                                            <div class="is-hidden-mobile">
-                                                                <a href="https://explorer.duinocoin.com#Charts">
-                                                                    <img style="width:7em"
-                                                                         src="https://server.duinocoin.com/mini_prices.png">
-                                                                </a>
+                                                            <div class="column">
+                                                                <canvas height="60em" id="balance_chart"></canvas>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="columns">
-                                                <div class="column is-one-third">
+                                            <div class="columns is-multiline">
+                                                <!-- Your Miners -->
+                                                <div class="column is-half">
                                                     <div class="box">
                                                         <p class="subtitle">
-                                                            <i class="fa fa-newspaper is-size-7 card-green fa-fw"></i>
-                                                            NEWS
+                                                            <i class="fa fa-chart-bar is-size-7 card-pomegrante fa-fw"></i>
+                                                            YOUR MINERS
                                                         </p>
-                                                        <iframe src="https://server.duinocoin.com/news.html"
-                                                                frameborder="0"
-                                                                style="word-break:break-all;width:100%;overflow:auto;height:13rem;"
-                                                                width="100%" allowtransparency="true">Please wait
-                                                        </iframe>
+                                                        <div style="height:11.25em;overflow:auto;">
+                                                            <span id="miners">Fetching data</span>
+                                                        </div>
+                                                        <p class="title is-size-6 mt-3">
+                                                            <i class="fa fa-tachometer-alt is-size-7 card-orange fa-fw"></i>&nbsp;
+                                                            <span id="minerHR">Fetching data</span>
+                                                        </p>
                                                     </div>
                                                 </div>
-                                                <div class="column is-one-third">
+                                                <!-- Send Money -->
+                                                <div class="column is-half">
                                                     <div class="box">
                                                         <p class="subtitle">
                                                             <i class="fa fa-share is-size-7 card-blue fa-fw"></i>
@@ -277,23 +254,87 @@
                                                         <span class="subtitle my-2 is-size-7" id="sendinginfo"></span>
                                                     </div>
                                                 </div>
-                                                <div class="column is-one-third">
+                                                <!-- Duco Price -->
+                                                <div class="column is-half">
                                                     <div class="box">
                                                         <p class="subtitle">
-                                                            <i class="fa fa-chart-bar is-size-7 card-pomegrante fa-fw"></i>
-                                                            YOUR MINERS
+                                                            <i class="fa fa-money-bill-wave is-size-7 card-turquoise fa-fw"></i>
+                                                            DUCO PRICE
                                                         </p>
-                                                        <div style="height:11.6em;overflow:auto;">
-                                                            <span id="miners">Please wait</span>
-                                                        </div>
-                                                        <p class="title is-size-6 mt-3">
-                                                            <i class="fa fa-tachometer-alt is-size-7 card-orange fa-fw"></i>&nbsp;
-                                                            <span id="minerHR">Please wait</span>
-                                                        </p>
+                                                        <div class="columns is-multiline">
+                                                            <div class="column is-full">
+                                                                <b style="color:#9381ff">DUCO Exchange</b>
+                                                                <div class="columns">
+                                                                    <div class="column">
+                                                                        &bull;
+                                                                        DUCO - XMG
+                                                                        <br>
+                                                                        <span id="ducousd" class="has-text-weight-bold">
+                                                                    Fetching data
+                                                                </span>
+                                                                    </div>
+                                                                    <div class="column">
+                                                                        &bull;
+                                                                        DUCO - BCH
+                                                                        <br>
+                                                                        <span id="ducousd_bch" class="has-text-weight-bold">
+                                                                    Fetching data
+                                                                </span>
+                                                                    </div>
+                                                                    <div class="column">
+                                                                        &bull;
+                                                                        DUCO - TRX
+                                                                        <br>
+                                                                        <span id="ducousd_trx" class="has-text-weight-bold">
+                                                                    Fetching data
+                                                                </span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="column">
+                                                                <b style="color:#60d394">Node-S</b>
+                                                                <div class="columns">
+                                                                    <div class="column">
+                                                                        &bull;
+                                                                        DUCO - USD
+                                                                        <br>
+                                                                        <span id="duco_nodes" class="has-text-weight-bold">
+                                                                    Fetching data
+                                                                </span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="column">
+                                                                <b style="color:#ff5d8f">JustSwap</b>
+                                                                <div class="columns">
+                                                                    <div class="column">
+                                                                        &bull;
+                                                                        DUCO - TRX
+                                                                        <br>
+                                                                        <span id="duco_justswap" class="has-text-weight-bold">
+                                                                    Fetching data
+                                                                </span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                    </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="columns">
+                                                <!-- News -->
+                                                <div class="column is-half">
+                                                    <div class="box">
+                                                        <p class="subtitle">
+                                                            <i class="fa fa-newspaper is-size-7 card-green fa-fw"></i>
+                                                            NEWS
+                                                        </p>
+                                                        <iframe src="https://server.duinocoin.com/news.html"
+                                                                frameborder="0"
+                                                                style="word-break:break-all;width:100%;overflow:auto;height:13rem;"
+                                                                width="100%" allowtransparency="true">Please wait
+                                                        </iframe>
+                                                    </div>
+                                                </div>
+                                                <!-- Transactions -->
                                                 <div class="column is-half">
                                                     <div class="box">
                                                         <p class="subtitle">
@@ -320,6 +361,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <!-- Calculator -->
                                                 <div class="column is-half">
                                                     <div class="box">
                                                         <p class="subtitle">
@@ -413,7 +455,6 @@
                                                         </p>
                                                     </div>
                                                 </div>
-                                            </div>
                                         </div>
                                     </section>
                                     <!--Minering-->
@@ -1136,7 +1177,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div id="large_prices" class="modal">
+                                        <div id="large_prices" class="modal scale-in">
                                             <div class="modal-background"></div>
                                             <div class="modal-card">
                                                 <header class="modal-card-head has-background-success">
@@ -1150,7 +1191,7 @@
                                                 </section>
                                             </div>
                                         </div>
-                                        <div id="large_miners" class="modal">
+                                        <div id="large_miners" class="modal scale-in">
                                             <div class="modal-background"></div>
                                             <div class="modal-card">
                                                 <header class="modal-card-head has-background-success">
@@ -1164,7 +1205,7 @@
                                                 </section>
                                             </div>
                                         </div>
-                                        <div id="large_balances" class="modal">
+                                        <div id="large_balances" class="modal scale-in">
                                             <div class="modal-background"></div>
                                             <div class="modal-card">
                                                 <header class="modal-card-head has-background-success">
@@ -1258,7 +1299,7 @@
             </div>
         </div>
     </section>
-    <div id="modal_error" class="modal">
+    <div id="modal_error" class="modal scale-in">
         <div class="modal-background"></div>
         <div class="modal-card">
             <header class="modal-card-head has-background-danger">
