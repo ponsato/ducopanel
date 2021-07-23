@@ -98,11 +98,7 @@ module.exports = {
                     scalable: 'build/icon.png',
                 },
             },
-        },
-        {
-            name: '@electron-forge/maker-rpm',
-            platforms: ['linux'],
-        },
+        }
     ],
     handleSquirrelEvent: function() {
         if (process.argv.length === 1) {
