@@ -198,6 +198,9 @@ window.addEventListener('load', function() {
             update_html("balance", balance_before_dot +
                 "<span class='has-text-weight-light'>." +
                 balance_after_dot + "</span> ᕲ");
+            update_html("balance_miner", balance_before_dot +
+                "<span class='has-text-weight-light'>." +
+                balance_after_dot + "</span> ᕲ");
 
             let balanceusd_list = round_to(4, balanceusd).toString().split(".")
             balanceusd_before_dot = balanceusd_list[0]
@@ -377,6 +380,8 @@ window.addEventListener('load', function() {
             update_element("estimatedprofitusd", "(≈ $" +
                 avgusd + ")");
             update_element("estimatedprofitusd_miner", "(≈ $" +
+                avgusd + ")");
+            update_element("estimatedprofitusd_pcminer", "(≈ $" +
                 avgusd + ")");
         }
         start = Date.now()
@@ -819,7 +824,7 @@ window.addEventListener('load', function() {
                     let counter = 0;
                     let worker_counter = 0;
                     for (worker in data["Active workers"]) {
-                        workers += `<li><a href="?search=` + worker + `"> ` + worker + `</a>&nbsp;<span class="tag">` + data["Active workers"][worker] + ` worker(s)</span></li>`;
+                        workers += `<li><span style="color: #5ea3e4"> ` + worker + `</span>&nbsp;<span class="tag">` + data["Active workers"][worker] + ` worker(s)</span></li>`;
                         worker_counter += data["Active workers"][worker];
                         counter++;
                         //if (counter > 100) break;

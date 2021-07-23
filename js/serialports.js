@@ -20,7 +20,6 @@ async function listSerialPorts() {
             document.getElementById('error').textContent = ''
             document.getElementById('error_boot').textContent = ''
         }
-        //console.log('ports', ports);
 
         if (ports.length === 0) {
             document.getElementById('error').textContent = 'No ports discovered'
@@ -185,32 +184,22 @@ function runMiner() {
     let hljs_miner = document.getElementById('hljs_miner');
     let sharesperc = document.getElementById('sharesperc');
     stop_mining.removeAttribute("disabled");
-    stop_mining.onclick = function () {
-        python.kill('SIGINT');
-        start_mining.removeAttribute("disabled");
-        stop_mining.setAttribute("disabled", true);
-    };
     python.stdout.on('data', function (data) {
         //console.log("Python response: ", data.toString('utf8'));
         if (String.fromCharCode.apply(null, data).indexOf('Error') > -1) {
             traces.innerHTML += '<span style="color: red">' + String.fromCharCode.apply(null, data) + '</span>';
         } else if (String.fromCharCode.apply(null, data).indexOf('Rejected') > -1) {
-            totalShares++;
             traces.innerHTML += '<span style="color: red">' + String.fromCharCode.apply(null, data) + '</span>';
         } else if (String.fromCharCode.apply(null, data).indexOf('sys0') > -1) {
             traces.innerHTML += '<span style="color: yellow">' + String.fromCharCode.apply(null, data) + '</span>';
         } else if (String.fromCharCode.apply(null, data).indexOf('Periodic') > -1) {
             traces.innerHTML += '<span style="color: yellow">' + String.fromCharCode.apply(null, data) + '</span>';
         } else if (String.fromCharCode.apply(null, data).indexOf('Accepted') > -1) {
-            totalShares++;
-            sharesCorrect++;
             traces.innerHTML += '<span style="color: lime">' + String.fromCharCode.apply(null, data) + '</span>';
         } else {
             traces.innerHTML += '<span style="color: cyan">' + String.fromCharCode.apply(null, data) + '</span>';
         }
         hljs_miner.scrollTop = document.getElementById('hljs_miner').scrollHeight;
-        shares_miner.innerHTML = sharesCorrect + "/" + totalShares;
-        sharesperc.innerHTML = " (" + (sharesCorrect / totalShares * 100).toFixed(2) + "%)";
     });
     python.stderr.on('data', (data) => {
         console.log("Python response: ", data.toString('utf8'));
@@ -251,13 +240,21 @@ function runMiner() {
         }
         document.querySelector("[data-chronometer]").innerHTML = `${hours}:${minutes}:${seconds}`;
     }, 1000);
-
+    let cleanConsole = setInterval(function() {
+        document.getElementById('traces').innerHTML = '';
+    }, 1800000);
+    stop_mining.onclick = function () {
+        python.kill('SIGINT');
+        start_mining.removeAttribute("disabled");
+        stop_mining.setAttribute("disabled", true);
+    };
     python.on('close', (data) => {
         traces.innerHTML += '<span style="color: white">child process exited with code ' + data + '</span>';
         hljs_miner.scrollTop = document.getElementById('hljs_miner').scrollHeight;
         start_mining.removeAttribute("disabled");
         stop_mining.setAttribute("disabled", true);
         clearInterval(chronometer);
+        clearInterval(cleanConsole);
     });
 }
 
@@ -267,6 +264,7 @@ function runBootloader() {
     let python = require('child_process').spawn('python', [dircode, '']);
     let stop_boot = document.getElementById('stop_boot');
     let start_boot = document.getElementById('start_boot');
+    let hljs_bootloader = document.getElementById('hljs_bootloader');
     stop_boot.removeAttribute("disabled");
     stop_boot.onclick = function () {
         python.kill('SIGINT');
@@ -284,7 +282,7 @@ function runBootloader() {
         } else {
             traces.innerHTML += '<span style="color: white">' + String.fromCharCode.apply(null, data) + '</span>'
         }
-        traces.scrollTop = traces.scrollHeight;
+        hljs_bootloader.scrollTop = document.getElementById('hljs_bootloader').scrollHeight;
     });
     python.stderr.on('data', (data) => {
         if (String.fromCharCode.apply(null, data).indexOf('Error') > -1) {
@@ -296,13 +294,13 @@ function runBootloader() {
         } else {
             traces.innerHTML += '<span style="color: blue">' + String.fromCharCode.apply(null, data) + '</span>'
         }
-        traces.scrollTop = traces.scrollHeight;
+        hljs_bootloader.scrollTop = document.getElementById('hljs_bootloader').scrollHeight;
     });
     python.on('close', (data) => {
         traces.innerHTML += '<span style="color: white">child process exited with code ' + data + '</span>';
         start_boot.removeAttribute("disabled");
         stop_boot.setAttribute("disabled", true);
-        traces.scrollTop = traces.scrollHeight;
+        hljs_bootloader.scrollTop = document.getElementById('hljs_bootloader').scrollHeight;
     });
 }
 
@@ -385,6 +383,9 @@ function runPcMiner() {
         }
         document.querySelector("[data-chronometer_pcminer]").innerHTML = `${hours}:${minutes}:${seconds}`;
     }, 1000);
+    let cleanConsolePC = setInterval(function() {
+        document.getElementById('traces_pcminering').innerHTML = '';
+    }, 1800000);
     stop_pcminering.removeAttribute("disabled");
     stop_pcminering.onclick = function () {
         workers.map(function (worker) {
@@ -393,6 +394,7 @@ function runPcMiner() {
         start_pcminering.removeAttribute("disabled");
         stop_pcminering.setAttribute("disabled", true);
         clearInterval(chronometer_pcminer);
+        clearInterval(cleanConsolePC);
     };
 }
 

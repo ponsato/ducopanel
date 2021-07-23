@@ -212,6 +212,13 @@ body {
     ::-webkit-scrollbar-thumb:hover {
         background: #555;
     }
+    select {
+        background: #2d3436 !important;
+        color: hsl(141, 53%, 53%) !important;
+    }
+    .select.is-info select {
+        border-color: hsl(141, 53%, 53%) !important;
+    }
 }
 
 .scale-in {
@@ -337,7 +344,7 @@ select {
 }
 #workers {
     max-height: 50em;
-    overflow: auto;
+    overflow: auto !important;
 }
 @media (min-width: 768px) {
     #workers {

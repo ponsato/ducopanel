@@ -112,7 +112,7 @@
                                             <a>
                                                 <span class="icon is-small"><i class="fas fa-microchip"
                                                                                aria-hidden="false"></i></span>
-                                                <span>Mining</span>
+                                                <span>AVR Miner</span>
                                             </a>
                                         </li>
                                         <li id="tab_bootloader">
@@ -457,14 +457,14 @@
                                                 </div>
                                         </div>
                                     </section>
-                                    <!--Minering-->
+                                    <!--AVR_Minering-->
                                     <section class="tab-content">
                                         <div class="container">
                                             <div class="columns">
                                                 <div class="column is-full">
                                                     <p class="subtitle has-text-weight-light">
                                                         <i class="fa fa-microchip fa-fw" style="color:blue;"></i>
-                                                        MINERS
+                                                        AVR MINER
                                                     </p>
                                                     <div id="ports">
 
@@ -498,16 +498,16 @@
                                                 <div class="column">
                                                     <div class="box">
                                                         <p class="subtitle">
-                                                            <i class="fa fa-check fa-fw" style="color:#6ab04c;"></i>
-                                                            ACCEPTED SHARES
+                                                            <i class="fa fa-wallet is-size-7 card-orange fa-fw"></i>
+                                                            DUCO BALANCE
                                                         </p>
                                                         <p class="title">
-                                                                    <span id="shares_miner">
-                                                                        0/0
-                                                                    </span>
-                                                            <span class="subtitle" id="sharesperc">
-                                                                        (0%)
-                                                                    </span>
+                                                            <span id="balance_miner">
+                                                                Please wait
+                                                            </span>
+                                                            <span class="subtitle is-size-6" id="balanceusd"
+                                                                      style="white-space: nowrap">
+                                                            </span>
                                                         </p>
                                                     </div>
                                                 </div>
@@ -602,7 +602,7 @@
                                                 </button>
                                             </div>
                                             <div class="box traces code">
-                                                <pre class="hljs"><code id="traces_boot"></code></pre>
+                                                <pre class="hljs" id="hljs_bootloader"><code id="traces_boot"></code></pre>
                                             </div>
                                             <div class="buttons">
                                                 <button class="button is-primary" id="clear_console_boot">Clear
