@@ -35,7 +35,11 @@
     "@electron-forge/maker-squirrel": "^6.0.0-beta.57",
     "@electron-forge/maker-zip": "^6.0.0-beta.57",
     "electron": "^13.1.2",
-    "electron-rebuild": "^2.3.4"
+    "electron-installer-debian": "^3.1.0",
+    "electron-installer-windows": "^3.0.0",
+    "electron-packager": "^15.3.0",
+    "electron-rebuild": "^2.3.4",
+    "grunt-electron-installer-debian": "^0.5.0"
   },
   "dependencies": {
     "bulma-switch": "^2.0.0",
