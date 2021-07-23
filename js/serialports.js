@@ -1,7 +1,7 @@
 const serialports = require('serialport');
 const upath = require('upath');
 const path = require('path');
-const version = "2.56";
+const version = "2.57";
 /*const {dialog} = require('electron').remote;*/
 const fs = require('fs');
 let previous_ports;
@@ -89,8 +89,9 @@ function manageMinerConfig (method) {
             "debug = n\n" +
             "soc_timeout = 45\n" +
             "avr_timeout = 3.1\n" +
-            "shuffle_ports = y\n" +
             "discord_presence = y\n" +
+            "periodic_report = 60\n" +
+            "shuffle_ports = y\n" +
             avrboard +
             "\n";
     }
@@ -190,18 +191,20 @@ function runMiner() {
         stop_mining.setAttribute("disabled", true);
     };
     python.stdout.on('data', function (data) {
-        console.log("Python response: ", data.toString('utf8'));
+        //console.log("Python response: ", data.toString('utf8'));
         if (String.fromCharCode.apply(null, data).indexOf('Error') > -1) {
             traces.innerHTML += '<span style="color: red">' + String.fromCharCode.apply(null, data) + '</span>';
         } else if (String.fromCharCode.apply(null, data).indexOf('Rejected') > -1) {
             totalShares++;
             traces.innerHTML += '<span style="color: red">' + String.fromCharCode.apply(null, data) + '</span>';
+        } else if (String.fromCharCode.apply(null, data).indexOf('sys0') > -1) {
+            traces.innerHTML += '<span style="color: yellow">' + String.fromCharCode.apply(null, data) + '</span>';
+        } else if (String.fromCharCode.apply(null, data).indexOf('Periodic') > -1) {
+            traces.innerHTML += '<span style="color: yellow">' + String.fromCharCode.apply(null, data) + '</span>';
         } else if (String.fromCharCode.apply(null, data).indexOf('Accepted') > -1) {
             totalShares++;
             sharesCorrect++;
             traces.innerHTML += '<span style="color: lime">' + String.fromCharCode.apply(null, data) + '</span>';
-        } else if (String.fromCharCode.apply(null, data).indexOf('sys0') > -1) {
-            traces.innerHTML += '<span style="color: yellow">' + String.fromCharCode.apply(null, data) + '</span>';
         } else {
             traces.innerHTML += '<span style="color: cyan">' + String.fromCharCode.apply(null, data) + '</span>';
         }
