@@ -70,7 +70,8 @@ To uninstall it, do it as you would uninstall any other program.
 
 ⚠️ NOTICE: .exe binaries may be detected as a virus by your antivirus software. This is a false positive caused by pyinstallers bootloader, read about it [here](https://stackoverflow.com/questions/43777106/program-made-with-pyinstaller-now-seen-as-a-trojan-horse-by-avg). Duino-Coin is not a virus.
 
-You can download the installer for the latest version for Windows 64-bit here:
+You can download the installer for the latest version for Windows and Debian 64-bit here:
 
-- [ducopanel-1.0.0-setup.exe](https://tomaszafra.es/ducopanel/installers/Ducopanel-1.0.0-setup.exe)
-- [ducopanel-1.0.0-setup.msi](https://tomaszafra.es/ducopanel/installers/Ducopanel-1.0.0-setup.msi)
+- [Ducopanel-1.257.0-setup.exe](https://github.com/ponsato/ducopanel/releases/download/1.257.0/Ducopanel-1.257.0-setup.exe)
+- [Ducopanel-1.257.0-setup.msi](https://github.com/ponsato/ducopanel/releases/download/1.257.0/Ducopanel-1.257.0-setup.msi)
+- [ducopanel_1.257.0_amd64.deb](https://github.com/ponsato/ducopanel/releases/download/1.257.0/ducopanel_1.257.0_amd64.deb)
