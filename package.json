@@ -14,8 +14,10 @@
     "set32": "electron-installer-windows --src out/ducopanel-win32-ia32/ --dest dist/installers/ia32/ --config config.json",
     "set64": "electron-installer-windows --src out/ducopanel-win32-x64/ --dest dist/installers/ --config config.json",
     "package-linux": "electron-installer-debian --src out/Ducopanel-linux-x64/ --dest dist/installers/ --arch amd64",
+    "package-linux": "electron-installer-debian --src out/Ducopanel-linux-arm64/ --dest dist/installers/ --arch amd64",
     "build": "npm run clean && npm run make && npm run set64",
-    "buildLinux": "npm run clean && npm run make && npm run package-linux"
+    "buildLinux": "npm run clean && npm run make && npm run package-linux",
+    "buildLinuxArm": "npm run clean && npm run make && npm run package-linux-arm"
   },
   "repository": {
     "type": "git",
