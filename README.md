@@ -1,10 +1,10 @@
 # DucoPanel
 
 This development tries to unify all the web tools and official documentation of https://duinocoin.com into a desktop application, which will also be able to detect the miners connected to the USB ports to run the official miner AVR_miner.py, creating the necessary configuration file to make it work.
-It will also include the PC_miner.py miner to be able to mine from the pc.
-On the other hand, we will try to include Arduino Cli to upload the official code to the arduino boards that are connected (Uno, nano and due, for now).
 
-For this we will use https://www.electronjs.org
+You can also upload the official code to all the Arduino boards that you have connected directly from the ducopanel, using the [Arduino-Cli](https://arduino.github.io/arduino-cli/latest/installation/).
+
+For this we will use [ElectronJs](https://www.electronjs.org).
 
 ![N|Solid](https://media.discordapp.net/attachments/677615906322382862/866087597813792768/unknown.png?width=1249&height=670)
 
@@ -14,8 +14,44 @@ It is necessary to have Python 3 and Arduino CLI installed in the environment, b
 
 You can download them from the following links:
 - [Python 3](https://www.python.org/downloads/)
+
+Or execute this command:
+
+```bash
+sudo apt install python3 python3-pip
+```
+
+For Linux, you have to run the following command to avoid having to grant read permissions to the USB ports every time the computer is restarted:
+
+```bash
+sudo usermod -aG dialout username
+```
+
+This will add the current user to the dialout group. Login and out it to take effect.
+
+## Arduino-Cli
+
+It is necessary to install Arduino-Cli and create an enviroment variable for it to be able to upload code to the arduino boards. For that, in Linux you have to follow the following commands:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | BINDIR=~/local/bin sh
+
+export PATH=$PATH:/local/bin
+
+sudo reboot
+```
+
+Once finished you have to install the arduino avr library with the following command:
+
+```bash
+arduino-cli core install arduino:avr
+```
+
+In windows follow these steps:
+
 - [Arduino Cli](https://arduino.github.io/arduino-cli/latest/installation/)
 - [Setting global enviroment variables](https://support.shotgunsoftware.com/hc/en-us/articles/114094235653-Setting-global-environment-variables-on-Windows)
+
 
 ## To use
 
@@ -23,7 +59,7 @@ To clone and run this repository you'll need [Git](https://git-scm.com) and [Nod
 
 ```bash
 # Clone this repository
-git clone git@github.com:ponsato/ducopanel.git
+git clone https://github.com/ponsato/ducopanel.git
 # Go into the repository
 cd ducopanel
 # Install dependencies
@@ -45,21 +81,31 @@ In the /out folder, a folder will be created with the name of the project and th
 
 This folder with all the contents of the application can be packed and run on any other device with the corresponding operating system. In this way, the result of the development can be tested without the need for a production version.
 
-## Windows installer
+## Installer
 
 You can then run the following command (be careful with the architecture you are using):
+
+For Windows:
 
 ```bash
 npm run-script build
 ```
 
+For Linux:
+
+```bash
+npm run-script buildLinux
+```
+
+For Linux Arm (raspberry Pi):
+
+```bash
+npm run-script buildLinuxArm
+```
+
 The installation files shall be created in:
 ```bash
 /dist/installers/
-```
-The installation will be carried out on the following route:
-```bash
-C:\Users\user\AppData\Local\ducopanel
 ```
 
 To close Ducopanel, or any of the windows that open internally, press alt + F4.
@@ -75,3 +121,4 @@ You can download the installer for the latest version for Windows and Debian 64-
 - [Ducopanel-1.257.0-setup.exe](https://github.com/ponsato/ducopanel/releases/download/1.257.0/Ducopanel-1.257.0-setup.exe)
 - [Ducopanel-1.257.0-setup.msi](https://github.com/ponsato/ducopanel/releases/download/1.257.0/Ducopanel-1.257.0-setup.msi)
 - [ducopanel_1.257.0_amd64.deb](https://github.com/ponsato/ducopanel/releases/download/1.257.0/ducopanel_1.257.0_amd64.deb)
+- [ducopanel_1.257.0_arm64.deb](https://github.com/ponsato/ducopanel/releases/download/1.257.0/ducopanel_1.257.0_arm64.deb)
