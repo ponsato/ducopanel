@@ -1,4 +1,5 @@
 const serialports = require('serialport');
+const autoupload = require('./autoupdate');
 const upath = require('upath');
 const path = require('path');
 const version = "2.57";

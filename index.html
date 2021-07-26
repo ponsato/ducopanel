@@ -28,6 +28,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!-- WebWallet -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!--<script type="text/javascript" src="js/autoupdate.js"></script>-->
     <script type="text/javascript" src="js/panel.js"></script>
     <!--<script type="text/javascript" src="js/serialports.js"></script>-->
 </head>
@@ -1311,6 +1312,32 @@
                     <p></p>
                 </div>
             </section>
+        </div>
+    </div>
+    <div id="modal_update" class="modal">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+            <header class="modal-card-head has-background-info">
+                <p class="modal-card-title">New update!</p>
+                <button class="delete" aria-label="close"></button>
+            </header>
+            <section class="modal-card-body">
+                <h2 class="subtitle">A more up-to-date version of Ducopanel is available:</h2>
+                <nav class="breadcrumb has-arrow-separator" aria-label="breadcrumbs">
+                    <ul id="modal_ducopanel_versions">
+                    </ul>
+                </nav>
+                <p>Do you want to download it?</p>
+                <br>
+                <article class="message" style="background-color: #f5f5f5;">
+                    <div class="message-body" style="border-color: #dbdbdb">
+                        After downloading, just run the new file and your installation will be upgraded.
+                    </div>
+                </article>
+            </section>
+            <footer class="modal-card-foot" style="background: white">
+                <button class="button is-success" onclick="location.href = 'https://github.com/ponsato/ducopanel/releases';">Download from the repository</button>
+            </footer>
         </div>
     </div>
 </div>
