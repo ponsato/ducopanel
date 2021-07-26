@@ -1,6 +1,5 @@
 const gittags = require('git-tags');
 const version = '1.257.0';
-const repo = 'https://github.com/ponsato/ducopanel/';
 
 window.addEventListener('load', function() {
     gittags.latest(function(err, latest) {
