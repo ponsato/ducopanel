@@ -26,6 +26,8 @@
     <img src="https://img.shields.io/badge/Türk-5f27cd.svg?style=for-the-badge" /></a>
   <a href="https://github.com/revoxhere/duino-coin/blob/master/Resources/README_TRANSLATIONS/README_th_TH.md">
     <img src="https://img.shields.io/badge/-%E0%B9%84%E0%B8%97%E0%B8%A2-blue.svg?style=for-the-badge" /></a>
+  <a href="https://github.com/revoxhere/duino-coin/blob/master/Resources/README_TRANSLATIONS/README_pt_BR.md">
+    <img src="https://img.shields.io/badge/-Portugu%C3%AAs-be2edd.svg?style=for-the-badge" /></a>
 </h1>
 <a href="https://wallet.duinocoin.com">
   <img src="https://img.shields.io/badge/Online Wallet-8e44ad.svg?style=for-the-badge&logo=Web" /></a>
@@ -33,12 +35,12 @@
   <img src="https://img.shields.io/badge/Android App-e84393.svg?style=for-the-badge&logo=Android" /></a>
 <a href="https://github.com/revoxhere/duino-coin/blob/gh-pages/assets/whitepaper.pdf">
   <img src="https://img.shields.io/badge/whitepaper-1abc9c.svg?style=for-the-badge&logo=Academia" /></a>
-<a href="https://youtu.be/bFnCdqMke34">
+<a href="https://youtu.be/im0Tca7EjrA">
   <img src="https://img.shields.io/badge/Video-Watch-e74c3c.svg?style=for-the-badge&logo=Youtube" /></a>
 <a href="https://discord.gg/kvBkccy">
   <img src="https://img.shields.io/discord/677615191793467402.svg?color=5539cc&label=Discord&logo=Discord&style=for-the-badge" /></a>
-<a href="https://github.com/revoxhere/duino-coin/releases/tag/2.5.5">
-  <img src="https://img.shields.io/badge/release-2.5.5-ff4112.svg?style=for-the-badge" /></a>
+<a href="https://github.com/revoxhere/duino-coin/releases/latest">
+  <img src="https://img.shields.io/badge/release-2.5.7-ff4112.svg?style=for-the-badge" /></a>
 <br>
 
 <h3>
@@ -116,6 +118,7 @@ After doing this, you are good to go with launching the software (just double cl
       *   [Teensy 4.1 code for Arduino IDE](https://github.com/revoxhere/duino-coin/blob/master/Unofficial%20miners/Teensy_code/Teensy_code.ino) by joaquinbvw
 
   ### Other tools:
+  *   [DuinoCoin-balance-Home-Assistant](https://github.com/NL647/DuinoCoin-balance-Home-Assistant) - addon for home assistant displaying your balance by NL647
   *   [Duino Coin Status Monitor](https://github.com/TSltd/duino_coin) for 128x64 SSD1306 OLED and ESP8266 by TSltd
   *   [ducopanel](https://github.com/ponsato/ducopanel) - a GUI app for controling your Duino-Coin miners by ponsato
   *   [Duino AVR Monitor](https://www.microsoft.com/store/apps/9NJ7HPFSR9V5) - GUI Windows App for monitoring AVR devices mining DUCO by niknak

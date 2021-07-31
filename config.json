@@ -2,6 +2,6 @@
   "dest": "dist/installers/",
   "icon": "resources/Icon.ico",
   "productName": "DucoPanel",
-  "version": "1.257.0",
+  "version": "1.260.0",
   "animation": "resources/duco.gif"
 }

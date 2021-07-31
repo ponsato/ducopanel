@@ -101,9 +101,20 @@
 
 .is-duco {
     background: linear-gradient(160deg, #fccf30 0%, #f55555 100%);
-    border: none;
+    border: none !important;
     color: white !important;
     text-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+}
+
+
+#miners {
+    height: 12.5rem;
+    overflow-y: scroll;
+}
+
+#transactions_table {
+    max-height: 16.8rem;
+    overflow-y: scroll;
 }
 
 .fa-check,
@@ -177,6 +188,10 @@ body {
 }
 
 @media (prefers-color-scheme: light) {
+    .box-grey {
+        background-color: #F5F5F5 !important;
+    }
+
     ::-webkit-scrollbar {
         width: 5px;
         height: 5px;
@@ -196,6 +211,14 @@ body {
 }
 
 @media (prefers-color-scheme: dark) {
+    .box {
+        background-color: #17181c !important;
+    }
+
+    .box-grey {
+        background-color: #202026 !important;
+    }
+
     ::-webkit-scrollbar {
         width: 5px;
         height: 5px;
@@ -216,34 +239,7 @@ body {
         background: #2d3436 !important;
         color: hsl(141, 53%, 53%) !important;
     }
-    .select.is-info select {
-        border-color: hsl(141, 53%, 53%) !important;
-    }
 }
-
-.scale-in {
-    -webkit-animation-name: scaleIn;
-    animation-name: scaleIn;
-    -webkit-animation-duration: .5s;
-    animation-duration: .5s;
-}
-
-@-webkit-keyframes scaleIn {
-    from {-webkit-transform: scale(0);transform: scale(0);}
-    to {-webkit-transform: scale(1);transform: scale(1);}
-}
-
-@keyframes scaleIn {
-    from {-webkit-transform: scale(0);transform: scale(0);}
-    to {-webkit-transform: scale(1);transform: scale(1);}
-}
-
-.modal-background {
-    background-color: rgba(0, 0, 0, .4) !important;
-    -webkit-backdrop-filter: blur(2px);
-    backdrop-filter: blur(2px);
-}
-
 /**/
 
 select {
@@ -254,7 +250,7 @@ select {
 .input:-webkit-autofill:hover,
 .input:-webkit-autofill:focus,
 .input:valid {
-    border: 1px solid hsl(141, 53%, 53%) !important;
+    //border: 1px solid hsl(141, 53%, 53%) !important;
     -webkit-text-fill-color: hsl(141, 53%, 53%);
     -webkit-box-shadow: 0 0 0px 10px inherit inset;
     transition: background-color 5000s ease-in-out 0s;
