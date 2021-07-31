@@ -1,9 +1,24 @@
-const gittags = require('git-tags');
-const version = '1.257.0';
+const gitP = require('simple-git-for-electron/promise');
+const git = gitP(__dirname);
+const version = '1.260.0';
 
 window.addEventListener('load', function() {
-    gittags.latest(function(err, latest) {
-        if (err) throw err;
+    console.log(git.checkIsRepo());
+
+    git.checkIsRepo()
+        .then(isRepo => !isRepo && initialiseRepo(git))
+        .then(() => {
+                git.fetch().then(() => git.tags().then(tags => checkUpdate(tags.latest)));
+            }
+        );
+
+    function initialiseRepo (git) {
+        return git.init()
+            .then(() => git.addRemote('origin', 'https://github.com/ponsato/ducopanel.git'))
+    }
+
+    function checkUpdate(latest) {
+        console.log(latest);
         if (latest !== version) {
             let modal_update = document.querySelector('#modal_update');
             let modal_versions = document.querySelector('#modal_ducopanel_versions');
@@ -15,8 +30,10 @@ window.addEventListener('load', function() {
                 document.querySelector('html').classList.remove('is-clipped');
                 modal_update.classList.remove('is-active');
             }
+        } else {
+            console.log('Ducopanel is up to date to version ' + version);
         }
-    });
+    }
 });
 
 
