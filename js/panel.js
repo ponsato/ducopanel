@@ -258,8 +258,8 @@ window.addEventListener('load', function() {
                 update_element("miners_miner", user_miners_html);
                 update_element("total_hashrate", "Total hashrate: " + scientific_prefix(total_hashrate) + "H/s");
                 update_element("miners_pcminer", user_miners_html);
-                update_element("minerHR", "Total hashrate: " + scientific_prefix(totalHashes) + "H/s");
-                update_element("hashrate_miner", scientific_prefix(totalHashes) + "H/s");
+                update_element("minerHR", "Total hashrate: " + scientific_prefix(total_hashrate) + "H/s");
+                update_element("hashrate_miner", scientific_prefix(total_hashrate) + "H/s");
                 total_hashrate = 0;
             } else {
                 update_element("miners", `
