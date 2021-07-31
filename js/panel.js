@@ -188,6 +188,7 @@ window.addEventListener('load', function() {
 
             balance = round_to(8, balance);
             update_element("balance", balance + " DUCO");
+            update_element("balance_miner", balance + " DUCO");
 
             balanceusd = round_to(4, balanceusd);
             update_element("balanceusd", "≈ $" + balanceusd);
