@@ -1,6 +1,6 @@
 const gitP = require('simple-git-for-electron/promise');
 const git = gitP(__dirname);
-const version = '1.261.0';
+const version = '1.273.0';
 
 window.addEventListener('load', function() {
     console.log(git.checkIsRepo());

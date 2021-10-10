@@ -525,6 +525,8 @@ window.addEventListener('load', function() {
                         $("#minercount").html(`(${all_miners})`);
                     } else {
                         update_element("minercount", `(${all_miners})`);
+                        update_element("minercount_miner", `(${all_miners})`);
+                        update_element("minercount_pc", `(${all_miners})`);
                     }
 
                     if (first_open) {
