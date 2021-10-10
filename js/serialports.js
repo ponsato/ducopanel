@@ -1,9 +1,6 @@
 const serialports = require('serialport');
-const autoupload = require('./autoupdate');
 const upath = require('upath');
-const path = require('path');
-const version = "2.61";
-/*const {dialog} = require('electron').remote;*/
+const version = "2.73";
 const fs = require('fs');
 let previous_ports;
 
@@ -70,7 +67,7 @@ function manageMinerConfig (method) {
         });
     }
     if (method === 'mining' || method === 'boot') {
-        dir = './AVRMiner_' + version + '_resources';
+        dir = './Duino-Coin AVR Miner ' + version + '';
         if (!fs.existsSync(dir)){
             fs.mkdirSync(dir);
         }
@@ -80,7 +77,7 @@ function manageMinerConfig (method) {
         if (method === 'boot') {
             avrboard = "avrboard = " + document.getElementById('avr_board').value;
         }
-        content = "[Duino-Coin-AVR-Miner]\n" +
+        content = "[AVR Miner]\n" +
             "username = " + username + "\n" +
             "avrport = " + avrport.toString() + "\n" +
             "donate = 0\n" +
@@ -88,14 +85,14 @@ function manageMinerConfig (method) {
             "identifier = " + identifier + "\n" +
             "debug = n\n" +
             "soc_timeout = 45\n" +
-            "avr_timeout = 3.1\n" +
+            "avr_timeout = 4\n" +
             "discord_presence = y\n" +
             "periodic_report = 60\n" +
             "shuffle_ports = y\n" +
             avrboard +
             "\n";
     }
-    fs.writeFile(dir + '/Miner_config.cfg', content, (err) => {
+    fs.writeFile(dir + '/Settings.cfg', content, (err) => {
         if(err){
             alert("An error ocurred creating config file "+ err.message);
             let modal_error = document.querySelector('#modal_error');

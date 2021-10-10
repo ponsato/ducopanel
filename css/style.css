@@ -1,3 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap');
+
+body {
+    font-family: 'Lato', sans-serif !important;
+
+    background-position: fixed !important;
+    background-attachment: fixed !important;
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
+
+    width: 100% !important;
+    min-height: -webkit-fill-available;
+    overflow-x: hidden !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.canvascontainer {
+    display: none;
+}
+
+#balance_chart {
+    display: none;
+}
+
 .card-orange {
     top: 0.15em;
     position: relative;
@@ -94,24 +120,32 @@
     color: white;
 }
 
-.is-primary {
-    /* Override Bulmas primary color to Duco-Colored gradient*/
-    background: linear-gradient(145deg, #fd746c, #ff9068) !important;
-}
-
-.has-text-duco {
-    color: #fd746c;
-}
-
 .is-duco {
-    background: linear-gradient(160deg, #fccf30 0%, #f55555 100%);
+    background: linear-gradient(45deg, #f55555, #e65c00);
     border: none !important;
-    color: white !important;
-    text-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
 }
+
+.is-duco:hover {
+    background: linear-gradient(45deg, #f54555, #e64c00);
+    border: none !important;
+}
+
+
+@keyframes fade {
+
+    0%,
+    100% {
+        opacity: 0
+    }
+
+    50% {
+        opacity: 1
+    }
+}
+
 
 #miners {
-    max-height: 10rem;
+    height: 10rem;
     overflow-y: auto;
     margin-right: 0.25em;
     margin-bottom: 0.25em;
@@ -124,11 +158,98 @@
     margin-bottom: 0.25em;
 }
 
-.fa-check,
-.fa-circle-notch,
-.fa-sign-in-alt {
-    filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.25));
+#loader-wrapper {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
 }
+
+@media (prefers-color-scheme: light) {
+    body {
+        background-color: #DDDDDD;
+    }
+
+    #loader-wrapper {
+        background: #dcdde1;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #111111;
+    }
+
+    #loader-wrapper {
+        background: #2f3640;
+    }
+}
+
+.load {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100px;
+    height: 100px;
+}
+
+.load hr {
+    border: 0;
+    margin: 0;
+    width: 40%;
+    height: 40%;
+    position: absolute;
+    border-radius: 50%;
+    animation: spin 2s ease infinite;
+}
+
+.load :first-child {
+    background: #8A2387;
+    animation-delay: -1.5s;
+}
+
+.load :nth-child(2) {
+    background: #E94057;
+    animation-delay: -1s;
+}
+
+.load :nth-child(3) {
+    background: #F27121;
+    animation-delay: -0.5s;
+}
+
+.load :last-child {
+    background: #FF4B2B;
+}
+
+@keyframes spin {
+
+    0%,
+    100% {
+        transform: translate(0)
+    }
+
+    25% {
+        transform: translate(160%)
+    }
+
+    50% {
+        transform: translate(160%, 160%)
+    }
+
+    75% {
+        transform: translate(0, 160%)
+    }
+}
+
+
+.has-text-duco {
+    color: #fd746c;
+}
+
 
 .is-duco-alt {
     background: linear-gradient(160deg, #fe9c88 0%, #f5d961 100%);
@@ -250,6 +371,71 @@ body {
     }
 }
 
+.scale-in {
+    -webkit-animation-name: scaleIn;
+    animation-name: scaleIn;
+    -webkit-animation-duration: .5s;
+    animation-duration: .5s;
+}
+
+@-webkit-keyframes scaleIn {
+    from {
+        -webkit-transform: scale(0);
+        transform: scale(0);
+    }
+
+    to {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        -webkit-transform: scale(0);
+        transform: scale(0);
+    }
+
+    to {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+    }
+}
+
+.modal-background {
+    background-color: rgba(0, 0, 0, .4) !important;
+    -webkit-backdrop-filter: blur(2px);
+    backdrop-filter: blur(2px);
+}
+
+.box-grey {
+    background-color: transparent !important;
+}
+
+.canvascontainer {
+    margin: auto !important;
+    display: block;
+}
+
+#balance_chart {
+    opacity: 0.25 !important;
+    position: fixed !important;
+    touch-action: none !important;
+    display: inline !important;
+    overflow: hidden !important;
+    height: 10em !important;
+    display: block;
+}
+
+.box {
+    border-radius: 12px;
+    border: 1px solid rgba(209, 213, 219, 0.3);
+}
+
+.button,
+.input {
+    transition: 0.2s;
+}
 
 .center {
   display: block;
@@ -267,12 +453,16 @@ body {
     transition: background-color 5000s ease-in-out 0s;
 }*/
 
+#modal_success,
+#modal_error,
+#modal_changepass,
 #modal_error {
-    animation: fadeIn 0.5s;
-    -webkit-animation: fadeIn 0.5s;
-    -moz-animation: fadeIn 0.5s;
-    -o-animation: fadeIn 0.5s;
-    -ms-animation: fadeIn 0.5s;
+    animation: fadeIn 0.3s;
+    -webkit-animation: fadeIn 0.3s;
+    -moz-animation: fadeIn 0.3s;
+    -o-animation: fadeIn 0.3s;
+    -ms-animation: fadeIn 0.3s;
+    transition: 0.3s;
 }
 
 @keyframes fadeIn {
@@ -325,6 +515,38 @@ body {
     }
 }
 
+.divider {
+    position: relative !important;
+    display: flex !important;
+    align-items: center !important;
+    color: #7a7a7a !important;
+    font-size: .75rem !important;
+    font-weight: 600 !important;
+    letter-spacing: .5px !important;
+}
+
+.divider:after,
+.divider:before {
+    content: "" !important;
+    display: block !important;
+    flex: 1 !important;
+    height: 1px !important;
+    background-color: #b5b5b5 !important;
+}
+
+.divider:after {
+    margin-left: 10px !important;
+}
+
+.divider:before {
+    margin-right: 10px !important;
+}
+
+.divider.is-vertical:after,
+.divider.is-vertical:before {
+    width: 1px !important;
+}
+
 .tab-content {
     padding: 1rem;
     display: none;
@@ -334,13 +556,13 @@ body {
 }
 
 /* Network */
-.is-primary {
-    /* Override Bulmas primary color to Duco-Colored gradient*/
+/*.is-primary {
+    !* Override Bulmas primary color to Duco-Colored gradient*!
     background: linear-gradient(160deg, #e74c3c, #f39c12) !important;
-}
+}*/
 .gradienttext {
     /* Gradient text */
-    background: -webkit-linear-gradient(160deg, #EA2027, #EE5A24) !important;
+    background: -webkit-linear-gradient(135deg, #C56CD6, #3425AF) !important;
     -webkit-background-clip: text !important;
     -webkit-text-fill-color: transparent !important;
     color: #EA2027 !important;
