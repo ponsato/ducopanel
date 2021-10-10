@@ -1,9 +1,5 @@
 let loggedIn = false;
 let balance = 0;
-let curr_bal = 0;
-let profitcheck = 0;
-let duco_price = 0.0065;
-let daily_average = [];
 let oldb = 0;
 let total_hashrate = 0;
 let start = Date.now();
@@ -525,13 +521,22 @@ window.addEventListener('load', function() {
                         }
                     }
 
-                    if (first_open) $("#minercount").html(`(${all_miners})`);
-                    else update_element("minercount", `(${all_miners})`);
+                    if (first_open) {
+                        $("#minercount").html(`(${all_miners})`);
+                    } else {
+                        update_element("minercount", `(${all_miners})`);
+                    }
 
-                    if (first_open) $("#total_hashrate").html(scientific_prefix(total_hashrate) + "H/s");
-                    else update_element("total_hashrate", scientific_prefix(total_hashrate) + "H/s");
+                    if (first_open) {
+                        $("#total_hashrate").html(scientific_prefix(total_hashrate) + "H/s");
+                    } else {
+                        update_element("total_hashrate", scientific_prefix(total_hashrate) + "H/s");
+                        update_element("hashrate_miner", scientific_prefix(total_hashrate) + "H/s");
+                    }
 
                     $("#miners").html(user_miners_html);
+                    $("#miners_miner").html(user_miners_html);
+                    $("#miners_pcminer").html(user_miners_html);
                     total_hashrate = 0;
                 } else {
                     if (first_open) {
@@ -694,10 +699,10 @@ window.addEventListener('load', function() {
                 Earning about <b>` + daily + ` ᕲ</b> daily`);
             update_element("estimatedprofit_miner", `
                 <i class="far fa-star"></i>
-                Earning about <b>` + daily + ` ᕲ</b> daily`);
+                <b>` + daily + ` ᕲ</b> daily`);
             update_element("estimatedprofit_pcminer", `
                 <i class="far fa-star"></i>
-                Earning about <b>` + daily + ` ᕲ</b> daily`);
+                <b>` + daily + ` ᕲ</b> daily`);
 
             avgusd = round_to(2, daily * duco_price);
             update_element("estimatedprofitusd", "(≈ $" + avgusd + ")");
