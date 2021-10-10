@@ -11,12 +11,16 @@
     <link rel="preload" as="image" href="backgrounds/wallet/yenn-sea-2.jpg">
     <link rel="preload" as="image" href="backgrounds/wallet/yenn-mountains-1.jpg">
     <link rel="preload" as="image" href="backgrounds/wallet/hge-sea-1.jpg">
-    <!-- JS -->
-    <script type="text/javascript" src="js/fontawesome.js"></script>
-    <script type="text/javascript" src="js/jquery-3.6.0.min.js"></script>
     <!-- Wallet Scripts -->
     <script type="text/javascript" src="js/chart.js"></script>
     <script type="text/javascript" src="js/panel.js"></script>
+    <!-- JS -->
+    <link rel="preload" as="script" href="js/chart.js">
+    <script type="text/javascript" src="js/chart.js"></script>
+    <link rel="preload" as="script" href="js/jquery-3.6.0.min.js">
+    <script type="text/javascript" src="js/jquery-3.6.0.min.js"></script>
+    <link rel="preload" as="script" href="js/fontawesome.js">
+    <script type="text/javascript" src="js/fontawesome.js"></script>
     <!-- Bulma -->
     <link rel="preload" href="css/style.css" as="style">
     <link rel="stylesheet" type="text/css" href="css/style.css">
@@ -24,73 +28,187 @@
     <link rel="stylesheet" href="css/bulma.min.css" type="text/css">
     <link rel="preload" href="css/bulma-prefers-dark.min.css" as="style">
     <link rel="stylesheet" href="css/bulma-prefers-dark.min.css" type="text/css">
-    <link rel="preload" href="css/bulma-pageloader.min.css" as="style">
-    <link rel="stylesheet" href="css/bulma-pageloader.min.css" type="text/css">
+    <link rel="preload" href="css/checkbox.css" as="style">
+    <link rel="stylesheet" href="css/checkbox.css" type="text/css">
     <link rel="stylesheet" href="css/bulma_switch.css" type="text/css">
     <!-- Themes -->
-    <link rel="stylesheet" disabled id="crisp" type="text/css" href="https://jenil.github.io/bulmaswatch/journal/bulmaswatch.min.css">
-    <link rel="stylesheet" disabled id="radiate" type="text/css" href="https://jenil.github.io/bulmaswatch/nuclear/bulmaswatch.min.css">
-    <link rel="stylesheet" disabled id="alt" type="text/css" href="https://jenil.github.io/bulmaswatch/materia/bulmaswatch.min.css">
-    <link rel="stylesheet" disabled id="material" type="text/css" href="https://jenil.github.io/bulmaswatch/cosmo/bulmaswatch.min.css">
+    <link rel="preload" href="css/radiance.css" as="style">
+    <link rel="stylesheet" disabled id="radiate" type="text/css" href="css/radiance.css">
+    <link rel="preload" href="css/blur.css" as="style">
     <link rel="stylesheet" id="frosted" type="text/css" href="css/blur.css">
 </head>
+
 <body>
-<div id="pageloader" class="pageloader is-active is-primary">
-    <p class="title">Duino-Coin Duco Panel</p>
+<div id="loader-wrapper">
+    <div class="load">
+        <hr />
+        <hr />
+        <hr />
+        <hr />
+    </div>
 </div>
 <div class="container">
-    <section class="hero is-fullheight" id="login">
+    <section class="hero is-fullheight" id="login" style="display:flex">
         <div class="hero-body is-align-self-center">
-            <div class="columns">
-                <div class="column">
-                    <div class="box">
-                        <section class="has-text-centered" style="max-width:100%">
-                            <p class="title m-2">
-                                <a href="https://duinocoin.com">
-                                    <img src="resources/ducobanner.png" width="175rem" class="image center">
-                                </a>
-                            </p>
-                            <p class="has-text-weight-normal" style="text-align:center">
-                                Duco Panel
-                                <span class="subtitle is-size-7">
-                                        v1.261.0
+            <div class="columns is-centered is-multiline">
+                <div class="column is-narrow">
+                    <div class="columns">
+                        <div class="column">
+                            <div class="box">
+                                <section>
+                                    <p class="title">
+                                        <a href="https://duinocoin.com">
+                                            <img src="resources/ducobanner.png" style="filter: saturate(70%)" width="175rem" class="image center">
+                                        </a>
+                                    </p>
+                                    <p class="has-text-weight-normal" style="text-align:center">
+                                        Duco Panel
+                                        <span class="subtitle is-size-7">
+                                        v1.273.0
                                     </span>
-                            </p>
-                            <p class="title mt-5">
-                                Sign in
-                            </p>
-                            <p class="subtitle">
-                                to your Duino-Coin Wallet
-                            </p>
-                            <div class="field mt-5">
-                                <div class="control has-icons-left">
-                                    <input type="text" id="usernameinput" placeholder="Wallet (username)" class="input" required>
-                                    <span class="icon is-left">
-                                            <i style="color: #777" class="fa fa-user"></i>
-                                        </span>
-                                </div>
+                                    </p>
+                                    <p class="title mt-5">
+                                        Sign in
+                                    </p>
+                                    <p class="subtitle">
+                                        to your Duino-Coin Wallet
+                                    </p>
+                                    <div class="field mt-5">
+                                        <div class="control has-icons-left">
+                                            <input type="text" id="usernameinput" placeholder="Wallet (username)" class="input" required>
+                                            <span class="icon is-left">
+                                                <i style="color: #777" class="fa fa-user"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="field">
+                                        <div class="control has-icons-left">
+                                            <input type="password" id="passwordinput" placeholder="Password" class="input" required>
+                                            <span class="icon is-left">
+                                                <i style="color: #777" class="fa fa-lock"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <!--<div class="field" style="margin-left:0.1em">
+                                        <label class="b-checkbox checkbox">
+                                            <input type="checkbox" id="remember">
+                                            <span class="check is-success"></span>
+                                            <span class="control-label">Remember me</span>
+                                        </label>
+                                    </div>-->
+                                    <p id="logintext"></p>
+                                    <div class="field mt-5">
+                                        <div class="buttons">
+                                            <button class="button is-dark is-duco" id="loginbutton">
+                                                Login
+                                            </button>
+                                            <a href="register.html" class="button">
+                                                Create a new wallet
+                                            </a>
+                                        </div>
+                                    </div>
+                                </section>
                             </div>
-                            <div class="field">
-                                <div class="control has-icons-left">
-                                    <input type="password" id="passwordinput" placeholder="Password" class="input" required>
-                                    <span class="icon is-left">
-                                            <i style="color: #777" class="fa fa-lock"></i>
-                                        </span>
+                        </div>
+                    </div>
+                    <div class="columns">
+                        <div class="column is-narrow">
+                            <div class="box">
+                                <div class="columns is-mobile">
+                                    <div class="column">
+                                        <p class="title is-size-5">
+                                            News center
+                                        </p>
+                                    </div>
+                                    <div class="column">
+                                        <p class="title is-size-6 has-text-right has-text-link">
+                                            <a href="https://server.duinocoin.com/news.html" target="_blank">
+                                                <i class="icon is-small fa fa-eye"></i>&nbsp;
+                                                View all
+                                            </a>
+                                        </p>
+                                    </div>
                                 </div>
+                                <iframe src="https://server.duinocoin.com/news.html" frameborder="0" style="word-break:break-all;width:100%;overflow:auto;height:10rem" allowtransparency="true">Please wait</iframe>
                             </div>
-                            <p id="logintext"></p>
-                            <div class="field mt-5">
-                                <div class="buttons">
-                                    <button class="button is-duco is-dark is-fullwidth" id="loginbutton">
-                                        Login
-                                    </button>
-                                    <a href="register.html" class="button is-fullwidth">
-                                        <i class="fa fa-sign-in-alt fa-fw"></i>&nbsp;
-                                        Create a wallet
+                        </div>
+                    </div>
+                </div>
+                <div class="column is-one-third">
+                    <div class="columns is-multiline">
+                        <div class="column is-full">
+                            <div class="box">
+                                <p class="title is-size-5">
+                                    Servers status
+                                </p>
+                                <div class="columns is-multiline">
+                                    <div id="server-status">
+                                        <div class="column content">
+                                            Fetching or data unavailable
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="subtitle is-size-7 has-text-right">
+                                    Data provided by
+                                    <a href="https://duco.sytes.net">
+                                        Lukas
                                     </a>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="box">
+                                <p class="title is-size-5">
+                                    Current rewards
+                                </p>
+                                <div class="columns is-multiline is-mobile">
+                                    <div class="column is-half">
+                                        <div class="icon-text">
+                                                <span>
+                                                    <i class="fas fa-microchip fa-fw" style="color:B33771;"></i>
+                                                </span>&nbsp;
+                                            <b>Arduino</b>
+                                        </div>
+                                        <p class="block" id="avr_rewards">
+                                            calculating
+                                        </p>
+                                    </div>
+                                    <div class="column is-half">
+                                        <div class="icon-text">
+                                                <span>
+                                                    <i class="fas fa-rss fa-fw" style="color:F5515F;"></i>
+                                                </span>&nbsp;
+                                            <b>ESP8266</b>
+                                        </div>
+                                        <p class="block" id="esp8266_rewards">
+                                            calculating
+                                        </p>
+                                    </div>
+                                    <div class="column">
+                                        <div class="icon-text">
+                                                <span>
+                                                    <i class="fas fa-wifi fa-fw" style="color:5f27cd;"></i>
+                                                </span>&nbsp;
+                                            <b>ESP32</b>
+                                        </div>
+                                        <p class="block" id="esp32_rewards">
+                                            calculating
+                                        </p>
+                                    </div>
+                                    <div class="column">
+                                        <div class="icon-text">
+                                                <span>
+                                                    <i class="fas fa-desktop fa-fw" style="color:F97F51;"></i>
+                                                </span>&nbsp;
+                                            <b>PC (Medium diff.)</b>
+                                        </div>
+                                        <p class="block" id="pc_rewards">
+                                            calculating
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
-                        </section>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -155,46 +273,49 @@
                 <!--Wallet-->
                 <section class="tab-content is-active" id="wallet">
                     <div class="container box m-3">
-                        <div class="columns is-multiline">
-                            <div class="column">
-                                <p class="title is-size-5">
-                                    <i class="fa fa-wallet is-size-7 card-orange fa-fw"></i>
-                                    Welcome back, <span id="user"></span>!
-                                </p>
-                                <p class="title">
-                        <span id="balance">
-                            Fetching data
-                        </span>
-                                </p>
-                                <p class="subtitle">
-                                    <span id="balanceusd" style="white-space: nowrap"></span>
-                                </p>
-                                <p class="subtitle">
-                        <span id="estimatedprofit">
-                            <i class="fas fa-spinner fa-pulse"></i>
-                            Calculating est. daily profit
-                        </span>
-                                    <span class="subtitle" id="estimatedprofitusd">
-                        </span>
-                                </p>
-                            </div>
-                            <div class="column">
-                                <canvas height="70em" id="balance_chart"></canvas>
-                            </div>
+                        <div class="canvascontainer is-hidden-mobile">
+                            <canvas height="30em" id="balance_chart"></canvas>
+                        </div>
+                        <div class="container">
+                            <p class="subtitle is-size-5 has-text-centered">
+                                Welcome back, <b id="user"></b>
+                            </p>
+                            <p class="title has-text-centered">
+                    <span id="balance">
+                        Fetching data
+                    </span>
+                            </p>
+                            <p class="subtitle has-text-centered">
+                                <span id="balanceusd" style="white-space: nowrap"></span>
+                            </p>
+                            <p class="subtitle has-text-centered">
+                    <span id="estimatedprofit">
+                        <i class="fas fa-spinner fa-pulse"></i>
+                        Calculating est. daily profit
+                    </span>
+                                <span class="subtitle" id="estimatedprofitusd">
+                    </span>
+                            </p>
                         </div>
                     </div>
                     <div class="columns is-multiline is-gapless">
                         <div class="column is-half">
                             <div class="column">
                                 <div class="box">
-                                    <p class="title is-size-5">
-                                        <i class="fa fa-tachometer-alt is-size-7 card-pomegrante fa-fw"></i>
-                                        Miners
-                                        <span id="minercount"></span>
-                                        -
-                                        <b id="total_hashrate">0 H/s</b> total
-                                    </p>
-                                    <div id="miners" class="columns is-multiline">
+                                    <div class="columns is-mobile">
+                                        <div class="column">
+                                            <p class="title is-size-5">
+                                                Your miners
+                                                <span id="minercount" class="has-text-weight-normal"></span>
+                                            </p>
+                                        </div>
+                                        <div class="column">
+                                            <p class="subtitle is-size-6 has-text-right">
+                                                <b id="total_hashrate">0 H/s</b> total
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div id="miners" class="columns is-multiline" style="resize: vertical;">
                                         <div class="column is-full">
                                             <p class="title is-size-6">
                                                 Fetching data
@@ -205,10 +326,26 @@
                             </div>
                             <div class="column">
                                 <div class="box">
-                                    <p class="title is-size-5">
-                                        <i class="fa fa-list-ul is-size-7 card-blue fa-fw"></i>
-                                        Last transactions
-                                    </p>
+                                    <div class="columns is-mobile">
+                                        <div class="column">
+                                            <p class="title is-size-5">
+                                                Your last transactions
+                                                <span class="has-text-weight-normal">
+                                        (<span id="transactioncount">0</span>)
+                                    </span>
+                                            </p>
+                                        </div>
+                                        <div class="column is-narrow has-text-right">
+                                            <div class="select" id="txsel">
+                                                <select id="txcount">
+                                                    <option selected value="5">5</option>
+                                                    <option value="15">15</option>
+                                                    <option value="30">30</option>
+                                                    <option value="7777">All</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div id="transactions_table" class="columns is-multiline">
                                         <div class="column is-full">
                                             <p class="title is-size-6">
@@ -220,10 +357,21 @@
                             </div>
                             <div class="column">
                                 <div class="box">
-                                    <p class="title is-size-5">
-                                        <i class="fa fa-newspaper is-size-7 card-pink fa-fw"></i>
-                                        News center
-                                    </p>
+                                    <div class="columns is-mobile">
+                                        <div class="column">
+                                            <p class="title is-size-5">
+                                                News center
+                                            </p>
+                                        </div>
+                                        <div class="column">
+                                            <p class="title is-size-6 has-text-right has-text-link">
+                                                <a href="https://server.duinocoin.com/news.html" target="_blank">
+                                                    <i class="icon is-small fa fa-eye"></i>&nbsp;
+                                                    View all
+                                                </a>
+                                            </p>
+                                        </div>
+                                    </div>
                                     <iframe id="news_iframe" frameborder="0" style="word-break:break-all;width:100%;overflow:auto;max-height:12rem" allowtransparency="true">Please wait</iframe>
                                 </div>
                             </div>
@@ -232,8 +380,7 @@
                             <div class="column">
                                 <div class="box">
                                     <p class="title is-size-5">
-                                        <i class="fa fa-share is-size-7 card-green fa-fw"></i>
-                                        Transfer DUCO
+                                        Transfer coins
                                     </p>
                                     <div class="columns is-multiline">
                                         <div class="column is-half">
@@ -261,7 +408,7 @@
                                             </div>
                                         </div>
                                         <div class="column is-half">
-                                            <button class="button is-primary is-fullwidth" id="send">
+                                            <button class="button is-primary is-light is-fullwidth" id="send">
                                                 Send
                                             </button>
                                         </div>
@@ -270,11 +417,19 @@
                             </div>
                             <div class="column">
                                 <div class="box">
-                                    <p class="title is-size-5">
-                                        <i class="fa fa-money-bill-wave is-size-7 card-turquoise fa-fw"></i>
-                                        Duino-Coin prices
-                                    </p>
-                                    <div class="columns is-multiline">
+                                    <div class="columns is-mobile">
+                                        <div class="column">
+                                            <p class="title is-size-5">
+                                                Exchange rates
+                                            </p>
+                                        </div>
+                                        <div class="column">
+                                            <p class="subtitle is-size-6 has-text-right">
+                                                max: <b id="ducousd">fetching data</b>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="columns is-multiline is-mobile">
                                         <div class="column is-full">
                                 <span class="title is-size-5">
                                     <img class="icon icon-text" target="_blank" src="resources/ducoexchange.png">
@@ -282,16 +437,16 @@
                                         DUCO Exchange
                                     </a>
                                 </span>
-                                            <div class="columns is-multiline mt-1">
-                                                <div class="column is-one-third">
-                                                    <p id="ducousd" class="title is-size-6">
+                                            <div class="columns is-multiline mt-1 is-mobile">
+                                                <div class="column is-one-quarter">
+                                                    <p id="ducousd_xmg" class="title is-size-6">
                                                         Fetching data
                                                     </p>
                                                     <p class="subtitle is-size-7">
                                                         DUCO <i class="fa fa-arrows-alt-h"></i> XMG
                                                     </p>
                                                 </div>
-                                                <div class="column is-one-third">
+                                                <div class="column is-one-quarter">
                                                     <p id="ducousd_bch" class="title is-size-6">
                                                         Fetching data
                                                     </p>
@@ -299,7 +454,15 @@
                                                         DUCO <i class="fa fa-arrows-alt-h"></i> BCH
                                                     </p>
                                                 </div>
-                                                <div class="column is-one-third">
+                                                <div class="column is-one-quarter">
+                                                    <p id="ducousd_rvn" class="title is-size-6">
+                                                        Fetching data
+                                                    </p>
+                                                    <p class="subtitle is-size-7">
+                                                        DUCO <i class="fa fa-arrows-alt-h"></i> RVN
+                                                    </p>
+                                                </div>
+                                                <div class="column is-one-quarter">
                                                     <p id="ducousd_trx" class="title is-size-6">
                                                         Fetching data
                                                     </p>
@@ -393,6 +556,40 @@
                                                 </p>
                                             </div>
                                         </div>
+                                        <div class="column">
+                                <span class="title is-size-5">
+                                    <img class="icon icon-text" target="_blank" src="resources/sushi.png">
+                                    <a href="https://medium.com/@johnny.mnemonic/guide-to-swapping-duino-coin-on-sushi-com-12bca3192ea2" target="_blank">
+                                        SushiSwap
+                                    </a>
+                                </span>
+                                            <div class="column">
+                                                <p id="duco_sushi" class="title is-size-6">
+                                                    Fetching data
+                                                </p>
+                                                <p class="subtitle is-size-7">
+                                                    maticDUCO <i class="fa fa-arrows-alt-h"></i> MATIC
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="column">
+                                <div class="box">
+                                    <ins class="adsbygoogle" style="display:block" align="center" data-ad-client="ca-pub-4670059148424169" data-ad-slot="4342121726" data-ad-format="horizontal" data-full-width-responsive="false"></ins>
+                                    <div class="content" id="adblocker_detected" style="display:none">
+                                        <p class="title is-size-4">
+                                            An ad should be here but you're using an adblocker 😞
+                                        </p>
+                                        <p class="subtitle">
+                                            We host all the websites and servers from <span class="has-text-danger-dark">our own money</span> that is often limited or not sufficient. The <b>single ad here</b> helps to cover these costs.<br>
+                                            If you're enjoying the project, it would be cool if you supported us by buying our
+                                            <a href="https://store.duinocoin.com" target="_blank">official merch</a>
+                                            or
+                                            <a href="https://duinocoin.com/donate" target="_blank">donating</a>.
+                                            <span class="has-text-success-dark">Thanks in advance 🥺</span>
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -673,203 +870,202 @@
                     <div class="container">
                         <!-- STATISTICS -->
                         <div class="panel">
-                            <p class="panel-heading heading">
-                                <i class="is-size-7 card-red-two fa fa-poll"></i>
-                                NETWORK STATS
+                            <p class="panel-heading">
+                                Network statistics
                                 <span class="title is-size-6 has-text-grey" id="lastupdate">(last update: loading data)</span>
                             </p>
                             <div class="panel-block">
                                 <div class="columns is-multiline">
                                     <div class="column is-one-quarter">
-                        <span class="title">
-                            <i class="is-size-6 card-orange fa fa-tachometer-alt"></i>
-                            <span id="hashrate">
-                                Please wait
+                            <span class="title">
+                                <i class="is-size-6 card-orange fa fa-tachometer-alt"></i>
+                                <span id="hashrate">
+                                    Please wait
+                                </span>
+                                <br>
                             </span>
-                            <br>
-                        </span>
                                         <span class="subtitle is-size-7">
-                            DUCO-S1: <b><span id="ducos1hashrate">Please wait</span></b>,
-                            XXHASH: <b><span id="xxhashhashrate">Please wait</span></b>
-                        </span>
+                                DUCO-S1: <b><span id="ducos1hashrate">Please wait</span></b>,
+                                XXHASH: <b><span id="xxhashhashrate">Please wait</span></b>
+                            </span>
                                         <span class="heading is-size-6">
-                            NET HASHRATE
-                        </span>
+                                NET HASHRATE
+                            </span>
                                     </div>
                                     <div class="column is-one-quarter">
-                        <span class="title">
-                            <i class="is-size-6 card-blue fa fa-users"></i>
-                            <span id="registeredusers">
-                                Please wait
+                            <span class="title">
+                                <i class="is-size-6 card-blue fa fa-users"></i>
+                                <span id="registeredusers">
+                                    Please wait
+                                </span>
+                                <br>
                             </span>
-                            <br>
-                        </span>
                                         <span class="heading is-size-6">
-                            REGISTERED USERS
-                        </span>
+                                REGISTERED USERS
+                            </span>
                                     </div>
                                     <div class="column is-one-quarter">
-                        <span class="title">
-                            <i class="is-size-6 card-red fa fa-cog"></i>
-                            <span id="difficulty">
-                                Please wait
+                            <span class="title">
+                                <i class="is-size-6 card-red fa fa-cog"></i>
+                                <span id="difficulty">
+                                    Please wait
+                                </span>
+                                <br>
                             </span>
-                            <br>
-                        </span>
                                         <span class="heading is-size-6">
-                            NET MINING DIFFICULTY
-                        </span>
+                                NET MINING DIFFICULTY
+                            </span>
                                     </div>
                                     <div class="column is-one-quarter">
-                        <span class="title">
-                            <i class="is-size-6 card-purple fa fa-coins"></i>
-                            <span id="allmined">
-                                Please wait
+                            <span class="title">
+                                <i class="is-size-6 card-purple fa fa-coins"></i>
+                                <span id="allmined">
+                                    Please wait
+                                </span>
+                                <br>
                             </span>
-                            <br>
-                        </span>
                                         <span class="heading is-size-6">
-                            DUCO IN CIRCULATION
-                        </span>
+                                DUCO IN CIRCULATION
+                            </span>
                                     </div>
                                     <div class="column is-one-quarter">
-                        <span class="title">
-                            <i class="is-size-6 card-purple fa fa-dollar-sign"></i>
-                            <span id="price">
-                                Please wait
+                            <span class="title">
+                                <i class="is-size-6 card-purple fa fa-dollar-sign"></i>
+                                <span id="price">
+                                    Please wait
+                                </span>
+                                <br>
                             </span>
-                            <br>
-                        </span>
                                         <span class="subtitle is-size-7">
-                            JustSwap: <b><span id="justswapprice">Please wait</span></b>,
-                            Node-S: <b><span id="nodesprice">Please wait</span></b>
-                        </span>
+                                JustSwap: <b><span id="justswapprice">Please wait</span></b>,
+                                Node-S: <b><span id="nodesprice">Please wait</span></b>
+                            </span>
                                         <span class="heading is-size-6">
-                            <a style="color:#EE5A24" href="https://exchange.duinocoin.com">
-                                DUCO EXCHANGE
-                            </a>
-                            PRICE
-                        </span>
+                                <a style="color:#EE5A24" href="https://exchange.duinocoin.com">
+                                    DUCO EXCHANGE
+                                </a>
+                                PRICE
+                            </span>
                                     </div>
                                     <div class="column is-one-quarter">
-                        <span class="title">
-                            <i class="is-size-6 card-green fa fa-leaf"></i>
-                            <span id="watt_usage">
-                                Please wait
+                            <span class="title">
+                                <i class="is-size-6 card-green fa fa-leaf"></i>
+                                <span id="watt_usage">
+                                    Please wait
+                                </span>
+                                <br>
                             </span>
-                            <br>
-                        </span>
                                         <span class="heading is-size-6">
-                            ESTIMATED NET ENERGY USAGE
-                        </span>
+                                ESTIMATED NET ENERGY USAGE
+                            </span>
                                     </div>
                                     <div class="column is-one-quarter">
-                        <span class="title">
-                            <i class="is-size-6 card-turquoise fa fa-hashtag"></i>
-                            <span id="lastblockhash">
-                                Please wait
+                            <span class="title">
+                                <i class="is-size-6 card-turquoise fa fa-hashtag"></i>
+                                <span id="lastblockhash">
+                                    Please wait
+                                </span>
+                                <br>
                             </span>
-                            <br>
-                        </span>
                                         <span class="heading is-size-6">
-                            LAST BLOCK HASH
-                        </span>
+                                LAST BLOCK HASH
+                            </span>
                                     </div>
                                     <div class="column is-one-quarter">
-                        <span class="title">
-                            <i class="is-size-6 card-pomegrante fa fa-border-all"></i>
-                            <span id="shares">
-                                Please wait
+                            <span class="title">
+                                <i class="is-size-6 card-pomegrante fa fa-border-all"></i>
+                                <span id="shares">
+                                    Please wait
+                                </span>
+                                <br>
                             </span>
-                            <br>
-                        </span>
                                         <span class="heading is-size-6">
-                            MINED SHARES
-                        </span>
+                                MINED SHARES
+                            </span>
                                     </div>
-                                    <div class="column is-one-seventh">
-                        <span class="title">
-                            <i class="is-size-6 card-blue fa fa-microchip"></i>
-                            <span id="arduinos">
-                                ...
+                                    <div class="column">
+                            <span class="title">
+                                <i class="is-size-6 card-blue fa fa-microchip"></i>
+                                <span id="arduinos">
+                                    ...
+                                </span>
+                                <br>
                             </span>
-                            <br>
-                        </span>
                                         <span class="heading is-size-6">
-                            ARDUINOS
-                        </span>
+                                ARDUINOS
+                            </span>
                                     </div>
-                                    <div class="column is-one-seventh">
-                        <span class="title">
-                            <i class="is-size-6 card-red fa fa-wifi"></i>
-                            <span id="esp8266s">
-                                ...
+                                    <div class="column">
+                            <span class="title">
+                                <i class="is-size-6 card-red fa fa-wifi"></i>
+                                <span id="esp8266s">
+                                    ...
+                                </span>
+                                <br>
                             </span>
-                            <br>
-                        </span>
                                         <span class="heading is-size-6">
-                            ESP8266S
-                        </span>
+                                ESP8266S
+                            </span>
                                     </div>
-                                    <div class="column is-one-seventh">
-                        <span class="title">
-                            <i class="is-size-6 card-grey fa fa-wifi"></i>
-                            <span id="esp32s">
-                                ...
+                                    <div class="column">
+                            <span class="title">
+                                <i class="is-size-6 card-grey fa fa-wifi"></i>
+                                <span id="esp32s">
+                                    ...
+                                </span>
+                                <br>
                             </span>
-                            <br>
-                        </span>
                                         <span class="heading is-size-6">
-                            ESP32S
-                        </span>
+                                ESP32S
+                            </span>
                                     </div>
-                                    <div class="column is-one-seventh">
-                        <span class="title">
-                            <i class="is-size-6 card-red-two fab fa-raspberry-pi"></i>
-                            <span id="rpis">
-                                ...
+                                    <div class="column">
+                            <span class="title">
+                                <i class="is-size-6 card-red-two fab fa-raspberry-pi"></i>
+                                <span id="rpis">
+                                    ...
+                                </span>
+                                <br>
                             </span>
-                            <br>
-                        </span>
                                         <span class="heading is-size-6">
-                            RASPBERRY PIS
-                        </span>
+                                RASPBERRY PIS
+                            </span>
                                     </div>
-                                    <div class="column is-one-seventh">
-                        <span class="title">
-                            <i class="is-size-6 card-green fa fa-laptop"></i>
-                            <span id="cpus">
-                                ...
+                                    <div class="column">
+                            <span class="title">
+                                <i class="is-size-6 card-green fa fa-laptop"></i>
+                                <span id="cpus">
+                                    ...
+                                </span>
+                                <br>
                             </span>
-                            <br>
-                        </span>
                                         <span class="heading is-size-6">
-                            PC CPUS
-                        </span>
+                                CPUS
+                            </span>
                                     </div>
-                                    <div class="column is-one-seventh">
-                        <span class="title">
-                            <i class="is-size-6 card-purple fa fa-desktop"></i>
-                            <span id="gpus">
-                                ...
+                                    <div class="column">
+                            <span class="title">
+                                <i class="is-size-6 card-blue fab fa-android"></i>
+                                <span id="phones">
+                                    ...
+                                </span>
+                                <br>
                             </span>
-                            <br>
-                        </span>
                                         <span class="heading is-size-6">
-                            PC GPUS
-                        </span>
+                                PHONES
+                            </span>
                                     </div>
-                                    <div class="column is-one-seventh">
-                        <span class="title">
-                            <i class="is-size-6 card-orange fa fa-laptop"></i>
-                            <span id="others">
-                                ...
+                                    <div class="column">
+                            <span class="title">
+                                <i class="is-size-6 card-orange fa fa-question-circle"></i>
+                                <span id="others">
+                                    ...
+                                </span>
+                                <br>
                             </span>
-                            <br>
-                        </span>
                                         <span class="heading is-size-6">
-                            OTHERS
-                        </span>
+                                UNKNOWN/OTHER
+                            </span>
                                     </div>
                                 </div>
                             </div>
@@ -880,17 +1076,15 @@
                                     <!-- EXPLORER -->
                                     <div class="column">
                                         <form class="panel">
-                                            <p class="panel-heading heading">
-                                                <i class="is-size-7 card-turquoise fa fa-search-dollar"></i>
-                                                EXPLORER
+                                            <p class="panel-heading">
+                                                Chain explorer
                                             </p>
                                             <p class="subtitle m-5" id="transactionstext1">
 
                                             </p>
                                             <p class="subtitle mx-5" id="transactionstext2"></p>
                                             <br>
-                                            <br>
-                                            <div class="columns">
+                                            <div class="columns is-mobile">
                                                 <div class="column is-half">
                                                     <p class="subtitle is-size-6 mx-5" id="transactionstext3">
                                                         Please wait...
@@ -909,12 +1103,11 @@
                             <!-- CHARTS -->
                             <div class="column is-half">
                                 <div class="panel">
-                                    <p class="panel-heading heading">
-                                        <i class="is-size-7 card-red fa fa-chart-pie"></i>
-                                        CHARTS
+                                    <p class="panel-heading">
+                                        Charts
                                         <span class="title is-size-6 has-text-grey">
-                            (click to enlarge)
-                        </span>
+                                (click to enlarge)
+                            </span>
                                     </p>
                                     <div class="columns is-multiline">
                                         <div class="column">
@@ -944,20 +1137,19 @@
                             <!-- NODES -->
                             <div class="column is-full mt-3">
                                 <div class="panel">
-                                    <p class="panel-heading heading">
-                                        <i class="is-size-7 fa fa-database card-orange"></i>
-                                        NODES
+                                    <p class="panel-heading">
+                                        Mining nodes
                                     </p>
                                     <div class="columns m-1">
                                         <div class="column">
                                             <div class="dropdown is-hoverable">
                                                 <div class="dropdown-trigger mb-3">
                                                     <p aria-haspopup="true" aria-controls="dropdown-menu4">
-                                                        <i class="is-size-7 card-green fa fa-heart"></i>&nbsp;
+                                                        <i class="is-size-7 card-green fa fa-server"></i>&nbsp;
                                                         <b>MASTER</b>
                                                         <span class="icon is-small">
-                                            <i class="fas fa-angle-down" aria-hidden="true"></i>
-                                        </span>
+                                                <i class="fas fa-angle-down" aria-hidden="true"></i>
+                                            </span>
                                                     </p>
                                                 </div>
                                                 <div class="dropdown-menu" id="dropdown-menu4" role="menu">
@@ -968,6 +1160,7 @@
                                                             <b>OS</b>: Debian 10 Buster<br>
                                                             <b>Storage</b>: 40 GB SSD<br>
                                                             <b>Provider</b>: Scaleway (DEV-1L)<br>
+                                                            <b>Hosted by</b>: revox & Bilaboz from the <b>Duino</b> team<br>
                                                             <b>Purpose</b>: The master node that processes transactions,
                                                             stores user wallets, and provides API functions. If there are no
                                                             other nodes available, it can also handle the miners.
@@ -976,56 +1169,38 @@
                                                 </div>
                                             </div>
                                             <div class="columns">
-                                                <div class="column is-half">
-                                    <span class="title is-size-6">
-                                        <i class="fa fa-fw fa-microchip"></i>
-                                        CPU:
-                                        <p class="subtitle" id="master_cpu">
-                                            ...
-                                        </p>
-                                    </span>
-                                                </div>
-                                                <div class="column is-half">
-                                    <span class="title is-size-6">
-                                        <i class="fa fa-fw fa-memory"></i>
-                                        RAM:
-                                        <p class="subtitle" id="master_ram">
-                                            ...
-                                        </p>
-                                    </span>
-                                                </div>
-                                            </div>
-                                            <div class="columns">
-                                                <div class="column is-half">
-                                    <span class="title is-size-6">
-                                        <i class="fa fa-fw fa-code-branch"></i>
-                                        CLIENTS:
-                                        <p class="subtitle" id="master_connections">
-                                            ...
-                                        </p>
-                                    </span>
-                                                </div>
-                                                <div class="column is-half">
-                                    <span class="title is-size-6">
-                                        <i class="fa fa-fw fa-th"></i>
-                                        THREADS:
-                                        <p class="subtitle" id="master_threads">
-                                            ...
-                                        </p>
-                                    </span>
+                                                <div class="column">
+                                                    <p class="subtitle">
+                                                        CPU:
+                                                        <b id="master_cpu">
+                                                            ...
+                                                        </b><br>
+                                                        RAM:
+                                                        <b id="master_ram">
+                                                            ...
+                                                        </b><br>
+                                                        Clients:
+                                                        <b id="master_connections">
+                                                            ...
+                                                        </b><br>
+                                                        Threads:
+                                                        <b id="master_threads">
+                                                            ...
+                                                        </b>
+                                                    </p>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="column">
                                             <div class="dropdown is-hoverable">
                                                 <div class="dropdown-trigger mb-3">
-                                                    <a href="http://149.91.88.18:6001" aria-haspopup="true" aria-controls="dropdown-menu4">
+                                                    <p aria-haspopup="true" aria-controls="dropdown-menu4">
                                                         <i class="is-size-7 card-red fa fa-heart"></i>&nbsp;
                                                         <b>PULSE</b>
                                                         <span class="icon is-small">
-                                            <i class="fas fa-angle-down" aria-hidden="true"></i>
-                                        </span>
-                                                    </a>
+                                                <i class="fas fa-angle-down" aria-hidden="true"></i>
+                                            </span>
+                                                    </p>
                                                 </div>
                                                 <div class="dropdown-menu" id="dropdown-menu4" role="menu">
                                                     <div class="dropdown-content">
@@ -1035,6 +1210,7 @@
                                                             <b>OS</b>: Debian 10 Buster<br>
                                                             <b>Storage</b>: 40 GB SSD<br>
                                                             <b>Provider</b>: PulseHeberg<br>
+                                                            <b>Hosted by</b>: Bilaboz from the <b>Duino</b> team<br>
                                                             <b>Purpose</b>: Miners get jobs from this node.
                                                             The node periodicaly syncs data with the master node
                                                         </div>
@@ -1042,56 +1218,34 @@
                                                 </div>
                                             </div>
                                             <div class="columns">
-                                                <div class="column is-half">
-                                    <span class="title is-size-6">
-                                        <i class="fa fa-fw fa-microchip"></i>
-                                        CPU:
-                                        <p class="subtitle" id="pulse_cpu2">
-                                            ...
-                                        </p>
-                                    </span>
-                                                </div>
-                                                <div class="column is-half">
-                                    <span class="title is-size-6">
-                                        <i class="fa fa-fw fa-memory"></i>
-                                        RAM:
-                                        <p class="subtitle" id="pulse_ram2">
-                                            ...
-                                        </p>
-                                    </span>
-                                                </div>
-                                            </div>
-                                            <div class="columns">
-                                                <div class="column is-half">
-                                    <span class="title is-size-6">
-                                        <i class="fa fa-fw fa-code-branch"></i>
-                                        CLIENTS (1):
-                                        <p class="subtitle" id="pulse_connections1">
-                                            ...
-                                        </p>
-                                    </span>
-                                                </div>
-                                                <div class="column is-half">
-                                    <span class="title is-size-6">
-                                        <i class="fa fa-fw fa-code-branch"></i>
-                                        CLIENTS (2):
-                                        <p class="subtitle" id="pulse_connections2">
-                                            ...
-                                        </p>
-                                    </span>
+                                                <div class="column">
+                                                    <p class="subtitle">
+                                                        CPU:
+                                                        <b id="pulse_cpu2">
+                                                            ...
+                                                        </b><br>
+                                                        RAM:
+                                                        <b id="pulse_ram2">
+                                                            ...
+                                                        </b><br>
+                                                        Clients:
+                                                        <b id="pulse_connections1">
+                                                            ...
+                                                        </b>
+                                                    </p>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="column">
                                             <div class="dropdown is-hoverable">
                                                 <div class="dropdown-trigger mb-3">
-                                                    <a href="http://51.158.182.90:6001/" aria-haspopup="true" aria-controls="dropdown-menu4">
-                                                        <i class="is-size-7 card-turquoise fa fa-star"></i>&nbsp;
+                                                    <p aria-haspopup="true" aria-controls="dropdown-menu4">
+                                                        <i class="is-size-7 card-orange fa fa-star"></i>&nbsp;
                                                         <b>STAR</b>
                                                         <span class="icon is-small">
-                                            <i class="fas fa-angle-down" aria-hidden="true"></i>
-                                        </span>
-                                                    </a>
+                                                <i class="fas fa-angle-down" aria-hidden="true"></i>
+                                            </span>
+                                                    </p>
                                                 </div>
                                                 <div class="dropdown-menu" id="dropdown-menu4" role="menu">
                                                     <div class="dropdown-content">
@@ -1101,6 +1255,7 @@
                                                             <b>OS</b>: Debian 10 Buster<br>
                                                             <b>Storage</b>: 10 GB<br>
                                                             <b>Provider</b>: Scaleway (Stardust)<br>
+                                                            <b>Hosted by</b>: revox & Bilaboz from the <b>Duino</b> team<br>
                                                             <b>Purpose</b>: Miners get jobs from this node.
                                                             The node periodicaly syncs data with the master node
                                                         </div>
@@ -1109,114 +1264,34 @@
                                             </div>
                                             <br>
                                             <div class="columns">
-                                                <div class="column is-half">
-                                    <span class="title is-size-6">
-                                        <i class="fa fa-fw fa-microchip"></i>
-                                        CPU:
-                                        <p class="subtitle" id="star_cpu">
-                                            ...
-                                        </p>
-                                    </span>
-                                                </div>
-                                                <div class="column is-half">
-                                    <span class="title is-size-6">
-                                        <i class="fa fa-fw fa-memory"></i>
-                                        RAM:
-                                        <p class="subtitle" id="star_ram">
-                                            ...
-                                        </p>
-                                    </span>
-                                                </div>
-                                            </div>
-                                            <div class="columns">
-                                                <div class="column is-half">
-                                    <span class="title is-size-6">
-                                        <i class="fa fa-fw fa-code-branch"></i>
-                                        CLIENTS:
-                                        <p class="subtitle" id="star_connections">
-                                            ...
-                                        </p>
-                                    </span>
+                                                <div class="column">
+                                                    <p class="subtitle">
+                                                        CPU:
+                                                        <b id="star_cpu">
+                                                            ...
+                                                        </b><br>
+                                                        RAM:
+                                                        <b id="star_ram">
+                                                            ...
+                                                        </b><br>
+                                                        Clients:
+                                                        <b id="star_connections">
+                                                            ...
+                                                        </b>
+                                                    </p>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="column">
                                             <div class="dropdown is-hoverable">
                                                 <div class="dropdown-trigger mb-3">
-                                                    <a href="http://193.164.7.180:6001" aria-haspopup="true" aria-controls="dropdown-menu4">
-                                                        <i class="is-size-7 card-orange fa fa-trophy"></i>&nbsp;
-                                                        <b>WINNER</b>
-                                                        <span class="icon is-small">
-                                            <i class="fas fa-angle-down" aria-hidden="true"></i>
-                                        </span>
-                                                    </a>
-                                                </div>
-                                                <div class="dropdown-menu" id="dropdown-menu4" role="menu">
-                                                    <div class="dropdown-content">
-                                                        <div class="content m-3">
-                                                            <b>CPU</b>: Intel Xeon X5670 @ 2.9 GHz (4 cores)<br>
-                                                            <b>RAM</b>: 2 GB<br>
-                                                            <b>OS</b>: Debian 10 Buster<br>
-                                                            <b>Storage</b>: 40 GB<br>
-                                                            <b>Provider</b>: @Maxteal#8376<br>
-                                                            <b>Purpose</b>: Miners get jobs from this node.
-                                                            The node periodicaly syncs data with the master node
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <br>
-                                            <div class="columns">
-                                                <div class="column is-half">
-                                    <span class="title is-size-6">
-                                        <i class="fa fa-fw fa-microchip"></i>
-                                        CPU:
-                                        <p class="subtitle" id="winner_cpu">
-                                            ...
-                                        </p>
-                                    </span>
-                                                </div>
-                                                <div class="column is-half">
-                                    <span class="title is-size-6">
-                                        <i class="fa fa-fw fa-memory"></i>
-                                        RAM:
-                                        <p class="subtitle" id="winner_ram">
-                                            ...
-                                        </p>
-                                    </span>
-                                                </div>
-                                            </div>
-                                            <div class="columns">
-                                                <div class="column is-half">
-                                    <span class="title is-size-6">
-                                        <i class="fa fa-fw fa-code-branch"></i>
-                                        CLIENTS (1):
-                                        <p class="subtitle" id="winner_connections">
-                                            ...
-                                        </p>
-                                    </span>
-                                                </div>
-                                                <div class="column is-half">
-                                    <span class="title is-size-6">
-                                        <i class="fa fa-fw fa-code-branch"></i>
-                                        CLIENTS (2):
-                                        <p class="subtitle" id="winner_connections2">
-                                            ...
-                                        </p>
-                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="column">
-                                            <div class="dropdown is-hoverable">
-                                                <div class="dropdown-trigger mb-3">
-                                                    <a href="https://beyondpool.io" aria-haspopup="true" aria-controls="dropdown-menu4">
+                                                    <p aria-haspopup="true" aria-controls="dropdown-menu4">
                                                         <i class="is-size-7 card-blue fa fa-rocket"></i>&nbsp;
                                                         <b>BEYOND</b>
                                                         <span class="icon is-small">
-                                            <i class="fas fa-angle-down" aria-hidden="true"></i>
-                                        </span>
-                                                    </a>
+                                                <i class="fas fa-angle-down" aria-hidden="true"></i>
+                                            </span>
+                                                    </p>
                                                 </div>
                                                 <div class="dropdown-menu" id="dropdown-menu4" role="menu">
                                                     <div class="dropdown-content">
@@ -1225,7 +1300,8 @@
                                                             <b>RAM</b>: 2 GB<br>
                                                             <b>OS</b>: Ubuntu 18.04<br>
                                                             <b>Storage</b>: 60 GB<br>
-                                                            <b>Provider</b>: @Beyondtoshi#0001<br>
+                                                            <b>Provider</b>: Amazon AWS<br>
+                                                            <b>Hosted by</b>: Beyondtoshi from the <b>Duino</b> team<br>
                                                             <b>Purpose</b>: Miners get jobs from this node.
                                                             The node periodicaly syncs data with the master node
                                                         </div>
@@ -1234,34 +1310,159 @@
                                             </div>
                                             <br>
                                             <div class="columns">
-                                                <div class="column is-half">
-                                    <span class="title is-size-6">
-                                        <i class="fa fa-fw fa-microchip"></i>
-                                        CPU:
-                                        <p class="subtitle" id="beyond_cpu">
-                                            ...
-                                        </p>
-                                    </span>
-                                                </div>
-                                                <div class="column is-half">
-                                    <span class="title is-size-6">
-                                        <i class="fa fa-fw fa-memory"></i>
-                                        RAM:
-                                        <p class="subtitle" id="beyond_ram">
-                                            ...
-                                        </p>
-                                    </span>
+                                                <div class="column">
+                                                    <p class="subtitle">
+                                                        CPU:
+                                                        <b id="beyond_cpu">
+                                                            ...
+                                                        </b><br>
+                                                        RAM:
+                                                        <b id="beyond_ram">
+                                                            ...
+                                                        </b><br>
+                                                        Clients:
+                                                        <b id="beyond_connections">
+                                                            ...
+                                                        </b>
+                                                    </p>
                                                 </div>
                                             </div>
+                                        </div>
+                                        <div class="column">
+                                            <div class="dropdown is-hoverable">
+                                                <div class="dropdown-trigger mb-3">
+                                                    <p aria-haspopup="true" aria-controls="dropdown-menu4">
+                                                        <i class="is-size-7 card-turquoise fa fa-rocket"></i>&nbsp;
+                                                        <b>BEYOND 2</b>
+                                                        <span class="icon is-small">
+                                                <i class="fas fa-angle-down" aria-hidden="true"></i>
+                                            </span>
+                                                    </p>
+                                                </div>
+                                                <div class="dropdown-menu" id="dropdown-menu4" role="menu">
+                                                    <div class="dropdown-content">
+                                                        <div class="content m-3">
+                                                            <b>CPU</b>: Intel Xeon E5-2676 @ 2.4 GHz (1 core)<br>
+                                                            <b>RAM</b>: 2 GB<br>
+                                                            <b>OS</b>: Ubuntu 18.04<br>
+                                                            <b>Storage</b>: 60 GB<br>
+                                                            <b>Provider</b>: Amazon AWS<br>
+                                                            <b>Hosted by</b>: Beyondtoshi from the <b>Duino</b> team<br>
+                                                            <b>Purpose</b>: Miners get jobs from this node.
+                                                            The node periodicaly syncs data with the master node
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br>
                                             <div class="columns">
-                                                <div class="column is-half">
-                                    <span class="title is-size-6">
-                                        <i class="fa fa-fw fa-code-branch"></i>
-                                        CLIENTS:
-                                        <p class="subtitle" id="beyond_connections">
-                                            ...
-                                        </p>
-                                    </span>
+                                                <div class="column">
+                                                    <p class="subtitle">
+                                                        CPU:
+                                                        <b id="beyond_cpu2">
+                                                            ...
+                                                        </b><br>
+                                                        RAM:
+                                                        <b id="beyond_ram2">
+                                                            ...
+                                                        </b><br>
+                                                        Clients:
+                                                        <b id="beyond_connections2">
+                                                            ...
+                                                        </b>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="column">
+                                            <div class="dropdown is-hoverable">
+                                                <div class="dropdown-trigger mb-3">
+                                        <span aria-haspopup="true" aria-controls="dropdown-menu4">
+                                            <i class="is-size-7 card-grey fa fa-heart-broken"></i>&nbsp;
+                                            <b>SVKO</b>
+                                            <span class="icon is-small">
+                                                <i class="fas fa-angle-down" aria-hidden="true"></i>
+                                            </span>
+                                        </span>
+                                                </div>
+                                                <div class="dropdown-menu" id="dropdown-menu4" role="menu">
+                                                    <div class="dropdown-content">
+                                                        <div class="content m-3">
+                                                            <b>CPU</b>: 2.6 GHz (4 cores)<br>
+                                                            <b>RAM</b>: 8 GB<br>
+                                                            <b>OS</b>: Debian 10 Buster<br>
+                                                            <b>Storage</b>: 60 GB<br>
+                                                            <b>Provider</b>: noez.de<br>
+                                                            <b>Hosted by</b>: revox from the <b>Duino</b> team<br>
+                                                            <b>Purpose</b>: Miners get jobs from this node.
+                                                            The node periodicaly syncs data with the master node
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <div class="columns">
+                                                <div class="column">
+                                                    <p class="subtitle">
+                                                        CPU:
+                                                        <b id="svko_cpu">
+                                                            ...
+                                                        </b><br>
+                                                        RAM:
+                                                        <b id="svko_ram">
+                                                            ...
+                                                        </b><br>
+                                                        Clients:
+                                                        <b id="svko_connections">
+                                                            ...
+                                                        </b>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="column">
+                                            <div class="dropdown is-hoverable">
+                                                <div class="dropdown-trigger mb-3">
+                                        <span aria-haspopup="true" aria-controls="dropdown-menu4">
+                                            <i class="is-size-7 card-purple fa fa-plus"></i>&nbsp;
+                                            <b>NULL</b>
+                                            <span class="icon is-small">
+                                                <i class="fas fa-angle-down" aria-hidden="true"></i>
+                                            </span>
+                                        </span>
+                                                </div>
+                                                <div class="dropdown-menu" id="dropdown-menu4" role="menu">
+                                                    <div class="dropdown-content">
+                                                        <div class="content m-3">
+                                                            <b>CPU</b>: Intel Xeon E5-1650 3.8 GHz (1 core)<br>
+                                                            <b>RAM</b>: 2 GB<br>
+                                                            <b>OS</b>: Ubuntu 18.04<br>
+                                                            <b>Storage</b>: 36 GB<br>
+                                                            <b>Provider</b>: noez.de<br>
+                                                            <b>Hosted by</b>: null from the <b>Duino</b> team<br>
+                                                            <b>Purpose</b>: Miners get jobs from this node.
+                                                            The node periodicaly syncs data with the master node
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <div class="columns">
+                                                <div class="column">
+                                                    <p class="subtitle">
+                                                        CPU:
+                                                        <b id="null_cpu">
+                                                            ...
+                                                        </b><br>
+                                                        RAM:
+                                                        <b id="null_ram">
+                                                            ...
+                                                        </b><br>
+                                                        Clients:
+                                                        <b id="null_connections">
+                                                            ...
+                                                        </b>
+                                                    </p>
                                                 </div>
                                             </div>
                                         </div>
@@ -1271,24 +1472,49 @@
                             <!-- ACTIVE WORKERS -->
                             <div class="column is-full">
                                 <div class="panel">
-                                    <p class="panel-heading">
-                                        <i class="is-size-7 card-purple fa fa-users"></i>
-                                        ACTIVE WORKERS
-                                        <span class="title is-size-6 has-text-grey" id="allworkers">
-                            (not loaded by default)
-                        </span>
-                                    </p>
+                                    <div class="panel-heading">
+                                        Active workers
+                                        <div class="columns is-mobile">
+                                            <div class="column">
+                                    <span class="is-size-6 has-text-grey-dark" id="allworkers">
+                                        (not loaded by default - prepare for a lot of data!)
+                                    </span>
+                                            </div>
+                                            <div class="column is-narrow">
+                                                <div class="columns is-multiline" style="text-align:right;">
+                                                    <div class="column is-narrow">
+                                                        <p class="is-size-6 has-text-grey-dark">
+                                                            <i class="fa fa-times-circle has-text-danger"></i>
+                                                            unverified account
+                                                        </p>
+                                                    </div>
+                                                    <div class="column is-narrow">
+                                                        <p class="is-size-6 has-text-grey-dark">
+                                                            <i class="fa fa-check has-text-success"></i>
+                                                            verified account
+                                                        </p>
+                                                    </div>
+                                                    <div class="column is-narrow">
+                                                        <p class="is-size-6 has-text-grey-dark">
+                                                            <span class="tag">123</span>
+                                                            amount of workers
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="panel-block">
-                        <span id="workers" class="subtitle is-size-6">
-                            <button id="loadworkers" class="button is-info" onclick="start_loading_workers()">
-                                Load all workers
-                            </button>
-                        </span>
+                            <span id="workers" class="subtitle is-size-6">
+                                <button id="loadworkers" class="button is-outlined is-info" onclick="fill_worker_list()">
+                                    Load all workers
+                                </button>
+                            </span>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div id="large_prices" class="modal scale-in">
+                        <div id="large_prices" class="modal">
                             <div class="modal-background"></div>
                             <div class="modal-card">
                                 <header class="modal-card-head has-background-success">
@@ -1302,7 +1528,7 @@
                                 </section>
                             </div>
                         </div>
-                        <div id="large_miners" class="modal scale-in">
+                        <div id="large_miners" class="modal">
                             <div class="modal-background"></div>
                             <div class="modal-card">
                                 <header class="modal-card-head has-background-success">
@@ -1316,7 +1542,7 @@
                                 </section>
                             </div>
                         </div>
-                        <div id="large_balances" class="modal scale-in">
+                        <div id="large_balances" class="modal">
                             <div class="modal-background"></div>
                             <div class="modal-card">
                                 <header class="modal-card-head has-background-success">
@@ -1334,39 +1560,37 @@
                 </section>
             </div>
             <!-- Footer -->
-            <div class="columns">
-                <div class="column">
+            <div class="column">
+                <div class="box">
                     <div class="buttons">
                         <div class="control has-icons-left mb-2 mr-2">
                             <div class="select is-normal">
                                 <select id="themesel">
                                     <option value="light">Simple</option>
-                                    <option value="material">Metro</option>
                                     <option selected value="frosted">Frosted glass</option>
-                                    <option value="crisp">Crisp</option>
                                     <option value="radiance">Nuclear</option>
-                                    <option value="altlight">Sleek</option>
                                 </select>
                             </div>
                             <span class="icon is-left">
                                 <i class="fas fa-sun" style="color:#f0932b"></i>
                             </span>
                         </div>
-                        <a href="https://server.duinocoin.com/webminer.html" class="button">
-                            <img class="icon is-small" src="resources/webminer.png">
-                            <span>Web Miner</span>
-                        </a>
-                        <a href="https://explorer.duinocoin.com" target="_blank" class="button">
-                            <img src="resources/explorer.png" class="icon is-small">
-                            <span>Network explorer</span>
-                        </a>
-                        <a href="https://duco.sytes.net/" target="_blank" class="button">
-                            <img src="resources/ducominingdashboarddark.png" class="icon is-small">
-                            <span>Lulaschkas' Dashboard</span>
-                        </a>
-                        <a href="https://duinotracker.com" target="_blank" class="button">
-                            <i class="fa fa-fw fa-address-book icon is-small" style="color:#22a6b3"></i>
-                            <span>DuinoTracker</span>
+                        <button id="changepassbtn" class="button">
+                            <i class="fa fa-fw fa-key icon"></i>
+                            <span>Change password</span>
+                        </button>
+                        <button id="wrapbtn" class="button">
+                            <img src="resources/wduco.png" class="icon is-small">
+                            <span>Wrap DUCO to wDUCO</span>
+                        </button>
+                        <button id="logout" class="button">
+                            <i class="fa fa-fw fa-sign-out-alt icon" style="color:#5f27cd;"></i>
+                            <span>Logout</span>
+                        </button>
+                        <div id="verify"></div>
+                        <a href="https://duco.pcgeek.pl/" target="_blank" class="button">
+                            <img src="resources/ducopcgeek.png" class="icon is-small">
+                            <span>DuinoCoin in Charts</span>
                         </a>
                         <a href="https://raffle.furim.xyz" target="_blank" class="button">
                             <i class="fa fa-fw fa-dice icon is-small" style="color:#6c5ce7"></i>
@@ -1376,20 +1600,16 @@
                             <img src="resources/furim_faucet.png" class="icon is-small">
                             <span>Furim's Faucet</span>
                         </a>
-                        <a href="http://phantom32.tk" target="_blank" class="button">
-                            <i class="fa fa-fw fa-ghost icon is-small has-text-duco"></i>
-                            <span>phantom32's Faucet</span>
-                        </a>
                         <a href="https://duco-faucet.pcgeek.pl" target="_blank" class="button">
                             <img src="resources/amogus_faucet.png" class="icon is-small">
                             <span>Amogus Faucet</span>
                         </a>
                         <a href="https://duinocoin.com/donate" target="_blank" class="button">
-                            <i class="fa fa-fw fa-heart icon is-small" style="color:#eb4d4b;"></i>&nbsp;
-                            <span><b>Donate</b></span>
+                            <i class="fa fa-fw fa-heart icon is-small" style="color:#eb4d4b;"></i>
+                            <span>Donate</span>
                         </a>
                         <a href="https://store.duinocoin.com" target="_blank" class="button">
-                            <i class="fa fa-fw fa-tshirt icon is-small" style="color:#6ab04c;"></i>&nbsp;
+                            <i class="fa fa-fw fa-tshirt icon is-small" style="color:#6ab04c;"></i>
                             <span>Merch</span>
                         </a>
                         <a href="https://github.com/revoxhere/duino-coin" target="_blank" class="button">
@@ -1414,7 +1634,7 @@
         <br>
     </section>
 </div>
-<div class="footer">
+<div class="footer mt-5">
     <p class="subtitle has-text-centered is-size-6">
         The
         <b>
@@ -1505,6 +1725,87 @@
         </section>
     </div>
 </div>
+<div id="modal_changepass" class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+        <header class="modal-card-head mx-1">
+            <p class="modal-card-title">Change password</p>
+            <button class="delete" aria-label="close"></button>
+        </header>
+        <section class="modal-card-body mx-1">
+            <div class="content">
+                <div class="columns">
+                    <div class="column">
+                        <input class="input" placeholder="Old password" type="password" id="oldpass">
+                    </div>
+                    <div class="column">
+                        <input class="input" placeholder="New password" type="password" id="newpass">
+                    </div>
+                    <div class="column">
+                        <input class="input" placeholder="Re-type new password" type="password" id="newpass_conf">
+                    </div>
+                </div>
+                <div class="columns">
+                    <div class="column is-narrow">
+                        <button class="button is-primary is-light" id="changepassconf">
+                            Submit
+                        </button>
+                    </div>
+                    <div class="column mt-1">
+                        <span id="changepass_text" class="subtitle"></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+<div id="modal_wrap" class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+        <header class="modal-card-head mx-1">
+            <p class="modal-card-title">
+                Wrap DUCO to wDUCO
+            <div class="tag is-success mr-1">BETA</div>
+            </p>
+            <button class="delete" aria-label="close"></button>
+        </header>
+        <section class="modal-card-body mx-1">
+            <div class="content">
+                <div class="columns is-multiline">
+                    <div class="column is-full content">
+                        <p>
+                            <b>Duino-Coin is a hybrid currency</b>, meaning that it can be converted to <b>wDUCO</b> - Duino wrapped on the <b>Tron</b> network (as a decentralized token). You can read more about it
+                            <a href="https://github.com/revoxhere/duino-coin/wiki/wDUCO-tutorial" target="_blank">
+                                here
+                            </a>
+                        </p>
+                        <p class="mt-3">
+                            Please note that <b>this feature is currently in beta</b> and may not work fully yet. For better stability and unwrap functions please use our <b>CLI Wallet</b>.
+                            <br>
+                            <b class="has-text-danger-dark">Warning:</b> your Tron wallet needs to support tokens, otherwise wrapped DUCO may get lost.
+                        </p>
+                    </div>
+                    <div class="column">
+                        <input class="input" placeholder="Amount" type="number" id="wrap_amount">
+                    </div>
+                    <div class="column">
+                        <input class="input" placeholder="Tron addresss" type="text" id="wrap_address">
+                    </div>
+                    <div class="column">
+                        <button class="button is-fullwidth is-primary is-light" id="wrapconf">
+                            Wrap
+                        </button>
+                    </div>
+                </div>
+                <div class="columns is-centered">
+                    <div class="column">
+                        <span id="wrap_text" class="subtitle"></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
 <div id="modal_update" class="modal">
     <div class="modal-background"></div>
     <div class="modal-card">
@@ -1532,4 +1833,12 @@
     </div>
 </div>
 </body>
+<script>
+    (document.querySelectorAll('.notification .delete') || []).forEach(($delete) => {
+        const $notification = $delete.parentNode;
+        $delete.addEventListener('click', () => {
+            $notification.parentNode.removeChild($notification);
+        });
+    });
+</script>
 </html>
