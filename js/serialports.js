@@ -2,7 +2,7 @@ const serialports = require('serialport');
 const autoupload = require('./autoupdate');
 const upath = require('upath');
 const path = require('path');
-const version = "2.6";
+const version = "2.61";
 /*const {dialog} = require('electron').remote;*/
 const fs = require('fs');
 let previous_ports;

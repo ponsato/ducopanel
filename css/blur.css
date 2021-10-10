@@ -10,16 +10,14 @@
     .tag,
     select {
         /* Fallback for firefox that still doesn't support blur */
-        background-color: rgba(0, 0, 0, .8);
-        background-blend-mode: lighten;
+        background-color: rgba(0, 0, 0, .8) !important;
     }
 
-    @supports ((-webkit-backdrop-filter: blur(1em)) or (backdrop-filter: blur(1em))) {
+    @supports ((-webkit-backdrop-filter: blur(10px)) or (backdrop-filter: blur(10px))) {
         .box {
-            background-color: rgba(0, 0, 0, .25) !important;
-            -webkit-backdrop-filter: blur(1em);
-            backdrop-filter: blur(1em);
-            background-blend-mode: lighten;
+            background-color: rgba(0, 0, 0, .3) !important;
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
         }
 
         input,
@@ -27,8 +25,7 @@
         .tag,
         select,
         button {
-            background-color: rgba(0, 0, 0, 0.25) !important;
-            backdrop-filter: blur(1em) !important;
+            background-color: rgba(0, 0, 0, 0.6) !important;
         }
     }
 
@@ -43,15 +40,13 @@
     select {
         /* Fallback for firefox that still doesn't support blur */
         background-color: rgba(255, 255, 255, .8);
-        background-blend-mode: lighten;
     }
 
-    @supports ((-webkit-backdrop-filter: blur(1em)) or (backdrop-filter: blur(1em))) {
+    @supports ((-webkit-backdrop-filter: blur(10px)) or (backdrop-filter: blur(10px))) {
         .box {
-            background-color: rgba(255, 255, 255, .6);
+            background-color: rgba(220, 220, 220, 0.6);
             -webkit-backdrop-filter: blur(1em);
-            backdrop-filter: blur(1em);
-            background-blend-mode: lighten;
+            backdrop-filter: blur(10px);
         }
 
         input,
@@ -59,8 +54,6 @@
         select,
         button {
             background-color: rgba(255, 255, 255, 0.5) !important;
-            backdrop-filter: blur(1em) !important;
-            background-blend-mode: lighten;
         }
     }
 

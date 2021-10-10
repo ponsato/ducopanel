@@ -1,6 +1,6 @@
 const gitP = require('simple-git-for-electron/promise');
 const git = gitP(__dirname);
-const version = '1.260.0';
+const version = '1.261.0';
 
 window.addEventListener('load', function() {
     console.log(git.checkIsRepo());
@@ -22,8 +22,8 @@ window.addEventListener('load', function() {
         if (latest !== version) {
             let modal_update = document.querySelector('#modal_update');
             let modal_versions = document.querySelector('#modal_ducopanel_versions');
-            modal_versions.innerHTML = `<li><span class="tag is-danger is-light"><b>Your: </b>` + version + `</span></li>
-                        <li><span class="tag is-success is-light"><b>New: </b>` + latest + `</span></li>`;
+            modal_versions.innerHTML = `<li><span class="tag is-danger"><b>Your: </b>` + version + `</span></li>
+                        <li><span class="tag is-success"><b>New: </b>` + latest + `</span></li>`;
             document.querySelector('html').classList.add('is-clipped');
             modal_update.classList.add('is-active');
             document.querySelector('#modal_update .delete').onclick = function() {
