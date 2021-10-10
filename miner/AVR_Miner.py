@@ -875,15 +875,15 @@ def periodic_report(start_time, end_time, shares,
     pretty_print("sys0",
                  " " + get_string('periodic_mining_report')
                  + Fore.RESET + Style.NORMAL
-                 + get_string('report_period')
+                 + "\n\t\t- During the last "
                  + str(seconds) + get_string('report_time')
-                 + get_string('report_body1')
+                 + "\n\t\t- You've mined "
                  + str(shares) + get_string('report_body2')
                  + str(round(shares/seconds, 1))
-                 + get_string('report_body3') + get_string('report_body4')
-                 + str(int(hashrate)) + " H/s" + get_string('report_body5')
+                 + get_string('report_body3') + "\n\t\t- With the hashrate of "
+                 + str(int(hashrate)) + " H/s" + "\n\t\t- In this time period, you've solved "
                  + str(int(hashrate*seconds)) + get_string('report_body6')
-                 + get_string('total_mining_time') + str(uptime), "success")
+                 + "\n\t\t- Total miner uptime: " + str(uptime), "success")
 
 
 def calculate_uptime(start_time):
