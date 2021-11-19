@@ -619,10 +619,10 @@ pre {
     max-height: 23em;
 }
 pre code {
-    font-size: .9em;
+    font-size: .85em !important;
 }
 .hljs {
-    background: #363636 !important;
+    background: transparent !important;
     padding: 1em;
 }
 #forUsername {

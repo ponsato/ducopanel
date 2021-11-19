@@ -118,7 +118,7 @@ class Settings:
     REPORT_TIME = 50
     DONATE_LVL = 0
 
-    BLOCK = " ‖ "
+    BLOCK = " - "
     PICK = ""
     COG = " @"
     if os.name != "nt":

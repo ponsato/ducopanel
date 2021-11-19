@@ -1,10 +1,12 @@
 # DucoPanel
 
-This development tries to unify all the web tools and official documentation of https://duinocoin.com into a desktop application, which will also be able to detect the miners connected to the USB ports to run the official miner AVR_miner.py, creating the necessary configuration file to make it work.
+Desktop App to manage all your AVR miners in a simple way, being able to upload the code to any Arduino board (through [Arduino-Cli](https://arduino.github.io/arduino-cli/latest/installation/)), mine with all the boards or with the ones you choose, mine with the PC (choosing the cores you want), and much more.
 
-You can also upload the official code to all the Arduino boards that you have connected directly from the ducopanel, using the [Arduino-Cli](https://arduino.github.io/arduino-cli/latest/installation/).
+You can also connect to your official wallet and perform any operation without leaving the application, as well as see the live status of the network and servers.
 
-For this we will use [ElectronJs](https://www.electronjs.org).
+This development makes everything related to [DuinoCoin](https://duinocoin.com) even easier, based exclusively on the official tools.
+
+[ElectronJs](https://www.electronjs.org) has been used for this purpose.
 
 ![N|Solid](https://media.discordapp.net/attachments/677615906322382862/866087597813792768/unknown.png?width=1249&height=670)
 
@@ -118,7 +120,7 @@ To uninstall it, do it as you would uninstall any other program.
 
 You can download the installer for the latest version for Windows and Debian 64-bit here:
 
-- [Ducopanel-1.261.0-setup.exe](https://github.com/ponsato/ducopanel/releases/download/1.261.0/Ducopanel-1.261.0-setup.exe)
-- [Ducopanel-1.261.0-setup.msi](https://github.com/ponsato/ducopanel/releases/download/1.261.0/Ducopanel-1.261.0-setup.msi)
-- [ducopanel_1.261.0_amd64.deb](https://github.com/ponsato/ducopanel/releases/download/1.261.0/ducopanel_1.261.0_amd64.deb)
-- [ducopanel_1.261.0_arm64.deb](https://github.com/ponsato/ducopanel/releases/download/1.261.0/ducopanel_1.261.0_arm64.deb)
+- [Ducopanel-1.273.0-setup.exe](https://github.com/ponsato/ducopanel/releases/download/1.273.0/Ducopanel-1.273.0-setup.exe)
+- [Ducopanel-1.273.0-setup.msi](https://github.com/ponsato/ducopanel/releases/download/1.273.0/Ducopanel-1.273.0-setup.msi)
+- [ducopanel_1.273.0_amd64.deb](https://github.com/ponsato/ducopanel/releases/download/1.273.0/ducopanel_1.273.0_amd64.deb)
+- [ducopanel_1.273.0_arm64.deb](https://github.com/ponsato/ducopanel/releases/download/1.273.0/ducopanel_1.273.0_arm64.deb)
