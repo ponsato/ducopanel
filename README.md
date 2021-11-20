@@ -8,7 +8,7 @@ This development makes everything related to [DuinoCoin](https://duinocoin.com) 
 
 [ElectronJs](https://www.electronjs.org) has been used for this purpose.
 
-![N|Solid](https://i.ibb.co/ThhFqD9/ducopanel-pi.png)
+![N|Solid](./resources/ducopanel.png)
 
 ## Requirements
 
