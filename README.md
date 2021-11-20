@@ -8,7 +8,7 @@ This development makes everything related to [DuinoCoin](https://duinocoin.com) 
 
 [ElectronJs](https://www.electronjs.org) has been used for this purpose.
 
-![N|Solid](https://media.discordapp.net/attachments/677615906322382862/866087597813792768/unknown.png?width=1249&height=670)
+![N|Solid](./resources/ducopanel.png)
 
 ## Requirements
 
