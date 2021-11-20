@@ -1,6 +1,6 @@
 const serialports = require('serialport');
 const upath = require('upath');
-const version = "2.73";
+const version = "2.74";
 const fs = require('fs');
 let previous_ports;
 
@@ -72,7 +72,7 @@ function manageMinerConfig (method) {
             fs.mkdirSync(dir);
         }
         let identifier_string = document.getElementById("identifier").value;
-        let identifier = identifier_string !== '' ? identifier_string : 'none';
+        let identifier = identifier_string !== '' ? identifier_string : 'Official AVR Miner 2.74';
         let avrboard = '';
         if (method === 'boot') {
             avrboard = "avrboard = " + document.getElementById('avr_board').value;
@@ -343,6 +343,10 @@ function runPcMiner() {
                     }
                     hljs_pcminer.scrollTop = document.getElementById('hljs_pcminer').scrollHeight;
                     break;
+                case 'Error':
+                    traces.innerHTML += '<span style="color: red">' + data[1] + '<br></span>';
+                    hljs_pcminer.scrollTop = document.getElementById('hljs_pcminer').scrollHeight;
+                    break
                 case 'UpdateHashrate':
                     document.getElementById("hashrate_pcminer").innerHTML = parseFloat(data[2] / 1000).toFixed(2) + " kH/s";
                     break;

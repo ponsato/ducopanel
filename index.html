@@ -193,7 +193,7 @@
                             <div class="tile is-child box blur">
                                 <div class="content" id="adblocker_detected">
                                     <p class="content">
-                                        We spend <span class="has-text-danger-dark">our own money</span> to maintain the servers. A <b>single ad</b> here helps in covering these costs.
+                                        We spend <span class="has-text-danger-dark">our own money</span> to maintain the servers.
                                         If you like the project consider buying our
                                         <a href="https://store.duinocoin.com" target="_blank">official merch</a>
                                         or
@@ -615,7 +615,7 @@
                 </section>
                 <!--Bootloading-->
                 <section class="tab-content">
-                    <div class="box blur">
+                    <div>
                         <p class="subtitle has-text-weight-light">
                             <i class="fa fa-terminal fa-fw" style="color:green;"></i>
                             BOOTLOADER
@@ -658,7 +658,7 @@
                 </section>
                 <!--PC mining-->
                 <section class="tab-content">
-                    <div class="box blur">
+                    <div>
                         <p class="subtitle has-text-weight-light">
                             <i class="fa fa-desktop fa-fw" style="color:orangered;"></i>
                             PC mining
@@ -751,12 +751,39 @@
                                         Your Miners
                                         <span id="minercount_pc" class="has-text-weight-normal"></span>
                                     </p>
-                                    <div id="miners_pcminer" class="columns is-multiline" style="resize: vertical;">
-                                        <div class="column is-full">
-                                            <p class="title is-size-6">
-                                                Fetching data
-                                            </p>
-                                        </div>
+                                    <div class="columns is-multiline" style="resize: vertical;">
+                                        <table class="table is-fullwidth" style="background: transparent">
+                                            <thead>
+                                            <th></th>
+                                            <th>
+                                                <p>Miner</p>
+                                            </th>
+                                            <th>
+                                                <span>Hashrate</span>
+                                                <p class="icon-text">
+                                        <span class="icon" style="color:#f0932b">
+                                            <i class="mdi mdi-pickaxe animated faa-slow faa-wrench"></i>
+                                        </span>
+                                                </p>
+                                            </th>
+                                            <th>
+                                                <span>Correct shares</span>
+                                                <p class="icon-text">
+                                        <span class="icon has-text-success-dark">
+                                            <i class="fa fa-spell-check"></i>
+                                        </span>
+                                                </p>
+                                            </th>
+                                            <th></th>
+                                            </thead>
+                                            <tbody id="miners_pcminer">
+                                                <div class="column is-full">
+                                                    <p class="title is-size-6">
+                                                        Fetching data
+                                                    </p>
+                                                </div>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
@@ -1182,10 +1209,6 @@
                         <img src="assets/wduco.png" class="icon is-small">
                         <span>Wrap DUCO to wDUCO</span>
                     </a>
-                    <a href="https://server.duinocoin.com/webminer.html" class="button">
-                        <img class="icon is-small" src="assets/webminer.png">
-                        <span>Web Miner</span>
-                    </a>
                     <a href="https://explorer.duinocoin.com" target="_blank" class="button">
                         <img src="assets/explorer.png" class="icon is-small">
                         <span>Network explorer</span>
@@ -1200,7 +1223,7 @@
                         <img src="assets/ducopcgeek.png" class="icon is-small">
                         <span>Duino-Coin in Charts</span>
                     </a>
-                    <a href="https://siunus.github.io/duco-monitor/" target="_blank" class="button">
+                    <a href="https://siunus.github.io/duco-monitor/" target="_blank" id="ducomonitor" class="button">
                         <i class="icon fa fa-search is-small"></i>
                         <span>DUCO Monitor</span>
                     </a>

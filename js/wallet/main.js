@@ -677,10 +677,12 @@ window.addEventListener('load', function() {
                     }
                     $("#miners").html(miners_html);
                     $("#miners_miner").html(miners_html);
+                    $("#miners_pcminer").html(miners_html);
                     $("#total_hashrate").html(scientific_prefix(total_hashrate) + "H/s");
                     $("#hashrate_miner").html(scientific_prefix(total_hashrate) + "H/s");
                     $("#minercount").html(user_miners.length);
                     $("#minercount_miner").html(user_miners.length);
+                    $("#minercount_pc").html(user_miners.length);
                 } else {
                     $("#minertable").fadeOut(function() {
                         $("#nominers").fadeIn();
@@ -828,6 +830,7 @@ window.addEventListener('load', function() {
                                 user_data(username, false);
                             }, 10 * 1000);
                             document.getElementById('forUsername').innerText = username;
+                            document.getElementById('ducomonitor').href = 'https://siunus.github.io/duco-monitor/#' + username;
                             search(username);
 
                             setTimeout(function() {

@@ -2,7 +2,7 @@ import sys
 import subprocess
 from configparser import ConfigParser
 
-MINER_VER = '2.73'  # Version number
+MINER_VER = '2.74'  # Version number
 RESOURCES_DIR = 'Duino-Coin AVR Miner ' + str(MINER_VER)
 
 config = ConfigParser()

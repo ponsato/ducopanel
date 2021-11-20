@@ -1,6 +1,6 @@
 {
   "name": "Ducopanel",
-  "version": "1.273.0",
+  "version": "1.274.0",
   "description": "Duinocoin minerpanel and dashboard",
   "main": "main.js",
   "scripts": {

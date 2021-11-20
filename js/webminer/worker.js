@@ -83,6 +83,7 @@ onmessage = function (event) {
 
             socket.onclose = function (event) {
                 console.error("CPU" + workerVer + ": WebSocket close observed, trying to reconnect: ", event);
+                postMessage("Error," + "CPU" + workerVer + ": WebSocket close observed - trying to reconnect - wait");
                 setTimeout(function () {
                     connect();
                 }, 15000);
