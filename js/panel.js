@@ -27,7 +27,6 @@ window.addEventListener('load', function() {
         tab.addEventListener('click', function () {
             deactvateAllTabs();
             hideTabsContent();
-            console.log('click');
             tab.classList.add('is-active');
             activateTabsContent(tab);
         });
@@ -36,63 +35,29 @@ window.addEventListener('load', function() {
 
 
     // Network
-    document.querySelector('#enlarge_prices').onclick =
-        function enlarge_prices() {
-            let large_prices = document.querySelector('#large_prices');
-            document.querySelector('html').classList.add('is-clipped');
-            large_prices.classList.add('is-active');
-
-            document.querySelector('#large_prices .delete').onclick = function() {
-                document.querySelector('html').classList.remove('is-clipped');
-                large_prices.classList.remove('is-active');
-            }
+    document.addEventListener('DOMContentLoaded', () => { // HAMBURGER MENU
+        const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+        if ($navbarBurgers.length > 0) {
+            $navbarBurgers.forEach(el => { // Add a click event on each of burger menus
+                el.addEventListener('click', () => {
+                    const target = el.dataset.target; // Get the target from the "data-target" attribute
+                    const $target = document.getElementById(target);
+                    el.classList.toggle('is-active'); // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+                    $target.classList.toggle('is-active');
+                });
+            });
         }
-
-    document.querySelector('#enlarge_miners').onclick =
-        function enlarge_miners() {
-            let large_miners = document.querySelector('#large_miners');
-            document.querySelector('html').classList.add('is-clipped');
-            large_miners.classList.add('is-active');
-
-            document.querySelector('#large_miners .delete').onclick = function() {
-                document.querySelector('html').classList.remove('is-clipped');
-                large_miners.classList.remove('is-active');
-            }
-        }
-
-    document.querySelector('#enlarge_balances').onclick =
-        function enlarge_balances() {
-            let large_balances = document.querySelector('#large_balances');
-            document.querySelector('html').classList.add('is-clipped');
-            large_balances.classList.add('is-active');
-
-            document.querySelector('#large_balances .delete').onclick = function() {
-                document.querySelector('html').classList.remove('is-clipped');
-                large_balances.classList.remove('is-active');
-            }
-        }
+    });
 
     // EXPLORER
     let duco_price = 0.00045;
     let load_workers = false;
     let url_string = window.location;
     let url = new URL(url_string);
-
-
+    let to_search = document.getElementById('forUsername').innerText;
 
     function update_element(element, value) {
-        // Nicely fade in the new value if it changed
-        element = "#" + element;
-        old_value = $(element).html()
-
-        if ($("<div>" + value + "</div>").text() != old_value) {
-            $(element).fadeOut('fast', function() {
-                $(element).html(value);
-                $(element).fadeIn('fast');
-            });
-            return true;
-        }
-        return false;
+        $(`#${element}`).html(value);
     }
 
 
@@ -101,94 +66,92 @@ window.addEventListener('load', function() {
         return Math.round(value * power_of_ten) / power_of_ten;
     }
 
-    document.querySelector('#loadworkers').onclick =
-        function fill_worker_list() {
-            $("#loadworkers").addClass("is-loading")
-            fetch("https://server.duinocoin.com/statistics_miners")
-                .catch(function(error) {
-                    console.log(error);
-                })
-                .then(response => response.json())
-                .then(data => {
-                    data = data.result;
-                    let workers = `<ul class="workers">`
-                    let counter = 0;
-                    let worker_counter = 0;
-                    let sorted_workers = [];
-                    for (worker in data) {
-                        sorted_workers.push({
-                            "User": worker,
-                            "Verified": data[worker]["v"],
-                            "Miners": data[worker]["w"]
-                        })
-                    }
-                    sorted_workers.sort((a, b) => b.Miners - a.Miners);
-                    for (let i = 0; i < sorted_workers.length; i++) {
-                        let worker = sorted_workers[i];
+    $('#loadworkers').on('click', fill_worker_list());
 
-                        if (worker.Verified == "yes") {
-                            workers +=
-                                `<li class="has-text-success">
+    function fill_worker_list() {
+        $("#loadworkers").addClass("is-loading")
+        fetch("https://server.duinocoin.com/statistics_miners")
+            .catch(function(error) {
+                console.log(error);
+            })
+            .then(response => response.json())
+            .then(data => {
+                data = data.result;
+                let workers = `<ul class="workers">`
+                let counter = 0;
+                let worker_counter = 0;
+                let sorted_workers = [];
+                for (worker in data) {
+                    sorted_workers.push({
+                        "User": worker,
+                        "Verified": data[worker]["v"],
+                        "Miners": data[worker]["w"]
+                    })
+                }
+                sorted_workers.sort((a, b) => b.Miners - a.Miners);
+                for (let i = 0; i < sorted_workers.length; i++) {
+                    let worker = sorted_workers[i];
+
+                    if (worker.Verified == "yes") {
+                        workers +=
+                            `<li class="has-text-success">
                                   <i class="fas fa-check"></i>
-                                  <span>` +
-                                worker.User +
-                                `</span><b class="tag">` +
-                                worker.Miners +
-                                `</b></li>`;
-                        } else {
-                            workers +=
-                                `<li class="has-text-danger">
+                                  <a onclick="link_search('${worker.User}')">` +
+                            worker.User +
+                            `</a><b class="tag">` +
+                            worker.Miners +
+                            `</b></li>`;
+                    } else {
+                        workers +=
+                            `<li class="has-text-danger">
                                   <i class="fas fa-times-circle"></i>
-                                  <span>` +
-                                worker.User +
-                                `</span>
+                                  <a onclick="link_search('${worker.User}')">` +
+                            worker.User +
+                            `</a>
                         <b class="tag">` +
-                                worker.Miners +
-                                `</b></li>`;
-                        }
-
-                        worker_counter += worker.Miners;
-                        counter++;
+                            worker.Miners +
+                            `</b></li>`;
                     }
-                    workers += `</ul>`;
-                    document.getElementById("workers").innerHTML = workers;
-                    $("#allworkers").text("(" + worker_counter + " workers on " + counter + " accounts)");
-                });
-        }
 
+                    worker_counter += worker.Miners;
+                    counter++;
+                }
+                workers += `</ul>`;
+                document.getElementById("workers").innerHTML = workers;
+                $("#allworkers").text("(" + worker_counter + " workers on " + counter + " accounts)");
+            });
+    }
+
+
+    const scientific_prefix = (value) => {
+        value = parseFloat(value);
+        if (value / 1000000 > 0.5)
+            value = round_to(4, value / 1000000) + " M";
+        else if (value / 1000 > 0.5)
+            value = round_to(4, value / 1000) + " k";
+        else
+            value = round_to(4, value) + " ";
+        return value;
+    };
 
     function update_stats() {
         fetch("https://server.duinocoin.com/api.json")
+            .catch(function(error) {
+                console.log(error);
+            })
             .then(response => response.json())
             .then(data => {
-                // FILL THE STATISTICS SECTION FROM API
                 duco_price = data["Duco price"];
 
-                update_element("lastupdate", "(last update: " + data["Last update"] + ")")
-
                 update_element("hashrate", data["Pool hashrate"])
-                update_element("ducos1hashrate", data["DUCO-S1 hashrate"])
-                update_element("xxhashhashrate", data["XXHASH hashrate"])
 
                 update_element("registeredusers", data["Registered users"])
 
-                update_element("difficulty", data["Current difficulty"])
-
-                update_element("allmined", round_to(2, data["All-time mined DUCO"]) + " ᕲ")
-
-                /* ---------------- */
-
-                update_element("price", "$" + round_to(5, data["Duco price"]))
-                update_element("nodesprice", "$" + round_to(5, data["Duco Node-S price"]))
-                update_element("justswapprice", "$" + round_to(5, data["Duco JustSwap price"]))
+                update_element("allmined", scientific_prefix(data["All-time mined DUCO"]));
 
                 update_element("watt_usage", data["Net energy usage"])
 
-                update_element("lastblockhash", data["Last block hash"])
-
-                update_element("shares", data["Mined blocks"])
-
-                /* ---------------- */
+                update_element("shares", scientific_prefix(data["Mined blocks"]))
 
                 update_element("arduinos", data["Miner distribution"]["Arduino"])
 
@@ -198,9 +161,10 @@ window.addEventListener('load', function() {
 
                 update_element("rpis", Math.round(data["Miner distribution"]["RPi"] / 4))
 
-                update_element("cpus", Math.round(data["Miner distribution"]["CPU"] / 6))
+                update_element("cpus", Math.round(data["Miner distribution"]["Web"] +
+                    data["Miner distribution"]["CPU"] / 4))
 
-                update_element("gpus", data["Miner distribution"]["GPU"])
+                update_element("phones", Math.round(data["Miner distribution"]["Phone"] / 4))
 
                 update_element("others", data["Miner distribution"]["Other"])
 
@@ -211,37 +175,15 @@ window.addEventListener('load', function() {
                 update_element("master_cpu", round_to(1, data["Server CPU usage"]) + "%")
                 update_element("master_ram", round_to(1, data["Server RAM usage"]) + "%")
                 update_element("master_threads", data["Open threads"])
-
-                // WORKER LIST
-                if (load_workers) {
-                    let workers = `<ul class="workers">`
-                    let counter = 0;
-                    let worker_counter = 0;
-                    let sorted_workers = [];
-                    for (worker in data["Active workers"]) {
-                        sorted_workers.push({
-                            "User": worker,
-                            "Miners": data["Active workers"][worker]
-                        })
-                    }
-                    sorted_workers.sort((a, b) => b.Miners - a.Miners);
-                    for (let i = 0; i < sorted_workers.length; i++) {
-                        let worker = sorted_workers[i];
-                        workers += `<li>` + worker.User + `<span class="tag">` + worker.Miners + ` worker(s)</span></li>`;
-                        worker_counter += worker.Miners;
-                        counter++;
-                        //if (counter > 100) break;
-                    }
-                    workers += `</ul>`;
-                    $("#workers").html(workers);
-                    $("#allworkers").text("(" + worker_counter + " workers on " + counter + " accounts)");
-                }
             })
     }
 
 
     function last_explorer_hashes() {
         fetch("https://server.duinocoin.com/transactions.json")
+            .catch(function(error) {
+                console.log(error);
+            })
             .then(response => response.json())
             .then(data => {
 
@@ -250,19 +192,22 @@ window.addEventListener('load', function() {
                     hashes.push(data[hash])
                 }
 
-                transaction_hashes_html = "<strong>Last transactions:</strong><br>";
+                transaction_hashes_html = "";
                 for (hash in hashes.reverse()) {
                     if (hash >= 5) break
                     this_hash = hashes[hash].Hash;
                     if (this_hash.length == 40) {
-                        transaction_hashes_html += "<span class='transaction1 monospace'>" + this_hash.substring(0, 14) + "</span><br>";
+                        transaction_hashes_html += `<a class='transaction2 monospace' onclick="link_search('${this_hash}')">` + this_hash.substring(0, 40) + "</a><br>";
                     } else {
-                        transaction_hashes_html += "<span class='transaction2 monospace'>" + this_hash.substring(0, 14) + "</span><br>";
+                        transaction_hashes_html += `<a class='transaction1 monospace' onclick="link_search('${this_hash}')">` + this_hash.substring(0, 40) + "</a><br>";
                     }
                 }
                 $("#transactionstext3").html(transaction_hashes_html);
             })
         fetch("https://server.duinocoin.com/foundBlocks.json")
+            .catch(function(error) {
+                console.log(error);
+            })
             .then(response => response.json())
             .then(data => {
                 let last = [];
@@ -270,19 +215,21 @@ window.addEventListener('load', function() {
                     last.push(hash);
                 }
 
-                block_hashes_html = "<strong>Last blocks:</strong><br>";
+                block_hashes_html = "";
                 for (hash in last.reverse()) {
                     if (hash >= 5) break
                     this_hash = last[hash];
                     if (this_hash.length == 40) {
-                        block_hashes_html += "<span class='block2 monospace' target='_blank'>" + this_hash.substring(0, 14) + "</span><br>";
+                        block_hashes_html += `<a class='block2 monospace' onclick="link_search('${this_hash}')">` + this_hash.substring(0, 40) + "</a><br>";
                     } else {
-                        block_hashes_html += "<span class='block1 monospace' target='_blank'>" + this_hash.substring(0, 14) + "</span><br>";
+                        block_hashes_html += `<a class='block1 monospace' onclick="link_search('${this_hash}')">` + this_hash.substring(0, 40) + "</a><br>";
                     }
                 }
                 $("#transactionstext4").html(block_hashes_html);
             })
     }
+
+
     String.prototype.escape = function() {
         var tagsToReplace = {
             '&': ' ',
@@ -298,241 +245,7 @@ window.addEventListener('load', function() {
             return tagsToReplace[tag] || tag;
         });
     };
-    function search() {
-        let cont = true;
-        if (hashToBeFound) {
-            console.log(hashToBeFound);
-            $("#transactionstext1").html(`Results for: <a class="gradienttext" onclick="link_search('${hashToBeFound}')">${hashToBeFound}</a></span>`);
-        }
-        if (cont) {
-            $.getJSON("https://server.duinocoin.com/transactions/" + hashToBeFound, function(data) {
-                if (data.success == true && data.result != "No transaction found") {
-                    cont = false;
-                    let amount_usd = data.result.amount * duco_price;
-                    if (hashToBeFound.length == 40) transaction_type = "DUCO-S1";
-                    else transaction_type = "XXHASH"
 
-                    found_transaction_html = `<ul class="subtitle"><li>` +
-                        `<i class='fas fa-fw card-green is-size-7 fa-info-circle'></i>` +
-                        `&nbsp;Type: <b>transaction</b> (` +
-                        transaction_type +
-                        `)</li>` +
-                        `<li>` +
-                        `<i class='fas fa-fw card-red is-size-7 fa-clock'></i>` +
-                        `&nbsp;Timestamp: <b>` +
-                        data.result.datetime +
-                        `</b> (UTC)</li>` +
-                        `<li>` +
-                        `<i class='fas fa-fw card-blue is-size-7 fa-user-tie'></i>` +
-                        `&nbsp;Sender: <b>` +
-                        `<a onclick="link_search('${data.result.sender}')">` +
-                        data.result.sender +
-                        `</a></b></li>` +
-                        `<li>` +
-                        `<i class='fas fa-fw card-orange is-size-7 fa-user'></i>` +
-                        `&nbsp;Recipient: <b>` +
-                        `<a onclick="link_search('${data.result.recipient}')">` +
-                        data.result.recipient +
-                        `</a></b></li>` +
-                        `<li>` +
-                        `<i class='fas fa-fw card-purple is-size-7 fa-receipt'></i>` +
-                        `&nbsp;Amount: <b>` +
-                        round_to(10, data.result.amount) +
-                        ` DUCO</b> (≈$` +
-                        round_to(4, amount_usd) +
-                        `)</li>` +
-                        `<li>` +
-                        `<i class='fas fa-fw card-turquoise is-size-7 fa-envelope'></i>` +
-                        `&nbsp;Message: <b><i>` +
-                        data.result.memo +
-                        `</b></i></li></ul>`
-
-                    update_element("transactionstext2", found_transaction_html);
-                }
-            })
-                .fail(function(error) {
-                    console.log(error.responseText);
-                    if (error.responseText.includes("500")) error = "500 - internal server error";
-                    else if (error.responseText.includes("429")) error = "429 - too many requests (slow down)";
-                    else if (error.responseText.includes("404")) error = "404 - nothing interesting found";
-                    found_transaction_html = `<ul class="subtitle"><li>` +
-                        `<i class='fas fa-fw card-red is-size-7 fa-info-circle'></i>` +
-                        `&nbsp;Error: <b>${error}</b> 🤦‍♀️</li></ul>`;
-                    update_element("transactionstext2", found_transaction_html);
-                });
-        }
-        if (cont) {
-            $.getJSON('https://server.duinocoin.com/users/' + hashToBeFound, function(data) {
-                if (data.success == true) {
-                    cont = false;
-                    let amount_usd = data.result.balance.balance * duco_price;
-
-                    found_user_html = `<ul><li>` +
-                        `<i class='fas fa-fw card-green is-size-7 fa-info-circle'></i>` +
-                        `&nbsp;Type: <b>wallet</b></li>` +
-                        `<li>` +
-                        `<i class='fas fa-fw card-red is-size-7 fa-user-tie'></i>` +
-                        `&nbsp;Username: <b>` +
-                        `<a onclick="link_search('${hashToBeFound}')">` +
-                        hashToBeFound +
-                        `</a></b></li>` +
-                        `<li>` +
-                        `<i class='fas fa-fw card-blue is-size-7 fa-wallet'></i>` +
-                        `&nbsp;Balance: <b>` +
-                        round_to(10, data.result.balance.balance) +
-                        ` DUCO</b> (≈$` +
-                        round_to(4, amount_usd) +
-                        `)</li>` +
-                        `<li>` +
-                        `<i class='fas fa-fw card-turquoise is-size-7 fa-check'></i>` +
-                        `&nbsp;Verified: <b>` +
-                        data.result.balance.verified +
-                        `</b></li>` +
-                        `<li>` +
-                        `<i class='fas fa-fw card-orange is-size-7 fa-calendar'></i>` +
-                        `&nbsp;Created: <b>` +
-                        data.result.balance.created +
-                        `</b></li>`;
-
-                    found_user_html += `<li>` +
-                        `<i class='fas fa-fw card-purple is-size-7 fa-cog'></i>` +
-                        `&nbsp;Miners <b>(` + data["result"]["miners"].length + `)</b>:</li>` +
-                        `<li class='is-size-6'>`;
-                    i = 0;
-                    if (data["result"]["miners"].length) {
-                        for (miner in data["result"]["miners"]) {
-                            if (data["result"]["miners"][miner]["identifier"] != "None") {
-                                found_user_html += "&nbsp; &nbsp; &nbsp; &bull; <b>" +
-                                    data["result"]["miners"][miner]["identifier"] +
-                                    "</b> <span class='has-text-grey'>(" +
-                                    data["result"]["miners"][miner]["software"] +
-                                    ")</span> - " +
-                                    data["result"]["miners"][miner]["accepted"] + "/" +
-                                    (data["result"]["miners"][miner]["accepted"] + data["result"]["miners"][miner]["rejected"]) +
-                                    ", <b>" + get_prefix("H/s", data["result"]["miners"][miner]["hashrate"]) + "</b><br>";
-                            } else {
-                                found_user_html += "&nbsp; &nbsp; &nbsp; &bull; <b>" + data["result"]["miners"][miner]["software"] + "</b> - " +
-                                    data["result"]["miners"][miner]["accepted"] + "/" +
-                                    (data["result"]["miners"][miner]["accepted"] + data["result"]["miners"][miner]["rejected"]) +
-                                    ", <b>" + get_prefix("H/s", data["result"]["miners"][miner]["hashrate"]) + "</b><br>";
-                            }
-
-                            if (i > 10) {
-                                found_user_html += "&nbsp; &nbsp; &nbsp; &bull; And " + (data["result"]["miners"].length - i) + " more miner(s)...";
-                                break;
-                            }
-                            i += 1;
-                        }
-                    } else {
-                        found_user_html += "&nbsp; &nbsp; &nbsp; &bull; No miners found for that user";
-                    }
-
-                    found_user_html += `<li>` +
-                        `<i class='fas fa-fw card-pomegrante is-size-7 fa-receipt'></i>` +
-                        `&nbsp;Last 10 transactions:</li>` +
-                        `<li class='is-size-6'>`;
-                    i = 0;
-                    if (data["result"]["transactions"].length) {
-                        for (transaction in data["result"]["transactions"].reverse()) {
-                            if (data["result"]["transactions"][transaction]["sender"] == data["result"]["balance"]["username"]) {
-                                found_user_html += "&nbsp; &nbsp; &nbsp; &bull; " +
-                                    "<span class='has-text-grey'>" +
-                                    data["result"]["transactions"][transaction]["datetime"] +
-                                    "</span><span class='has-text-danger-dark'>" +
-                                    " Sent <b>" +
-                                    Math.round(data["result"]["transactions"][transaction]["amount"] * 1000) / 1000 +
-                                    " DUCO</b></span> to " +
-                                    `<a onclick="link_search('${data["result"]["transactions"][transaction]["recipient"]}')">` +
-                                    "<b>" +
-                                    data["result"]["transactions"][transaction]["recipient"] + "</a></b> " + `<a onclick="link_search('${data["result"]["transactions"][transaction]["hash"]}')">(` + data["result"]["transactions"][transaction]["hash"].substr(data["result"]["transactions"][transaction]["hash"].length - 8) + ")</a><br>"
-                            } else {
-                                found_user_html += "&nbsp; &nbsp; &nbsp; &bull; " +
-                                    "<span class='has-text-grey'>" +
-                                    data["result"]["transactions"][transaction]["datetime"] +
-                                    "</span><span class='has-text-success-dark'>" +
-                                    " Received <b>" +
-                                    Math.round(data["result"]["transactions"][transaction]["amount"] * 1000) / 1000 +
-                                    " DUCO</b></span> from " +
-                                    `<a onclick="link_search('${data["result"]["transactions"][transaction]["sender"]}')">` + "<b>" +
-                                    data["result"]["transactions"][transaction]["sender"] + "</a></b> " + `<a onclick="link_search('${data["result"]["transactions"][transaction]["hash"]}')">(` + data["result"]["transactions"][transaction]["hash"].substr(data["result"]["transactions"][transaction]["hash"].length - 8) + ")</a><br>"
-                            }
-
-                            i += 1;
-                            if (i > 10) {
-                                break;
-                            }
-                        }
-                    } else {
-                        found_user_html += "&nbsp; &nbsp; &bull; No transactions found for that user";
-                    }
-
-                    found_user_html += "</ul>"
-
-                    update_element("transactionstext2", found_user_html);
-                }
-            })
-                .fail(function(error) {
-                    if (error.responseText.includes("500")) error = "500 - internal server error";
-                    else if (error.responseText.includes("429")) error = "429 - too many requests (slow down)";
-                    else if (error.responseText.includes("404")) error = "404 - nothing interesting found";
-                    found_transaction_html = `<ul class="subtitle"><li>` +
-                        `<i class='fas fa-fw card-red is-size-7 fa-info-circle'></i>` +
-                        `&nbsp;Error: <b>${error}</b> 🤦‍♀️</li></ul>`;
-                    update_element("transactionstext2", found_transaction_html);
-                });
-        }
-        if (cont) {
-            $.getJSON('https://server.duinocoin.com/foundBlocks.json', function(data) {
-                cont = false;
-                let found = data[hashToBeFound]
-                if (hashToBeFound != "" && found != "" && found != undefined) {
-                    cont = false;
-                    let amount_usd = found["Amount generated"] * duco_price;
-                    if (hashToBeFound.length == 40) block_type = "DUCO-S1";
-                    else block_type = "XXHASH"
-
-                    found["Finder"] = found["Finder"].replace("(DUCO-S1)", "")
-                    found["Finder"] = found["Finder"].replace("(XXHASH)", "")
-
-                    found_block_html = `<ul><li>` +
-                        `<i class='fas fa-fw card-green is-size-7 fa-info-circle'></i>` +
-                        `&nbsp;Type: <b>block</b> (` +
-                        block_type +
-                        `)</li>` +
-                        `<li>` +
-                        `<i class='fas fa-fw card-red is-size-7 fa-clock'></i>` +
-                        `&nbsp;Timestamp: <b>` +
-                        found["Date"] +
-                        ` ` +
-                        found["Time"] +
-                        `</b> (UTC)</li>` +
-                        `<li>` +
-                        `<i class='fas fa-fw card-blue is-size-7 fa-user-tie'></i>` +
-                        `&nbsp;Finder: <b>` +
-                        `<a onclick="link_search('${found["Finder"]}')">` +
-                        found["Finder"] +
-                        `</a></b></li>` +
-                        `</b></li>` +
-                        `<li><i class='fas card-orange is-size-7 fa-fw fa-receipt'></i>` +
-                        `&nbsp;Generated: <b>` +
-                        round_to(2, found["Amount generated"]) +
-                        ` DUCO</b> (≈$` + round_to(4, amount_usd) + `)</li></ul>`;
-
-                    update_element("transactionstext2", found_block_html);
-                }
-            })
-                .fail(function(error) {
-                    if (error.responseText.includes("500")) error = "500 - internal server error";
-                    else if (error.responseText.includes("429")) error = "429 - too many requests (slow down)";
-                    else if (error.responseText.includes("404")) error = "404 - nothing interesting found";
-                    found_transaction_html = `<ul class="subtitle"><li>` +
-                        `<i class='fas fa-fw card-red is-size-7 fa-info-circle'></i>` +
-                        `&nbsp;Error: <b>${error}</b> 🤦‍♀️</li></ul>`;
-                    update_element("transactionstext2", found_transaction_html);
-                });
-        }
-        if (cont) $("#transactionstext2").text(`Nothing interesting found for your query 🤷`);
-    }
 
     function update_pools() {
         fetch("https://server.duinocoin.com/all_pools")
@@ -547,16 +260,6 @@ window.addEventListener('load', function() {
                         pools[pool["name"]] = pool;
                     });
                     // Update pool info, add new pools here
-
-                    // Pulse pool
-                    try {
-                        let pulse1_data = pools["pulse-pool-1"];
-                        let pulse2_data = pools["pulse-pool-2"];
-                        update_element("pulse_connections1", pools["pulse-pool-1"]["connections"] + pools["pulse-pool-2"]["connections"] + pools["pulse-pool-3"]["connections"] + pools["pulse-pool-4"]["connections"]);
-
-                        update_element("pulse_cpu2", round_to(1, parseFloat(pulse2_data["cpu"])) + "%");
-                        update_element("pulse_ram2", round_to(1, parseFloat(pulse2_data["ram"])) + "%");
-                    } catch (e) { console.log(e) };
 
                     // Star pool
                     try {
@@ -603,74 +306,6 @@ window.addEventListener('load', function() {
             })
     }
 
-    function pulse_update() {
-        fetch("https://api.codetabs.com/v1/proxy?quest=http://149.91.88.18/statistics_2.json")
-            .then(response => response.json())
-            .then(data => {
-                update_element("pulse_connections1", data["connections"]);
-            })
-
-        fetch("https://api.codetabs.com/v1/proxy?quest=http://149.91.88.18/statistics.json")
-            .then(response => response.json())
-            .then(data => {
-                update_element("pulse_connections2", data["connections"]);
-                update_element("pulse_cpu2", round_to(1, parseFloat(data["cpu"])) + "%");
-                update_element("pulse_ram2", round_to(1, parseFloat(data["ram"])) + "%");
-            })
-    }
-
-    function star_update() {
-        fetch("https://api.codetabs.com/v1/proxy?quest=http://51.158.182.90/statistics.json")
-            .then(response => response.json())
-            .then(data => {
-                update_element("star_connections", data["connections"]);
-                update_element("star_cpu", round_to(1, parseFloat(data["cpu"])) + "%");
-                update_element("star_ram", round_to(1, parseFloat(data["ram"])) + "%");
-            })
-    }
-
-    function winner_update() {
-        fetch("https://api.allorigins.win/get?url=http://193.164.7.180/statistics.json")
-            .then(response => response.json())
-            .then(data => {
-                data = JSON.parse(data["contents"]);
-                update_element("winner_connections", data["connections"]);
-            })
-
-        fetch("https://api.allorigins.win/get?url=http://193.164.7.180/statistics_2.json")
-            .then(response => response.json())
-            .then(data => {
-                data = JSON.parse(data["contents"]);
-                update_element("winner_connections2", data["connections"]);
-                update_element("winner_cpu", round_to(1, parseFloat(data["cpu"])) + "%");
-                update_element("winner_ram", round_to(1, parseFloat(data["ram"])) + "%");
-            })
-    }
-
-    function beyond_update() {
-        fetch("https://api.allorigins.win/get?url=http://beyondpool.io/statistics.json")
-            .then(response => response.json())
-            .then(data => {
-                data = JSON.parse(data["contents"]);
-                update_element("beyond_connections", data["connections"]);
-                update_element("beyond_cpu", round_to(1, parseFloat(data["cpu"])) + "%");
-                update_element("beyond_ram", round_to(1, parseFloat(data["ram"])) + "%");
-            })
-    }
-
-    function get_prefix(symbol, value) {
-        value = parseFloat(value);
-        if (value / 1000000000 > 0.5)
-            value = round_to(2, value / 1000000000) + " G" + symbol;
-        else if (value / 1000000 > 0.5)
-            value = round_to(2, value / 1000000) + " M" + symbol;
-        else if (value / 1000 > 0.5)
-            value = round_to(2, value / 1000) + " k" + symbol;
-        else
-            value = round_to(2, value) + " " + symbol;
-        return value;
-    }
-
     update_stats();
     window.setInterval(update_stats, 10000); // Refresh every 10s
 
@@ -680,6 +315,25 @@ window.addEventListener('load', function() {
     update_pools();
     window.setInterval(update_pools, 60000); // Refresh every 30s
 
+    $("#search_input").on('keydown', function(e) {
+        if (e.which === 13) {
+            e.preventDefault();
+            button_search();
+        }
+    });
+
+    function button_search() {
+        to_search = document.getElementById('forUsername').innerText;
+        console.log("Button search for ", to_search.escape())
+        search(to_search.escape());
+    }
+
+    function link_search(to_search) {
+        console.log("Link search for ", to_search.escape())
+        search(to_search.escape());
+    }
+
+    if (to_search.escape()) search(to_search.escape());
 
     // Target Blank
     function targetBlank() {

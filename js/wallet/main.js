@@ -818,6 +818,7 @@ window.addEventListener('load', function() {
                                 user_data(username, false);
                             }, 10 * 1000);
                             document.getElementById('forUsername').innerText = username;
+                            search(username);
 
                             setTimeout(function() {
                                 $('#form').hide("drop", { direction: "down" }, 500, function() {
@@ -866,4 +867,391 @@ window.addEventListener('load', function() {
             $('#submit').click();
         }
     }, 500)
+
+    // Network
+    function search(searched_string) {
+        let cont = true;
+        if (searched_string) {
+            window.history.pushState('Duino-Coin | Network statistics', 'Duino-Coin | Network statistics', `?search=${searched_string}`);
+            $("#transactionstext1").html(`<div class="divider">Results&nbsp;for&nbsp;<span class='has-text-info' style="overflow:hidden"><span>${searched_string}</span></span></div>`);
+        }
+        if (cont) {
+            $.getJSON("https://server.duinocoin.com/transactions/" + searched_string, function(data) {
+                if (data.success == true && data.result != "No transaction found") {
+                    cont = false;
+                    let amount_usd = data.result.amount * duco_price;
+                    if (searched_string.length == 40) transaction_type = "DUCO-S1";
+                    else transaction_type = "XXHASH"
+
+                    found_transaction_html = `
+                            <table class="table is-narrow is-fullwidth">
+                                <tbody>
+                                    <tr>
+                                        <th>
+                                            <span class="icon-text">
+                                                <i class="icon fa fa-info-circle"></i>
+                                                <span>Type</span> 
+                                            </span>
+                                        </th>
+                                        <th>
+                                            Transaction #${data.result.id} (${transaction_type})
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            <span class="icon-text">
+                                                <i class="icon fa fa-calendar"></i>
+                                                <span>Timestamp</span>
+                                            </span>
+                                        </th>
+                                        <th>
+                                            ${data.result.datetime}
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            <span class="icon-text">
+                                                <i class="icon fa fa-arrow-right"></i>
+                                                <span>Output (sender)</span>
+                                            </span>
+                                        </th>
+                                        <th>
+                                            <span class='has-text-info'">
+                                                ${data.result.sender}
+                                            </span>
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            <span class="icon-text">
+                                                <i class="icon fa fa-arrow-left"></i>
+                                                <span>Input (recipient)</span>
+                                            </span>
+                                        </th>
+                                        <th>
+                                            <span class='has-text-info'>
+                                                ${data.result.recipient}
+                                            </span>
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            <span class="icon-text">
+                                                <i class="icon fa fa-coins"></i>
+                                                <span>Transferred amount</span>
+                                            </span>
+                                        </th>
+                                        <th>
+                                            ${data.result.amount} DUCO
+                                            ($${round_to(4, amount_usd)})
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            <span class="icon-text">
+                                                <i class="icon fa fa-envelope"></i>
+                                                <span>Memo</span>
+                                            </span>
+                                        </th>
+                                        <th>
+                                            ${data.result.memo}
+                                        </th>
+                                    </tr>
+                                </tbody>
+                            </table>`
+
+                    update_element("transactionstext2", found_transaction_html);
+                }
+            })
+                .fail(function(error) {
+                    console.log(error.responseText);
+                    if (error.responseText.includes("500")) error = "500 - internal server error";
+                    else if (error.responseText.includes("429")) error = "429 - too many requests (slow down)";
+                    else if (error.responseText.includes("404")) error = "404 - nothing interesting found";
+                    found_transaction_html = `<ul class="is-size-6"><li>` +
+                        `<i class='fas fa-info-circle'></i>` +
+                        `&nbsp;Error: <b>${error}</b> 🤦‍♀️</li></ul>`;
+                    update_element("transactionstext2", found_transaction_html);
+                });
+        }
+        if (cont) {
+            $.getJSON('https://server.duinocoin.com/users/' + searched_string, function(data) {
+                if (data.success == true) {
+                    cont = false;
+                    let amount_usd = data.result.balance.balance * duco_price;
+
+                    miner_str = "";
+                    miner_count = 0;
+                    if (data.result.miners.length) {
+                        let threaded_miners = {};
+                        user_miners = data.result.miners;
+
+                        for (let miner in user_miners) {
+                            let miner_wallet_id = user_miners[miner]["wd"];
+                            if (!miner_wallet_id) miner_wallet_id = Math.random();
+                            const miner_hashrate = user_miners[miner]["hashrate"];
+                            const miner_rejected = user_miners[miner]["rejected"];
+                            const miner_accepted = user_miners[miner]["accepted"];
+
+                            if (!threaded_miners[miner_wallet_id]) {
+                                threaded_miners[miner_wallet_id] = user_miners[miner];
+                                threaded_miners[miner_wallet_id]["threads"] = 1;
+                                miner_count += 1;
+                                continue;
+                            } else if (threaded_miners[miner_wallet_id]) {
+                                threaded_miners[miner_wallet_id]["hashrate"] += miner_hashrate;
+                                threaded_miners[miner_wallet_id]["rejected"] += miner_rejected;
+                                threaded_miners[miner_wallet_id]["accepted"] += miner_accepted;
+                                threaded_miners[miner_wallet_id]["threads"] += 1;
+                                continue;
+                            }
+                        }
+
+                        i = 0;
+                        for (miner in threaded_miners) {
+                            if (threaded_miners[miner]["identifier"] != "None") {
+                                miner_str += "<b>" +
+                                    threaded_miners[miner]["identifier"] +
+                                    "</b> <span class='has-text-grey'>(" +
+                                    threaded_miners[miner]["software"] +
+                                    ")</span> - " +
+                                    get_prefix("", threaded_miners[miner]["accepted"]) + "/" +
+                                    get_prefix("", (threaded_miners[miner]["accepted"] + threaded_miners[miner]["rejected"])) +
+                                    ", <b>" + get_prefix("H/s", threaded_miners[miner]["hashrate"]) + `</b> (${((threaded_miners[miner]["threads"] == 1) ? ("1 thread") : (`${threaded_miners[miner]["threads"]} threads`))}) <br>`;
+                            } else {
+                                miner_str += "<b>" + threaded_miners[miner]["software"] + "</b> - " +
+                                    threaded_miners[miner]["accepted"] + "/" +
+                                    (threaded_miners[miner]["accepted"] + threaded_miners[miner]["rejected"]) +
+                                    ", <b>" + get_prefix("H/s", threaded_miners[miner]["hashrate"]) + `</b> (${((threaded_miners[miner]["threads"] == 1) ? ("1 thread") : (`${threaded_miners[miner]["threads"]} threads`))}) <br>`;
+                            }
+
+                            if (i > 10) {
+                                miner_str += "And " + (miner_count - i) + " more miner(s)...";
+                                break;
+                            }
+                            i += 1;
+                        }
+                    } else {
+                        miner_str += "No miners found for that user";
+                    }
+
+                    tx_str = "";
+                    i = 0;
+                    if (data["result"]["transactions"].length) {
+                        for (transaction in data["result"]["transactions"].reverse()) {
+                            if (data["result"]["transactions"][transaction]["sender"] == data["result"]["balance"]["username"]) {
+                                tx_str += "<span class='has-text-grey'>" +
+                                    data["result"]["transactions"][transaction]["datetime"] +
+                                    "</span> Sent <span class='has-text-danger-dark'>" +
+                                    " <b>" +
+                                    Math.round(data["result"]["transactions"][transaction]["amount"] * 1000) / 1000 +
+                                    " DUCO</b></span> to " +
+                                    `<span class='has-text-info'>` +
+                                    "<b>" +
+                                    data["result"]["transactions"][transaction]["recipient"] + "</span></b> " + `<span class='has-text-info'>(` + data["result"]["transactions"][transaction]["hash"].substr(data["result"]["transactions"][transaction]["hash"].length - 8) + ")</span><br>"
+                            } else {
+                                tx_str += "<span class='has-text-grey'>" +
+                                    data["result"]["transactions"][transaction]["datetime"] +
+                                    "</span> Received <span class='has-text-success-dark'>" +
+                                    "<b>" +
+                                    Math.round(data["result"]["transactions"][transaction]["amount"] * 1000) / 1000 +
+                                    " DUCO</b></span> from " +
+                                    `<span class='has-text-info'>` + "<b>" +
+                                    data["result"]["transactions"][transaction]["sender"] + "</span></b> " + `<span class='has-text-info'>(` + data["result"]["transactions"][transaction]["hash"].substr(data["result"]["transactions"][transaction]["hash"].length - 8) + ")</span><br>"
+                            }
+
+                            i += 1;
+                            if (i > 10) {
+                                break;
+                            }
+                        }
+                    } else {
+                        tx_str += "No transactions found for that user";
+                    }
+
+                    found_user_html = `
+                            <table class="table is-narrow is-fullwidth">
+                                <tbody>
+                                    <tr>
+                                        <th>
+                                            <span class="icon-text">
+                                                <i class="icon fa fa-user"></i>
+                                                <span>Wallet name</span> 
+                                            </span>
+                                        </th>
+                                        <th>
+                                            <span class='has-text-info'">
+                                                ${searched_string}
+                                            </span>
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            <span class="icon-text">
+                                                <i class="icon fa fa-coins"></i>
+                                                <span>Balance</span>
+                                            </span>
+                                        </th>
+                                        <th>
+                                            ${round_to(10, data.result.balance.balance)} DUCO
+                                            ($${round_to(4, amount_usd)})
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            <span class="icon-text">
+                                                <i class="icon fa fa-check-circle"></i>
+                                                <span>Verified</span>
+                                            </span>
+                                        </th>
+                                        <th>
+                                            ${data.result.balance.verified}
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            <span class="icon-text">
+                                                <i class="icon fa fa-calendar"></i>
+                                                <span>Creation date</span>
+                                            </span>
+                                        </th>
+                                        <th>
+                                            ${data.result.balance.created}
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="2">
+                                            <span class="icon-text">
+                                                <i class="icon fa fa-cog"></i>
+                                                <span>Miners</span>
+                                            </span>
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="2">
+                                            ${miner_str}
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="2">
+                                            <span class="icon-text">
+                                                <i class="icon fas fa-people-arrows"></i>
+                                                <span>Transactions</span>
+                                            </span>
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="2">
+                                            ${tx_str}
+                                        </th>
+                                    </tr>
+                                </tbody>
+                            </table>`
+
+                    update_element("transactionstext2", found_user_html);
+                }
+            })
+                .fail(function(error) {
+                    if (error.responseText.includes("500")) error = "500 - internal server error";
+                    else if (error.responseText.includes("429")) error = "429 - too many requests (slow down)";
+                    else if (error.responseText.includes("404")) error = "404 - nothing interesting found";
+                    found_transaction_html = `<ul class="is-size-6"><li>` +
+                        `<i class='fas fa-info-circle'></i>` +
+                        `&nbsp;Error: <b>${error}</b> 🤦‍♀️</li></ul>`;
+                    update_element("transactionstext2", found_transaction_html);
+                });
+        }
+        if (cont) {
+            $.getJSON('https://server.duinocoin.com/foundBlocks.json', function(data) {
+                cont = false;
+                let found = data[searched_string]
+                if (searched_string != "" && found != "" && found != undefined) {
+                    cont = false;
+                    let amount_usd = found["Amount generated"] * duco_price;
+                    if (searched_string.length == 40) block_type = "DUCO-S1";
+                    else block_type = "XXHASH"
+
+                    found["Finder"] = found["Finder"].replace("(DUCO-S1)", "")
+                    found["Finder"] = found["Finder"].replace("(XXHASH)", "")
+
+                    found_block_html = `
+                            <table class="table is-fullwidth">
+                                <tbody>
+                                    <tr>
+                                        <th>
+                                            <span class="icon-text">
+                                                <i class="icon fa fa-info-circle"></i>
+                                                <span>Type</span>
+                                            </span>
+                                        </th>
+                                        <th>
+                                            Block (${block_type})
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            <span class="icon-text">
+                                                <i class="icon fa fa-calendar"></i>
+                                                <span>Timestamp</span>
+                                            </span>
+                                        </th>
+                                        <th>
+                                            ${found["Date"]} ${found["Time"]}
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            <span class="icon-text">
+                                                <i class="icon fa fa-user-tie"></i>
+                                                <span>Finder</span>
+                                            </span>
+                                        </th>
+                                        <th>
+                                            <a onclick="link_search('${found["Finder"]}')">
+                                                ${found["Finder"]}
+                                            </a>
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            <span class="icon-text">
+                                                <i class="icon fa fa-coins"></i>
+                                                <span>Generated amount</span>
+                                            </span>
+                                        </th>
+                                        <th>
+                                            ${found["Amount generated"]} DUCO
+                                            ($${round_to(4, amount_usd)})
+                                        </th>
+                                    </tr>
+                                </tbody>
+                            </table>`
+
+                    update_element("transactionstext2", found_block_html);
+                }
+            })
+                .fail(function(error) {
+                    if (error.responseText.includes("500")) error = "500 - internal server error";
+                    else if (error.responseText.includes("429")) error = "429 - too many requests (slow down)";
+                    else if (error.responseText.includes("404")) error = "404 - nothing interesting found";
+                    found_transaction_html = `<ul class="is-size-6"><li>` +
+                        `<i class='fas fa-info-circle'></i>` +
+                        `&nbsp;Error: <b>${error}</b> 🤦‍♀️</li></ul>`;
+                    update_element("transactionstext2", found_transaction_html);
+                });
+        }
+        if (cont) $("#transactionstext2").text(`Nothing interesting found for your query 🤷`);
+    }
+    function get_prefix(symbol, value) {
+        value = parseFloat(value);
+        if (value / 1000000000 > 0.5)
+            value = round_to(2, value / 1000000000) + " G" + symbol;
+        else if (value / 1000000 > 0.5)
+            value = round_to(2, value / 1000000) + " M" + symbol;
+        else if (value / 1000 > 0.5)
+            value = round_to(2, value / 1000) + " k" + symbol;
+        else
+            value = round_to(2, value) + " " + symbol;
+        return value;
+    }
 });

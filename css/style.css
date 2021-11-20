@@ -149,7 +149,7 @@ a {
 }
 
 
-form {
+.tab-content:not(#network) form {
     width: 300px;
 }
 
@@ -333,7 +333,7 @@ td {
 }
 
 @media screen and (max-width: 1008px) {
-    form {
+    .tab-content:not(#network) form {
         width: 290px;
     }
 
@@ -564,4 +564,214 @@ pre code {
 }
 #forUsername {
     display: none;
+}
+
+/* Network */
+#network .is-primary {
+    background: linear-gradient(50deg, #ff7a3e, #ff4962, #ff2780) !important;
+}
+
+#network .monospace {
+    /* Monospace font for TXIDs */
+    font-family: 'Roboto Mono', monospace;
+}
+
+#network #workers {
+    max-height: 25em;
+    overflow: auto;
+}
+
+@media (max-width: 768px) {
+    #network #workers {
+        columns: 2;
+        -webkit-columns: 2;
+        -moz-columns: 2;
+    }
+}
+
+@media (min-width: 768px) {
+    #network #workers {
+        columns: 6;
+        -webkit-columns: 6;
+        -moz-columns: 6;
+    }
+}
+
+#network img {
+    image-rendering: -moz-crisp-edges;
+    /* Firefox */
+    image-rendering: -o-crisp-edges;
+    /* Opera */
+    image-rendering: -webkit-optimize-contrast;
+    /* Webkit (non-standard naming) */
+    image-rendering: crisp-edges;
+    -ms-interpolation-mode: nearest-neighbor;
+    /* IE (non-standard property) */
+}
+
+#network .divider {
+    z-index: 5;
+    margin: 0.5em !important;
+}
+
+#network .block1,
+#network .transaction2 {
+    color: #ff7a3e;
+}
+
+#network .block2,
+#network .transaction1 {
+    color: #ff4962;
+}
+
+#network a,
+#network button,
+#network input {
+    transition: 0.2s;
+}
+
+#network .is-primary {
+    background: linear-gradient(50deg, #ff7a3e, #ff4962, #ff2780) !important;
+}
+
+#network .navbar-item {
+    background: none !important;
+}
+
+
+#network .blur {
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    border-radius: 20px !important;
+}
+
+#network .navbar {
+    width: 100%;
+    position: fixed;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+}
+
+#network .section>.container {
+    margin-top: 2.5em !important;
+}
+
+#network .panel-heading {
+    border-radius: 20px 20px 0 0;
+}
+
+#network table {
+    background: transparent !important;
+}
+
+#network .is-duco {
+    box-shadow: none !important;
+    background: linear-gradient(135deg, #ff7a3e, #ff4962, #ff2780) !important;
+    display: block !important;
+    border-radius: 25px !important;
+    outline: none !important;
+    border: none !important;
+    background: linear-gradient(to left, #ff7a3e, #ff4962, #ff2780) !important;
+    background-size: 300% !important;
+    color: #fff !important;
+    cursor: pointer !important;
+    transition: 0.6s !important;
+}
+
+#network .is-duco:hover,
+#network .is-search:hover {
+    background-position: right !important;
+}
+
+#network .is-search {
+    box-shadow: none !important;
+    background: linear-gradient(135deg, #ff2780, #ff4962, #ff7a3e) !important;
+    display: block !important;
+    border-radius: 0 25px 25px 0 !important;
+    outline: none !important;
+    border: none !important;
+    background: linear-gradient(to left, #ff2780, #ff4962, #ff7a3e) !important;
+    background-size: 300% !important;
+    color: #fff !important;
+    cursor: pointer !important;
+    transition: 0.6s !important;
+}
+
+@media (prefers-color-scheme: dark) {
+    #network .blur {
+        background-color: rgba(0, 0, 0, 0.7) !important;
+        box-shadow: 0 8px 20px 0 rgba(32, 32, 32, 0.6) !important;
+        border: 1px solid rgba(255, 255, 255, 0.125) !important;
+    }
+
+    #network .navbar {
+        background-color: rgba(0, 0, 0, 0.7) !important;
+        box-shadow: 0 8px 20px 0 rgba(32, 32, 32, 0.6) !important;
+    }
+
+    #network input:-webkit-autofill,
+    #network input:-webkit-autofill:hover,
+    #network input:-webkit-autofill:focus,
+    #network input:-webkit-autofill:active {
+        transition: background-color 5000s ease-in-out 0s;
+        -webkit-text-fill-color: #ddd !important;
+        background-color: transparent !important;
+    }
+}
+
+#network #transactionstext4,
+#network #transactionstext3 {
+    overflow: hidden;
+}
+
+#network #transactionstext4:before,
+#network #transactionstext3:before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    pointer-events: none;
+    height: 10em;
+    width: 10%;
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0), #070708);
+}
+
+#network #transactionstext3:before {
+    right: 50%;
+}
+
+#network .ducoinput {
+    border: 1px solid #ff7a3e !important;
+}
+
+#network .ducoinput:focus {
+    box-shadow: 0 0 10px #ff7a3e;
+}
+
+@media (prefers-color-scheme: light) {
+
+    #network #transactionstext4:before,
+    #network #transactionstext3:before {
+        background: linear-gradient(90deg, rgba(0, 0, 0, 0), #F9F9F9);
+    }
+
+    #network .blur {
+        background-color: rgba(255, 255, 255, 0.65) !important;
+        box-shadow: 0 8px 20px 0 rgba(128, 128, 128, 0.6) !important;
+        border: 1px solid rgba(209, 213, 219, 0.3) !important;
+    }
+
+    #network .navbar {
+        background-color: rgba(255, 255, 255, 0.65) !important;
+        box-shadow: 0 8px 20px 0 rgba(128, 128, 128, 0.6) !important;
+    }
+
+    #network input:-webkit-autofill,
+    #network input:-webkit-autofill:hover,
+    #network input:-webkit-autofill:focus,
+    #network input:-webkit-autofill:active {
+        transition: background-color 5000s ease-in-out 0s;
+        -webkit-text-fill-color: #111 !important;
+        background-color: transparent !important;
+    }
 }
