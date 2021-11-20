@@ -120,7 +120,7 @@ To uninstall it, do it as you would uninstall any other program.
 
 You can download the installer for the latest version for Windows and Debian 64-bit here:
 
-- [Ducopanel-1.273.0-setup.exe](https://github.com/ponsato/ducopanel/releases/download/1.273.0/Ducopanel-1.273.0-setup.exe)
-- [Ducopanel-1.273.0-setup.msi](https://github.com/ponsato/ducopanel/releases/download/1.273.0/Ducopanel-1.273.0-setup.msi)
-- [ducopanel_1.273.0_amd64.deb](https://github.com/ponsato/ducopanel/releases/download/1.273.0/ducopanel_1.273.0_amd64.deb)
-- [ducopanel_1.273.0_arm64.deb](https://github.com/ponsato/ducopanel/releases/download/1.273.0/ducopanel_1.273.0_arm64.deb)
+- [Ducopanel-1.274.0-setup.exe](https://github.com/ponsato/ducopanel/releases/download/1.274.0/Ducopanel-1.274.0-setup.exe)
+- [Ducopanel-1.274.0-setup.msi](https://github.com/ponsato/ducopanel/releases/download/1.274.0/Ducopanel-1.274.0-setup.msi)
+- [ducopanel_1.274.0_amd64.deb](https://github.com/ponsato/ducopanel/releases/download/1.274.0/ducopanel_1.274.0_amd64.deb)
+- [ducopanel_1.274.0_arm64.deb](https://github.com/ponsato/ducopanel/releases/download/1.274.0/ducopanel_1.274.0_arm64.deb)
