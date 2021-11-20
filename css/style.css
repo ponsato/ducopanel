@@ -19,14 +19,6 @@ input {
     border-radius: 20px !important;
 }
 
-@media screen and (min-width: 768px) {
-    #wallet {
-        margin-top: 2.5rem !important;
-        margin-left: 5rem !important;
-        margin-right: 5rem !important;
-    }
-}
-
 #news_iframe {
     word-break: break-all;
     width: 100%;

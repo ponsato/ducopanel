@@ -561,12 +561,39 @@
                                         Your Miners
                                         <span id="minercount_miner" class="has-text-weight-normal"></span>
                                     </p>
-                                    <div id="miners_miner" class="columns is-multiline" style="resize: vertical;">
-                                        <div class="column is-full">
-                                            <p class="title is-size-6">
-                                                Fetching data
-                                            </p>
-                                        </div>
+                                    <div class="columns is-multiline" style="resize: vertical;">
+                                        <table class="table is-fullwidth" style="background: transparent">
+                                            <thead>
+                                            <th></th>
+                                            <th>
+                                                <p>Miner</p>
+                                            </th>
+                                            <th>
+                                                <span>Hashrate</span>
+                                                <p class="icon-text">
+                                        <span class="icon" style="color:#f0932b">
+                                            <i class="mdi mdi-pickaxe animated faa-slow faa-wrench"></i>
+                                        </span>
+                                                </p>
+                                            </th>
+                                            <th>
+                                                <span>Correct shares</span>
+                                                <p class="icon-text">
+                                        <span class="icon has-text-success-dark">
+                                            <i class="fa fa-spell-check"></i>
+                                        </span>
+                                                </p>
+                                            </th>
+                                            <th></th>
+                                            </thead>
+                                            <tbody id="miners_miner">
+                                                <div class="column is-full">
+                                                    <p class="title is-size-6">
+                                                        Fetching data
+                                                    </p>
+                                                </div>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>

@@ -239,6 +239,8 @@ function calculdaily(newb, oldb) {
 
         avgusd = round_to(3, daily * duco_price);
         update_element("estimatedprofitusd", "(≈ $" + avgusd + ")");
+        update_element("estimatedprofit_miner", daily + ` ᕲ</b> daily`);
+        update_element("estimatedprofit_pcminer", daily + ` ᕲ</b> daily`);
     }
     start = Date.now()
 }
@@ -375,8 +377,13 @@ window.addEventListener('load', function() {
                 duco_price = data.prices.max;
 
                 balance = round_to(10, parseFloat(data.balance.balance));
-                if (first_open) $("#balance").html(balance);
-                else update_element("balance", balance);
+                if (first_open)  {
+                    $("#balance").html(balance);
+                } else {
+                    update_element("balance", balance);
+                    update_element("balance_miner", round_to(7, balance));
+                    update_element("balance_miner", round_to(7, balance));
+                }
 
                 if (oldb != balance) {
                     calculdaily(balance, oldb);
@@ -669,8 +676,11 @@ window.addEventListener('load', function() {
                             </tr>`
                     }
                     $("#miners").html(miners_html);
+                    $("#miners_miner").html(miners_html);
                     $("#total_hashrate").html(scientific_prefix(total_hashrate) + "H/s");
+                    $("#hashrate_miner").html(scientific_prefix(total_hashrate) + "H/s");
                     $("#minercount").html(user_miners.length);
+                    $("#minercount_miner").html(user_miners.length);
                 } else {
                     $("#minertable").fadeOut(function() {
                         $("#nominers").fadeIn();
@@ -1147,7 +1157,6 @@ window.addEventListener('load', function() {
                                     </tr>
                                 </tbody>
                             </table>`
-
                     update_element("transactionstext2", found_user_html);
                 }
             })
