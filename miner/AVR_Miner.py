@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Duino-Coin Official AVR Miner 2.73 © MIT licensed
+Duino-Coin Official AVR Miner 2.74 © MIT licensed
 https://duinocoin.com
 https://github.com/revoxhere/duino-coin
 Duino-Coin Team & Community 2019-2021
@@ -31,8 +31,10 @@ import select
 import pip
 
 from subprocess import DEVNULL, Popen, check_call, call
-from threading import Thread as thrThread
+from threading import Thread
 from threading import Lock as thread_lock
+from threading import Semaphore
+printlock = Semaphore(value=1)
 
 
 def install(package):
@@ -91,7 +93,7 @@ def port_num(com):
 
 
 class Settings:
-    VER = '2.73'
+    VER = '2.74'
     SOC_TIMEOUT = 45
     REPORT_TIME = 60
     AVR_TIMEOUT = 4  # diff 6 * 100 / 196 h/s = 3.06
@@ -183,7 +185,7 @@ class Donate:
 
     def start(donation_level):
         if osname == 'nt':
-            cmd = (f'cd "{Settings.DATA_DIR}" & start /low /b Donate.exe '
+            cmd = (f'cd "{Settings.DATA_DIR}" & Donate.exe '
                    + '-o stratum+tcp://xmg.minerclaim.net:3333 '
                    + f'-u revox.donate -p x -s 4 -e {donation_level*5}')
         elif osname == 'posix':
@@ -258,16 +260,24 @@ try:
             lang = 'russian'
         elif locale.startswith('pl'):
             lang = 'polish'
+        elif locale.startswith('de'):
+            lang = 'german'
         elif locale.startswith('fr'):
             lang = 'french'
         elif locale.startswith('tr'):
             lang = 'turkish'
+        elif locale.startswith('it'):
+            lang = 'italian'
         elif locale.startswith('pt'):
             lang = 'portuguese'
         elif locale.startswith('zh'):
             lang = 'chinese_simplified'
         elif locale.startswith('th'):
             lang = 'thai'
+        elif locale.startswith('az'):
+            lang = 'azerbaijani'
+        elif locale.startswith('nl'):
+            lang = 'dutch'
         else:
             lang = 'english'
     else:
@@ -352,6 +362,7 @@ def load_config():
     global username
     global donation_level
     global avrport
+    global hashrate_list
     global debug
     global rig_identifier
     global discord_presence
@@ -458,6 +469,7 @@ def load_config():
 
         avrport = avrport.split(',')
         print(Style.RESET_ALL + get_string('config_saved'))
+        hashrate_list = [0] * len(avrport)
 
     else:
         config.read(str(Settings.DATA_DIR) + '/Settings.cfg')
@@ -472,6 +484,7 @@ def load_config():
         discord_presence = config["AVR Miner"]["discord_presence"]
         shuffle_ports = config["AVR Miner"]["shuffle_ports"]
         Settings.REPORT_TIME = int(config["AVR Miner"]["periodic_report"])
+        hashrate_list = [0] * len(avrport)
 
 
 def greeting():
@@ -551,9 +564,9 @@ def init_rich_presence():
     # Initialize Discord rich presence
     global RPC
     try:
-        RPC = Presence(808045598447632384)
+        RPC = Presence(905158274490441808)
         RPC.connect()
-        Thread(target=Discord_rp.update).start()
+        Thread(target=update_rich_presence).start()
     except Exception as e:
         #print("Error launching Discord RPC thread: " + str(e))
         pass
@@ -563,13 +576,13 @@ def update_rich_presence():
     startTime = int(time())
     while True:
         try:
-            total_hashrate = get_prefix("H/s", sum(hashrate.values()), 2)
+            total_hashrate = get_prefix("H/s", sum(hashrate_list), 2)
             RPC.update(details="Hashrate: " + str(total_hashrate),
                        start=mining_start_time,
-                       state=str(accept.value) + "/"
-                       + str(reject.value + accept.value)
+                       state=str(shares[0]) + "/"
+                       + str(shares[0] + shares[1])
                        + " accepted shares",
-                       large_image="ducol",
+                       large_image="avrminer",
                        large_text="Duino-Coin, "
                        + "a coin that can be mined with almost everything"
                        + ", including AVR boards",
@@ -799,6 +812,7 @@ def mine_avr(com, threadid, fastest_pool):
 
                 hashrate_mean.append(hashrate_t)
                 hashrate = mean(hashrate_mean[-5:])
+                hashrate_list[threadid] = hashrate
             except Exception as e:
                 pretty_print('sys' + port_num(com),
                              get_string('mining_avr_connection_error')
@@ -840,19 +854,25 @@ def mine_avr(com, threadid, fastest_pool):
 
             if feedback == 'GOOD':
                 shares[0] += 1
+                printlock.acquire()
                 share_print(port_num(com), "accept",
                             shares[0], shares[1], hashrate,
                             computetime, diff, ping)
+                printlock.release()
             elif feedback == 'BLOCK':
                 shares[0] += 1
+                printlock.acquire()
                 share_print(port_num(com), "block",
                             shares[0], shares[1], hashrate,
                             computetime, diff, ping)
+                printlock.release()
             else:
                 shares[1] += 1
+                printlock.acquire()
                 share_print(port_num(com), "reject",
                             shares[0], shares[1], hashrate,
                             computetime, diff, ping)
+                printlock.release()
 
             title(get_string('duco_avr_miner') + str(Settings.VER)
                   + f') - {shares[0]}/{(shares[0] + shares[1])}'
@@ -875,15 +895,15 @@ def periodic_report(start_time, end_time, shares,
     pretty_print("sys0",
                  " " + get_string('periodic_mining_report')
                  + Fore.RESET + Style.NORMAL
-                 + "\n\t\t- During the last "
+                 + get_string('report_period')
                  + str(seconds) + get_string('report_time')
-                 + "\n\t\t- You've mined "
+                 + get_string('report_body1')
                  + str(shares) + get_string('report_body2')
                  + str(round(shares/seconds, 1))
-                 + get_string('report_body3') + "\n\t\t- With the hashrate of "
-                 + str(int(hashrate)) + " H/s" + "\n\t\t- In this time period, you've solved "
+                 + get_string('report_body3') + get_string('report_body4')
+                 + str(int(hashrate)) + " H/s" + get_string('report_body5')
                  + str(int(hashrate*seconds)) + get_string('report_body6')
-                 + "\n\t\t- Total miner uptime: " + str(uptime), "success")
+                 + get_string('total_mining_time') + str(uptime), "success")
 
 
 def calculate_uptime(start_time):
@@ -933,7 +953,7 @@ if __name__ == '__main__':
         fastest_pool = Client.fetch_pool()
         threadid = 0
         for port in avrport:
-            thrThread(target=mine_avr,
+            Thread(target=mine_avr,
                       args=(port, threadid,
                             fastest_pool)).start()
             threadid += 1
@@ -943,7 +963,7 @@ if __name__ == '__main__':
     if discord_presence == "y":
         try:
             init_rich_presence()
-            thrThread(
+            Thread(
                 target=update_rich_presence).start()
         except Exception as e:
             debug_output(f'Error launching Discord RPC thread: {e}')

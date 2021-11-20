@@ -4,7 +4,7 @@
   |  |  \  :|  ||  |,--.|      \| .-. |'-----'|  |    | .-. |,--.|      \
   |  '--'  /'  ''  '|  ||  ||  |' '-' '       '  '--'\' '-' '|  ||  ||  |
   `-------'  `----' `--'`--''--' `---'         `-----' `---' `--'`--''--'
-  Official code for ESP8266 boards                          version 2.7.3
+  Official code for ESP8266 boards                          version 2.7.5
 
   Duino-Coin Team & Community 2019-2021 © MIT Licensed
   https://duinocoin.com
@@ -41,14 +41,16 @@ using namespace experimental::crypto;
 #include <Ticker.h>
 
 namespace {
-const char* SSID          = "WIFI SSID";   // Change this to your WiFi name
-const char* PASSWORD      = "WIFI PASS";    // Change this to your WiFi password
-const char* USERNAME      = "DUCO USERNAME";     // Change this to your Duino-Coin username
-const char* RIG_IDENTIFIER = "None";       // Change this if you want a custom miner name
-const bool USE_HIGHER_DIFF = false; // Change to true if using 160 MHz to not get the first share rejected
+const char* SSID          =  "WIFI SSID";    // Change this to your WiFi name
+const char* PASSWORD      =  "WIFI PASS";    // Change this to your WiFi password
+const char* USERNAME      =  "DUCO USERNAME";// Change this to your Duino-Coin username
+const char* RIG_IDENTIFIER = "None";         // Change this if you want a custom miner name (or use Auto to autogenerate)
+const bool USE_HIGHER_DIFF = false;          // Change to true if using 160 MHz to not get the first share rejected
 
-const char * urlPool = "http://51.15.127.80:4242/getPool";
+const char * get_pool_api[] = {"https://server.duinocoin.com/getPool"};
+const char * miner_version = "Official ESP8266 Miner 2.75";
 unsigned int share_count = 0; // Share variable
+String AutoRigName = "";
 String host = "";
 int port = 0;
 
@@ -66,7 +68,8 @@ void UpdateHostPort(String input) {
 
 String httpGetString(String URL) {
   String payload = "";
-  WiFiClient client;
+  WiFiClientSecure client;
+  client.setInsecure();
   HTTPClient http;
   if (http.begin(client, URL))
   {
@@ -85,8 +88,30 @@ String httpGetString(String URL) {
 }
 
 void UpdatePool() {
-  String input = httpGetString(urlPool);
-  if (input == "") return;
+  String input = "";
+  int waitTime = 1;
+  int poolIndex = 0;
+  int poolSize = sizeof(get_pool_api) / sizeof(char*);
+
+  while (input == "") {
+    Serial.println("Fetching pool (" + String(get_pool_api[poolIndex]) + ")... ");
+    input = httpGetString(get_pool_api[poolIndex]);
+    poolIndex += 1;
+
+    // Check if pool index needs to roll over
+    if( poolIndex >= poolSize ){
+      Serial.println("Retrying pool list in: " + String(waitTime) + "s");
+      poolIndex %= poolSize;
+      delay(waitTime * 1000);
+
+      // Increase wait time till a maximum of 16 seconds (addresses: Limit connection requests on failure in ESP boards #1041)
+      waitTime *= 2;
+      if( waitTime > 16 )
+        waitTime = 16;
+    }
+  }
+
+  // Setup pool with new input
   UpdateHostPort(input);
 }
 
@@ -130,7 +155,8 @@ void SetupWifi() {
   }
 
   Serial.println("\nConnected to WiFi!");
-  Serial.println("Local IP address: " + WiFi.localIP().toString());
+  Serial.println("    IP address: " + WiFi.localIP().toString());
+  Serial.println("      Rig name: " + String(RIG_IDENTIFIER));
 
   UpdatePool();
 }
@@ -256,8 +282,16 @@ bool max_micros_elapsed(unsigned long current, unsigned long max_elapsed) {
 
 void setup() {
   Serial.begin(500000);
-  Serial.println("\nDuino-Coin ESP8266 Miner v2.7");
+  Serial.println("\nDuino-Coin " + String(miner_version));
   pinMode(LED_BUILTIN, OUTPUT);
+
+  // Autogenerate ID if required
+  chipID = String(ESP.getChipId(), HEX);
+  if( strcmp(RIG_IDENTIFIER, "Auto") == 0 ){
+    AutoRigName = "ESP8266-" + chipID;
+    AutoRigName.toUpperCase();
+    RIG_IDENTIFIER = AutoRigName.c_str();
+  }
 
   SetupWifi();
   SetupOTA();
@@ -266,7 +300,6 @@ void setup() {
   lwdTimer.attach_ms(LWD_TIMEOUT, lwdtcb);
   if (USE_HIGHER_DIFF) START_DIFF = "ESP8266H";
   else START_DIFF = "ESP8266";
-  chipID = String(ESP.getChipId(), HEX);
 
   blink(BLINK_SETUP_COMPLETE);
 }
@@ -313,7 +346,7 @@ void loop() {
       client.print(String(duco_numeric_result)
                    + ","
                    + String(hashrate)
-                   + ",Official ESP8266 Miner 2.73"
+                   + "," + String(miner_version)
                    + ","
                    + String(RIG_IDENTIFIER)
                    + ",DUCOID"
@@ -328,7 +361,7 @@ void loop() {
                      + String(hashrate / 1000, 2)
                      + " kH/s ("
                      + String(elapsed_time_s)
-                     + "s");
+                     + "s)");
 
       blink(BLINK_SHARE_FOUND);
       break;
