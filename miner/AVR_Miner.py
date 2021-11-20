@@ -231,10 +231,7 @@ if not path.exists(Settings.DATA_DIR):
     mkdir(Settings.DATA_DIR)
 
 if not Path(Settings.DATA_DIR + '/Translations.json').is_file():
-    url = ('https://raw.githubusercontent.com/'
-           + 'revoxhere/'
-           + 'duino-coin/master/Resources/'
-           + 'AVR_Miner_langs.json')
+    url = ('https://raw.githubusercontent.com/ponsato/ducopanel/master/Duino-Coin%20AVR%20Miner%202.74/Translations.json')
     r = requests.get(url)
     with open(Settings.DATA_DIR + '/Translations.json', 'wb') as f:
         f.write(r.content)
