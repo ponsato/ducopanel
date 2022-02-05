@@ -25,7 +25,7 @@ function createWindow () {
         },
 
     });
-    mainWindow.removeMenu();
+    //mainWindow.removeMenu();
     mainWindow.on('menu', function (e){
         e.preventDefault();
     });
@@ -37,7 +37,7 @@ function createWindow () {
     mainWindow.webContents.setWindowOpenHandler(({ url }) => {
         return { action: 'allow' }
     });
-    mainWindow.webContents.on("devtools-opened", () => { mainWindow.webContents.closeDevTools(); });
+    //mainWindow.webContents.on("devtools-opened", () => { mainWindow.webContents.closeDevTools(); });
 }
 
 app.whenReady().then(() => {

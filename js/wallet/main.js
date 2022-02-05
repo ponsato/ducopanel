@@ -69,6 +69,20 @@ function get_user_color(username) {
     return component_to_hex(r) + component_to_hex(g) + component_to_hex(b);
 };
 
+/*const sWarningsBtn = document.querySelector("#showWarnings");
+
+if (getcookie("hideWarnings")) {
+    if(getcookie("hideWarnings") == "true") sWarningsBtn.checked = true;
+    else sWarningsBtn.checked = false;
+}
+
+sWarningsBtn.addEventListener("click", function () {
+    if (this.checked) {
+        setcookie("hideWarnings", "true");
+    } else {
+        setcookie("hideWarnings", "false");
+    }
+});*/
 
 const inputs = document.querySelectorAll(".input");
 
@@ -467,6 +481,7 @@ window.addEventListener('load', function() {
                         miner_pool = t_miners[miner]["pool"];
                         miner_algo = t_miners[miner]["algorithm"];
                         miner_count = t_miners[miner]["threads"];
+                        miner_ki = t_miners[miner]["ki"];
 
                         if (!miner_identifier || miner_identifier === "None") {
                             miner_name = miner_software;
@@ -519,7 +534,7 @@ window.addEventListener('load', function() {
                             miner_type = "Unknown!";
                         }
 
-                        let miner_efficiency = round_to(2, Math.pow(percentage, miner_num - 1) * 100);
+                        let miner_efficiency = round_to(2, Math.pow(percentage, miner_ki - 1) * 100);
                         let efficiency_color = "has-text-warning-dark";
                         if (miner_efficiency < 40) {
                             efficiency_color = "has-text-danger-dark";
@@ -540,17 +555,59 @@ window.addEventListener('load', function() {
                             thread_string = `(${miner_count} threads)`;
                         }
 
-                        let warning_icon = "";
+                        icon_class = "has-text-warning-dark";
+                        icon_class_animation = "fa fa-exclamation-triangle animated faa-flash";
+                        icon_class_alt = "has-text-danger";
+                        icon_class_animation_alt = "fa fa-times-circle animated faa-flash";
+
+                        if (getcookie("hideWarnings") == "true") {
+                            icon_class = "";
+                            icon_class_animation = "far fa-question-circle";
+                            icon_class_alt = "";
+                            icon_class_animation_alt = "far fa-question-circle";
+                        }
+
+                        let warning_icon = `
+                        <span class="icon-text has-text-success" title="Operating normally">
+                            <i class="icon fa fa-check-circle"></i>
+                        </span>`;
                         if (miner_efficiency < 40) {
                             warning_icon = `
-                        <span class="icon-text has-text-danger" title="Too many miners - low Kolka efficiency">
-                            <i class="icon fa fa-times-circle animated faa-flash"></i>
+                        <span class="${icon_class_alt}" title="Too many miners - low Kolka efficiency">
+                            <i class="icon ${icon_class_animation_alt}"></i>
                         </span>`
                         } else if (accepted_rate < 50) {
                             warning_icon = `
-                        <span class="icon-text has-text-danger" title="Too many rejected shares">
-                            <i class="icon fa fa-times-circle animated faa-flash"></i>
+                        <span class="${icon_class_alt}" title="Too many rejected shares">
+                            <i class="icon ${icon_class_animation_alt}"></i>
                         </span>`
+                        }
+
+                        if (miner_type == "AVR (I²C)" && !(miner_hashrate > 225 && miner_hashrate < 265)) {
+                            warning_icon = `
+                            <span class="${icon_class_alt}" title="Incorrect hashrate">
+                                <i class="icon ${icon_class_animation_alt}"></i>
+                            </span>`
+                        } else if (miner_type == "AVR (Normal)" && !(miner_hashrate > 225 && miner_hashrate < 265)) {
+                            warning_icon = `
+                            <span class="${icon_class_alt}" title="Incorrect hashrate">
+                                <i class="icon ${icon_class_animation_alt}"></i>
+                            </span>`
+                        } else if (miner_type == "ESP8266" && miner_hashrate > 12000) {
+                            warning_icon = `
+                            <span class="${icon_class_alt}" title="Incorrect hashrate">
+                                <i class="icon ${icon_class_animation_alt}"></i>
+                            </span>`
+                        } else if (miner_type == "ESP8266" && miner_hashrate < 9000) {
+                            warning_icon = `
+                            <span class="icon-text ${icon_class}" title="Use 160 MHz clock for optimal hashrate">
+                                <i class="icon ${icon_class_animation}"></i>
+                            </span>`
+                        } else if (miner_type == "ESP32" && miner_hashrate > 48000) {
+                            warning_icon = `
+                            <span class="${icon_class_alt}" title="Incorrect hashrate">
+                                <i class="icon ${icon_class_animation_alt}"></i>
+                            </span>`
                         }
 
                         miners_html += `
@@ -583,14 +640,14 @@ window.addEventListener('load', function() {
                                         ${accepted_rate}%
                                     </span>
                                     <span class="has-text-weight-normal">
-                                        (${miner_accepted}/${(miner_accepted+miner_rejected)})
+                                        (${miner_accepted}/${(miner_accepted + miner_rejected)})
                                     </span>
                                 </th>
                                 <th align="center">
                                         <span class="icon-text">
                                             ${warning_icon}
                                         </span>
-                                        <span class="icon-text" style="cursor: pointer">
+                                        <span class="icon-text expand-btn" style="cursor: pointer">
                                             <i class="icon fa fa-info-circle"></i>
                                         </span>
                                 </th>
